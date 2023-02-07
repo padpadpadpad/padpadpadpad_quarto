@@ -1,0 +1,20 @@
+---
+title: "Disturbance‐mediated invasions are dependent on community resource abundance"
+type: "article"
+author: "Luke Lear, Daniel Padfield, Hidetoshi Inamine, Katriona Shea, Angus Buckling"
+year: "2022"
+publication: "Ecology"
+doi: "https://doi.org/10.1002/ecy.3728"
+code: "https://doi.org/10.5281/zenodo.6334795"
+data: "https://doi.org/10.5281/zenodo.5057319"
+toc: false
+comments: false
+---
+
+## Citation
+
+Lear, L., Padfield, D., Inamine, H., Shea, K., & Buckling, A. (2022). Disturbance‐mediated invasions are dependent on community resource abundance. **Ecology**, *103(8)*, e3728.
+
+## Abstract
+
+Disturbances can facilitate biological invasions, with the associated increase in resource availability being a proposed cause. Here, we experimentally tested the interactive effects of disturbance regime (different frequencies of biomass removal at equal intensities) and resource abundance on invasion success using a factorial design containing five disturbance frequencies and three resource levels. We invaded populations of the bacterium *Pseudomonas fluorescens* with two ecologically different invader morphotypes: a fast-growing “colonizer” type and a slower growing “competitor” type. As resident populations were altered by the treatments, we additionally tested their effect on invader success. Disturbance frequency and resource abundance interacted to affect the success of both invaders, but this interaction differed between the invader types. The success of the colonizer type was positively affected by disturbance under high resources but negatively under low. However, disturbance negatively affected the success of the competitor type under high resource abundance but not under low or medium. Resident population changes did not alter invader success beyond direct treatment effects. We therefore demonstrate that the same disturbance regime can either be beneficial or detrimental for an invader depending on both community resource abundance and its life history. These results may help to explain some of the inconsistencies found in the disturbance-invasion literature.

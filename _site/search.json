@@ -140,6 +140,20 @@
     "text": "Abstract\nThere exists an enormous diversity of bacteria capable of human infection, but no up-to-date, publicly accessible list is available. Combining a pragmatic definition of pathogenicity with an extensive search strategy, we report 1513 bacterial pathogens known to infect humans described pre-2021. Of these, 73 % were regarded as established (have infected at least three persons in three or more references) and 27 % as putative (fewer than three known cases). Pathogen species belong to 10 phyla and 24 classes scattered throughout the bacterial phylogeny. We show that new human pathogens are discovered at a rapid rate. Finally, we discuss how our results could be expanded to a database, which could provide a useful resource for microbiologists. Our list is freely available and archived on GitHub and Zenodo and we have provided walkthroughs to facilitate access and use."
   },
   {
+    "objectID": "publications/articles/lear_2022a.html",
+    "href": "publications/articles/lear_2022a.html",
+    "title": "Disturbance‐mediated invasions are dependent on community resource abundance",
+    "section": "",
+    "text": "Lear, L., Padfield, D., Inamine, H., Shea, K., & Buckling, A. (2022). Disturbance‐mediated invasions are dependent on community resource abundance. Ecology, 103(8), e3728."
+  },
+  {
+    "objectID": "publications/articles/lear_2022a.html#abstract",
+    "href": "publications/articles/lear_2022a.html#abstract",
+    "title": "Disturbance‐mediated invasions are dependent on community resource abundance",
+    "section": "Abstract",
+    "text": "Abstract\nDisturbances can facilitate biological invasions, with the associated increase in resource availability being a proposed cause. Here, we experimentally tested the interactive effects of disturbance regime (different frequencies of biomass removal at equal intensities) and resource abundance on invasion success using a factorial design containing five disturbance frequencies and three resource levels. We invaded populations of the bacterium Pseudomonas fluorescens with two ecologically different invader morphotypes: a fast-growing “colonizer” type and a slower growing “competitor” type. As resident populations were altered by the treatments, we additionally tested their effect on invader success. Disturbance frequency and resource abundance interacted to affect the success of both invaders, but this interaction differed between the invader types. The success of the colonizer type was positively affected by disturbance under high resources but negatively under low. However, disturbance negatively affected the success of the competitor type under high resource abundance but not under low or medium. Resident population changes did not alter invader success beyond direct treatment effects. We therefore demonstrate that the same disturbance regime can either be beneficial or detrimental for an invader depending on both community resource abundance and its life history. These results may help to explain some of the inconsistencies found in the disturbance-invasion literature."
+  },
+  {
     "objectID": "publications/articles/lear_2022.html",
     "href": "publications/articles/lear_2022.html",
     "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
@@ -179,7 +193,7 @@
     "href": "publications.html",
     "title": "DanPadLab",
     "section": "",
-    "text": "Home\n    Publications\n  \n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Author\n        \n         \n          Publication\n        \n         \n          Year\n        \n     \n  \n    \n      \n      \n    \n\n\n  \n    A comprehensive list of bacterial pathogens infecting humans\n    Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos\n    Microbiology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n  \n  \n    Bacterial colonisation dynamics of household plastics in a coastal environment\n    Luke Lear, Daniel Padfield, Tirion Dowsett, Maia Jones, Suzanne Kay, Alex Hayward, Michiel Vos\n    Science of the Total Environment\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n  \n\n\nNo matching items"
+    "text": "Home\n    Publications\n  \n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Author\n        \n         \n          Publication\n        \n         \n          Year\n        \n     \n  \n    \n      \n      \n    \n\n\n  \n    A comprehensive list of bacterial pathogens infecting humans\n    Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos\n    Microbiology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n  \n  \n    Bacterial colonisation dynamics of household plastics in a coastal environment\n    Luke Lear, Daniel Padfield, Tirion Dowsett, Maia Jones, Suzanne Kay, Alex Hayward, Michiel Vos\n    Science of the Total Environment\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n  \n  \n    Disturbance‐mediated invasions are dependent on community resource abundance\n    Luke Lear, Daniel Padfield, Hidetoshi Inamine, Katriona Shea, Angus Buckling\n    Ecology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n  \n\n\nNo matching items"
   },
   {
     "objectID": "about.html",
