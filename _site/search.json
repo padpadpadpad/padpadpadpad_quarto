@@ -140,6 +140,27 @@
     "text": "Abstract\nThere exists an enormous diversity of bacteria capable of human infection, but no up-to-date, publicly accessible list is available. Combining a pragmatic definition of pathogenicity with an extensive search strategy, we report 1513 bacterial pathogens known to infect humans described pre-2021. Of these, 73 % were regarded as established (have infected at least three persons in three or more references) and 27 % as putative (fewer than three known cases). Pathogen species belong to 10 phyla and 24 classes scattered throughout the bacterial phylogeny. We show that new human pathogens are discovered at a rapid rate. Finally, we discuss how our results could be expanded to a database, which could provide a useful resource for microbiologists. Our list is freely available and archived on GitHub and Zenodo and we have provided walkthroughs to facilitate access and use."
   },
   {
+    "objectID": "publications/articles/lear_2022.html",
+    "href": "publications/articles/lear_2022.html",
+    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
+    "section": "",
+    "text": "Lear, L., Padfield, D., Dowsett, T., Jones, M., Kay, S., Hayward, A., & Vos, M. (2022). Bacterial colonisation dynamics of household plastics in a coastal environment. Science of the Total Environment, 838, 156199."
+  },
+  {
+    "objectID": "publications/articles/lear_2022.html#abstract",
+    "href": "publications/articles/lear_2022.html#abstract",
+    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
+    "section": "Abstract",
+    "text": "Abstract\nAccumulation of plastics in the marine environment has widespread detrimental consequences for ecosystems and wildlife. Marine plastics are rapidly colonised by a wide diversity of bacteria, including human pathogens, posing potential risks to health. Here, we investigate the effect of polymer type, residence time and estuarine location on bacterial colonisation of common household plastics, including pathogenic bacteria. We submerged five main household plastic types: low-density PE (LDPE), high-density PE (HDPE), polypropylene (PP), polyvinyl chloride (PVC) and polyethylene terephthalate (PET) at an estuarine site in Cornwall (U.K.) and tracked bacterial colonisation dynamics. Using both culture-dependent and culture-independent approaches, we found that bacteria rapidly colonised plastics irrespective of polymer type, reaching culturable densities of up to 1000 cells cm3 after 7 weeks. Community composition of the biofilms changed over time, but not among polymer types. The presence of pathogenic bacteria, quantified using the insect model Galleria mellonella, increased dramatically over a five-week period, with Galleria mortality increasing from 4% in week one to 65% in week five. No consistent differences in virulence were observed between polymer types. Pathogens isolated from plastic biofilms using Galleria enrichment included Serratia and Enterococcus species and they harboured a wide range of antimicrobial resistance genes. Our findings show that plastics in coastal waters are rapidly colonised by a wide diversity of bacteria independent of polymer type. Further, our results show that marine plastic biofilms become increasingly associated with virulent bacteria over time."
+  },
+  {
+    "objectID": "publications/articles/lear_2022.html#graphical-abstract",
+    "href": "publications/articles/lear_2022.html#graphical-abstract",
+    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
+    "section": "Graphical Abstract",
+    "text": "Graphical Abstract"
+  },
+  {
     "objectID": "article_template.html#abstract",
     "href": "article_template.html#abstract",
     "title": "DanPadLab",
@@ -158,7 +179,7 @@
     "href": "publications.html",
     "title": "DanPadLab",
     "section": "",
-    "text": "Home\n    Publications\n  \n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Author\n        \n         \n          Publication\n        \n         \n          Year\n        \n     \n  \n    \n      \n      \n    \n\n\n  \n    A comprehensive list of bacterial pathogens infecting humans\n    Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos\n    Microbiology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n  \n\n\nNo matching items"
+    "text": "Home\n    Publications\n  \n\n\n\n   \n     \n     \n       Order By\n       Default\n         \n          Title\n        \n         \n          Author\n        \n         \n          Publication\n        \n         \n          Year\n        \n     \n  \n    \n      \n      \n    \n\n\n  \n    A comprehensive list of bacterial pathogens infecting humans\n    Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos\n    Microbiology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n  \n  \n    Bacterial colonisation dynamics of household plastics in a coastal environment\n    Luke Lear, Daniel Padfield, Tirion Dowsett, Maia Jones, Suzanne Kay, Alex Hayward, Michiel Vos\n    Science of the Total Environment\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n  \n\n\nNo matching items"
   },
   {
     "objectID": "about.html",

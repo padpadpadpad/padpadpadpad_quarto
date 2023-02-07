@@ -2,42 +2,46 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://padpadpadpad.netlify.app/posts/rolling_regression/index.html</loc>
-    <lastmod>2023-02-07T11:10:43.787Z</lastmod>
+    <lastmod>2023-02-07T11:55:18.711Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/posts/nlsmultstart/index.html</loc>
-    <lastmod>2023-02-07T11:10:46.736Z</lastmod>
+    <lastmod>2023-02-07T11:55:21.437Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/posts/animate_rstrava/index.html</loc>
-    <lastmod>2023-02-07T11:10:48.671Z</lastmod>
+    <lastmod>2023-02-07T11:55:23.444Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/posts/bootstrap_nls/index.html</loc>
-    <lastmod>2023-02-07T11:10:51.272Z</lastmod>
+    <lastmod>2023-02-07T11:55:26.266Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/publications/articles/bartlett_2022.html</loc>
-    <lastmod>2023-02-07T11:10:51.900Z</lastmod>
+    <lastmod>2023-02-07T11:55:27.079Z</lastmod>
+  </url>
+  <url>
+    <loc>https://padpadpadpad.netlify.app/publications/articles/lear_2022.html</loc>
+    <lastmod>2023-02-07T11:55:28.245Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/article_template.html</loc>
-    <lastmod>2023-02-07T11:10:52.848Z</lastmod>
+    <lastmod>2023-02-07T11:55:28.741Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/index.html</loc>
-    <lastmod>2023-02-07T11:10:53.512Z</lastmod>
+    <lastmod>2023-02-07T11:55:29.424Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/publications.html</loc>
-    <lastmod>2023-02-07T11:10:54.231Z</lastmod>
+    <lastmod>2023-02-07T11:55:30.490Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/about.html</loc>
-    <lastmod>2023-02-07T11:10:57.043Z</lastmod>
+    <lastmod>2023-02-07T11:55:33.949Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/posts.html</loc>
-    <lastmod>2023-02-07T11:10:57.872Z</lastmod>
+    <lastmod>2023-02-07T11:55:35.267Z</lastmod>
   </url>
 </urlset>
