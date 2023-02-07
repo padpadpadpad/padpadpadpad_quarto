@@ -1,0 +1,21 @@
+---
+title: "Greater phage genotypic diversity constrains arms-race coevolution"
+type: "article"
+author: "Meaghan Castledine, Pawel Sierocinski, Mhairi Inglis, Suzanne Kay, Alex Hayward, Angus Buckling, Daniel Padfield"
+year: "2022"
+publication: "Frontiers in Cellular and Infection Microbiology"
+doi: "https://doi.org/10.3389/fcimb.2022.834406"
+code: "https://github.com/padpadpadpad/Castledine_2022_frontiers"
+data: "https://www.ebi.ac.uk/ena/browser/view/PRJEB50009"
+toc: false
+comments: false
+---
+
+## Citation
+
+Castledine, M., Sierocinski, P., Inglis, M., Kay, S., Hayward, A., Buckling, A., & Padfield, D. (2022). Greater phage genotypic diversity constrains arms-race coevolution. **Frontiers in Cellular and Infection Microbiology**, *168*.
+
+## Abstract
+
+Antagonistic coevolution between hosts and parasites, the reciprocal evolution of host resistance and parasite infectivity, has important implications in ecology and evolution. The dynamics of coevolution – notably whether host or parasite has an evolutionary advantage – is greatly affected by the relative amount of genetic variation in host resistance and parasite infectivity traits. While studies have manipulated genetic diversity during coevolution, such as by increasing mutation rates, it is unclear how starting genetic diversity affects host-parasite coevolution. Here, we (co)evolved the bacterium **Pseudomonas fluorescens** SBW25 and two bacteriophage genotypes of its lytic phage SBW25ɸ2 in isolation (one phage genotype) and together (two phage genotypes). Bacterial populations rapidly evolved phage resistance and phage reciprocally increased their infectivity in response. When phage populations were evolved with bacteria in isolation, bacterial resistance and phage infectivity increased through time, indicative of arms-race coevolution. In contrast, when both phage genotypes were together, bacteria did not increase their resistance in response to increasing phage infectivity. This was likely due to bacteria being unable to evolve resistance to both phage via the same mutations. These results suggest that increasing initial parasite genotypic diversity can give parasites an evolutionary advantage that arrests long-term coevolution. This study has important implications for the applied use of phage in phage therapy and in understanding host-parasite dynamics in broader ecological and evolutionary theory.
+

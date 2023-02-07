@@ -2,50 +2,62 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://padpadpadpad.netlify.app/posts/rolling_regression/index.html</loc>
-    <lastmod>2023-02-07T13:11:37.093Z</lastmod>
+    <lastmod>2023-02-07T22:14:38.384Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/posts/nlsmultstart/index.html</loc>
-    <lastmod>2023-02-07T13:11:40.014Z</lastmod>
+    <lastmod>2023-02-07T22:14:40.967Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/posts/animate_rstrava/index.html</loc>
-    <lastmod>2023-02-07T13:11:42.287Z</lastmod>
+    <lastmod>2023-02-07T22:14:42.947Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/posts/bootstrap_nls/index.html</loc>
-    <lastmod>2023-02-07T13:11:44.974Z</lastmod>
+    <lastmod>2023-02-07T22:14:45.797Z</lastmod>
+  </url>
+  <url>
+    <loc>https://padpadpadpad.netlify.app/publications/articles/castledine_2022a.html</loc>
+    <lastmod>2023-02-07T22:14:46.758Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/publications/articles/bartlett_2022.html</loc>
-    <lastmod>2023-02-07T13:11:45.535Z</lastmod>
+    <lastmod>2023-02-07T22:14:47.754Z</lastmod>
+  </url>
+  <url>
+    <loc>https://padpadpadpad.netlify.app/publications/articles/castledine_2022b.html</loc>
+    <lastmod>2023-02-07T22:14:48.376Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/publications/articles/lear_2022a.html</loc>
-    <lastmod>2023-02-07T13:11:46.463Z</lastmod>
+    <lastmod>2023-02-07T22:14:49.014Z</lastmod>
+  </url>
+  <url>
+    <loc>https://padpadpadpad.netlify.app/publications/articles/swan_2022.html</loc>
+    <lastmod>2023-02-07T22:14:49.907Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/publications/articles/lear_2022.html</loc>
-    <lastmod>2023-02-07T13:11:47.110Z</lastmod>
+    <lastmod>2023-02-07T22:14:50.782Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/article_template.html</loc>
-    <lastmod>2023-02-07T13:11:47.616Z</lastmod>
+    <lastmod>2023-02-07T22:14:51.312Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/index.html</loc>
-    <lastmod>2023-02-07T13:11:48.392Z</lastmod>
+    <lastmod>2023-02-07T22:14:51.893Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/publications.html</loc>
-    <lastmod>2023-02-07T13:11:48.954Z</lastmod>
+    <lastmod>2023-02-07T22:14:52.580Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/about.html</loc>
-    <lastmod>2023-02-07T13:11:51.440Z</lastmod>
+    <lastmod>2023-02-07T22:14:55.275Z</lastmod>
   </url>
   <url>
     <loc>https://padpadpadpad.netlify.app/posts.html</loc>
-    <lastmod>2023-02-07T13:11:52.307Z</lastmod>
+    <lastmod>2023-02-07T22:14:56.102Z</lastmod>
   </url>
 </urlset>
