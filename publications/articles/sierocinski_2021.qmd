@@ -1,0 +1,24 @@
+---
+title: "The impact of propagule pressure on whole community invasions in biomethane-producing communities"
+type: "article"
+author: "Pawel Sierocinski, Jesica Soria Pascual, Daniel Padfield, Mike Salter, Angus Buckling"
+year: "2021"
+publication: "iScience"
+doi: "https://doi.org/10.1016/j.isci.2021.102659"
+data: "https://www.ebi.ac.uk/ena/browser/view/PRJEB43371"
+preprint: "https://doi.org/10.1101/2021.02.25.432953"
+toc: false
+comments: false
+---
+
+## Citation
+
+Sierocinski, P., Pascual, J. S., Padfield, D., Salter, M., & Buckling, A. (2021). The impact of propagule pressure on whole community invasions in biomethane-producing communities. **Iscience**, *24(6)*, 102659.
+
+## Abstract
+
+Microbes can invade as whole communities, but the ecology of whole community invasions is poorly understood. Here, we investigate how invader propagule pressure (the number of invading organisms) affects the composition and function of invaded laboratory methanogenic communities. An invading community was equally successful at establishing itself in a resident community regardless of propagule pressure, which varied between 0.01 and 10% of the size resident community. Invasion resulted in enhanced biogas production (to the level of the pure invading community) but only when propagule pressure was 1% or greater. This inconsistency between invasion success and changes in function can be explained by a lower richness of invading taxa at lower propagule pressures, and an important functional role of the taxa that were absent. Our results highlight that whole community invasion ecology cannot simply be extrapolated from our understanding of single species invasions. Moreover, we show that methane production can be enhanced by invading poorly performing reactors with a better performing community at levels that may be practical in industrial settings.
+
+## Graphical Abstract
+
+![](images/sierocinski_2021.jpg)
