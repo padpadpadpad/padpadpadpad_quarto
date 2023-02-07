@@ -1,0 +1,31 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "DanPadLab"
+  site-url: https://padpadpadpad.netlify.app/
+  repo-url: https://github.com/padpadpadpad/padpadpadpad_quarto
+  navbar:
+    right:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: About
+      - href: posts.qmd
+        text: Posts
+      - href: publications.qmd
+        text: Publications
+
+comments:
+  giscus:
+    repo: padpadpadpad/padpadpadpad_quarto
+      
+format:
+  html:
+    theme: sandstone
+    css: styles.css
+    toc: true
+
+editor: source
+

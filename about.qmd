@@ -1,0 +1,37 @@
+---
+title: "Daniel Padfield"
+comments: false
+description: |
+  "Why toast when you can roast" - Mark Corrigan
+image: images/profile_avatar.jpg
+about:
+  template: jolla
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/padpadpadpad
+    - icon: github
+      text: Github
+      href: https://github.com/padpadpadpad
+    - icon: mastodon
+      text: Mastodon
+      href: https://mastodon.social/@padpadpadpad@ecoevo.social
+    - icon: google-scholar
+      text: Google Scholar
+      href: https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&hl=en
+    - icon: envelope
+      text: email
+      href: 'mailto:d.padfield@exeter.ac.uk'
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+I am a microbial ecologist working at the University of Exeter in Penryn, Cornwall. I have broad interests that span climate change, evolution, and community ecology. My research has concentrated on how environmental change alters the interplay of ecological and evolutionary dynamics in microbial communities. I do this by combining theory and simulations with experimental evolution. In January 2023 I started a NERC Independent Research Fellowship at the University of Exeter to explore the links between climate warming and antibiotic resistance in microbial communities.
+
+I am an avid R programmer - authoring the R packages **nls.multstart** and **rTPC** - and specialise in the wrangling and manipulation of large datasets and statistical analysis. I also have experience in bioinformatics from 16S sequencing to _de novo_ genome assembly, the latter using bash scripting.
+
+I am also a carer for my partner. She has full-body neuropathic pain, severe ME/CFS and has been bed-bound for around 4 years. She lives with her parents in Cheltenham and I visit for long weekends every three to four weeks.
+
+If you are interested in collaborating or have any questions or comments I would love to hear from you.

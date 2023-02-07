@@ -1,0 +1,8 @@
+.Rproj.user
+.Rhistory
+.Rdata
+.httr-oauth
+.DS_Store
+/posts/animate_rstrava/.httr_oauth
+/posts/animate_rstrava/google_api.rds
+/.quarto/

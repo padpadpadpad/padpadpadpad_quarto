@@ -1,0 +1,21 @@
+---
+title: "A comprehensive list of bacterial pathogens infecting humans"
+type: "article"
+author: "Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos"
+year: "2022"
+publication: "Microbiology"
+doi: "https://doi.org/10.1099/mic.0.001269"
+code: "https://github.com/padpadpadpad/bartlett_et_al_2022_human_pathogens"
+data: "https://doi.org/10.5281/zenodo.7337534"
+toc: false
+comments: false
+---
+
+## Citation
+
+Bartlett, A., Padfield, D., Lear, L., Bendall, R., & Vos, M. (2022). A comprehensive list of bacterial pathogens infecting humans. **Microbiology**, *168(12)*, 001269.
+
+## Abstract
+
+There exists an enormous diversity of bacteria capable of human infection, but no up-to-date, publicly accessible list is available. Combining a pragmatic definition of pathogenicity with an extensive search strategy, we report 1513 bacterial pathogens known to infect humans described pre-2021. Of these, 73 % were regarded as established (have infected at least three persons in three or more references) and 27 % as putative (fewer than three known cases). Pathogen species belong to 10 phyla and 24 classes scattered throughout the bacterial phylogeny. We show that new human pathogens are discovered at a rapid rate. Finally, we discuss how our results could be expanded to a database, which could provide a useful resource for microbiologists. Our list is freely available and archived on GitHub and Zenodo and we have provided walkthroughs to facilitate access and use.
+

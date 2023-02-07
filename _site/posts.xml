@@ -1,0 +1,1180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>DanPadLab</title>
+<link>https://padpadpadpad.netlify.app/posts.html</link>
+<atom:link href="https://padpadpadpad.netlify.app/posts.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<generator>quarto-1.2.269</generator>
+<lastBuildDate>Fri, 15 Nov 2019 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Rolling regression to estimate microbial growth rate</title>
+  <dc:creator>Daniel Padfield</dc:creator>
+  <link>https://padpadpadpad.netlify.app/posts/rolling_regression/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level3">
+<h3 class="anchored" data-anchor-id="introduction">Introduction</h3>
+<p>Microbial ecologists often measure the growth rates of their favourite microbes, commonly using an OD (optical density) reader, with growth being related to the increasing OD of the sample through time. There are loads of ways to analyse these curves. Most of these, like <a href="https://github.com/sprouffske/growthcurver"><strong>growthcurver</strong></a> and the methods I used in my recent <a href="https://github.com/padpadpadpad/Padfield_2019_ISME_bact_phage_temperature">ISME</a> paper (<a href="https://github.com/padpadpadpad/nls.multstart"><strong>nls.multstart</strong></a> and functions from <a href="https://cran.r-project.org/web/packages/nlsMicrobio/nlsMicrobio.pdf"><strong>nlsMicrobio</strong></a>), fit models to logistic growth. Both methods can easily be scaled up to fit multiple curves at the same time.</p>
+<p>However, sometimes these methods do not do a good job. The most common example when this happens is if the wee critters do not reach stationary phase. Without stationary phase, most of the models will struggle to calculate carrying capacity, which also means the estimated exponential growth rate is poor. Similar things can occur if the bacteria form biofilms. This can result in increasingly noisy measurements at higher OD readings, again making the estimation of carrying capacity and growth rates more difficult.</p>
+<p>As an alternative, we can bin off trying to model the entire growth curve, and instead implement a rolling regression, where we fit a linear regression on a shifting window of points. On natural-log transformed OD, the slope of the regression between <img src="https://latex.codecogs.com/png.latex?logOD"> and time is equivalent to the exponential growth rate.</p>
+</section>
+<section id="get-started" class="level3">
+<h3 class="anchored" data-anchor-id="get-started">Get started</h3>
+<p>We will load (and install) all the packages needed to run the example here. We will use the example data from <strong>growthcurver</strong> as example OD readings from a 96-well plate. Time is in hours, and I have created stacked all the wells into a single column for OD. Finally I created a column for <img src="https://latex.codecogs.com/png.latex?logOD">, which is needed for the rolling regression, and <img src="https://latex.codecogs.com/png.latex?log_%7B10%7DOD"> which is needed for fitting the modified gompertz growth model from <strong>nlsMicrobio</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># load packages</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(tidyverse) <span class="co" style="color: #5E5E5E;">#install.packages(tidyverse)</span></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(zoo) <span class="co" style="color: #5E5E5E;">#install.packages(zoo)</span></span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;">library</span>(broom) <span class="co" style="color: #5E5E5E;">#install.packages(broom)</span></span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;">library</span>(growthcurver) <span class="co" style="color: #5E5E5E;"># install.packages(growthcurver)</span></span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;">library</span>(nls.multstart) <span class="co" style="color: #5E5E5E;"># install.packages(nls.multstart)</span></span>
+<span id="cb1-7"><span class="co" style="color: #5E5E5E;"># remotes::install_github('padpadpadpad/MicrobioUoE)</span></span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;"># load example data</span></span>
+<span id="cb1-10">d <span class="ot" style="color: #003B4F;">&lt;-</span> growthcurver<span class="sc" style="color: #5E5E5E;">::</span>growthdata <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb1-11">  <span class="fu" style="color: #4758AB;">gather</span>(., well, od, <span class="sc" style="color: #5E5E5E;">-</span>time) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb1-12">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">ln_od =</span> <span class="fu" style="color: #4758AB;">log</span>(od),</span>
+<span id="cb1-13">         <span class="at" style="color: #657422;">log10_od =</span> <span class="fu" style="color: #4758AB;">log10</span>(od))</span>
+<span id="cb1-14"><span class="co" style="color: #5E5E5E;"># have a look at the data</span></span>
+<span id="cb1-15"><span class="fu" style="color: #4758AB;">glimpse</span>(d)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 13,920
+Columns: 5
+$ time     &lt;dbl&gt; 0.0000000, 0.1666667, 0.3333333, 0.5000000, 0.6666667, 0.8333…
+$ well     &lt;chr&gt; "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "…
+$ od       &lt;dbl&gt; 0.05348585, 0.04800336, 0.05587451, 0.05131749, 0.04516719, 0…
+$ ln_od    &lt;dbl&gt; -2.928338, -3.036484, -2.884647, -2.969724, -3.097384, -2.938…
+$ log10_od &lt;dbl&gt; -1.271761, -1.318728, -1.252786, -1.289735, -1.345177, -1.276…</code></pre>
+</div>
+</div>
+</section>
+<section id="fit-modified-gompertz-model-for-bacterial-growth" class="level3">
+<h3 class="anchored" data-anchor-id="fit-modified-gompertz-model-for-bacterial-growth">Fit modified gompertz model for bacterial growth</h3>
+<p>We will first demonstrate rolling regression against the modified gompertz model for growth. I like the inclusion of the lag parameter in this model, especially for OD readers where the initial inoculate can often be so low that the OD reader cannot measure it. It means that exponential growth is only calculated at OD readings that we are confident represent changes in biomass of the bacteria.</p>
+<p>To do this, we’ll filter the data for just the first well, A1. Then we will fit the modified gompertz model and plot the results.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;"># filter for just a single well</span></span>
+<span id="cb3-2">d_a1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(d, well <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'A1'</span>)</span>
+<span id="cb3-3"><span class="co" style="color: #5E5E5E;"># define gompertz growth model</span></span>
+<span id="cb3-4">gompertz <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(log10_nmax, log10_n0, mumax, t, lag){</span>
+<span id="cb3-5">  log10_n0 <span class="sc" style="color: #5E5E5E;">+</span> (log10_nmax <span class="sc" style="color: #5E5E5E;">-</span> log10_n0) <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">exp</span>(<span class="sc" style="color: #5E5E5E;">-</span><span class="fu" style="color: #4758AB;">exp</span>(mumax <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">exp</span>(<span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">*</span> (lag <span class="sc" style="color: #5E5E5E;">-</span> t)<span class="sc" style="color: #5E5E5E;">/</span>((log10_nmax <span class="sc" style="color: #5E5E5E;">-</span> log10_n0) <span class="sc" style="color: #5E5E5E;">*</span> <span class="fu" style="color: #4758AB;">log</span>(<span class="dv" style="color: #AD0000;">10</span>)) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>))</span>
+<span id="cb3-6">}</span>
+<span id="cb3-7"><span class="co" style="color: #5E5E5E;"># fit gompertz model</span></span>
+<span id="cb3-8">fit_gomp <span class="ot" style="color: #003B4F;">&lt;-</span> nls.multstart<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">nls_multstart</span>(log10_od <span class="sc" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;">gompertz</span>(log10_nmax, log10_n0, mumax, <span class="at" style="color: #657422;">t =</span> time, lag),</span>
+<span id="cb3-9">           <span class="at" style="color: #657422;">data =</span> d_a1,</span>
+<span id="cb3-10">           <span class="at" style="color: #657422;">start_lower =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">log10_nmax =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">0.75</span>, <span class="at" style="color: #657422;">log10_n0 =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">mumax =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">lag =</span> <span class="dv" style="color: #AD0000;">0</span>),</span>
+<span id="cb3-11">           <span class="at" style="color: #657422;">start_upper =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">log10_nmax =</span> <span class="fl" style="color: #AD0000;">0.5</span>, <span class="at" style="color: #657422;">log10_n0 =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">mumax =</span> <span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">lag =</span> <span class="dv" style="color: #AD0000;">25</span>),</span>
+<span id="cb3-12">           <span class="at" style="color: #657422;">lower =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">log10_nmax =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="fl" style="color: #AD0000;">0.6</span>, <span class="at" style="color: #657422;">log10_n0 =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">mumax =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">lag =</span> <span class="dv" style="color: #AD0000;">0</span>),</span>
+<span id="cb3-13">           <span class="at" style="color: #657422;">iter =</span> <span class="dv" style="color: #AD0000;">500</span>,</span>
+<span id="cb3-14">           <span class="at" style="color: #657422;">supp_errors =</span> <span class="st" style="color: #20794D;">'Y'</span>)</span>
+<span id="cb3-15"><span class="co" style="color: #5E5E5E;"># get predictions</span></span>
+<span id="cb3-16">gomp_preds <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">augment</span>(fit_gomp)</span>
+<span id="cb3-17"><span class="co" style="color: #5E5E5E;"># plot on original scale</span></span>
+<span id="cb3-18"><span class="fu" style="color: #4758AB;">ggplot</span>(d_a1, <span class="fu" style="color: #4758AB;">aes</span>(time, od)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb3-19">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(time, <span class="dv" style="color: #AD0000;">10</span><span class="sc" style="color: #5E5E5E;">^</span>.fitted), gomp_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'red'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb3-20">  <span class="fu" style="color: #4758AB;">geom_point</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb3-21">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">16</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb3-22">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'time (hours)'</span>,</span>
+<span id="cb3-23">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'OD'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb3-24">  <span class="fu" style="color: #4758AB;">annotate</span>(<span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">'text'</span>, <span class="at" style="color: #657422;">x =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">y =</span> <span class="fl" style="color: #AD0000;">0.37</span>, <span class="at" style="color: #657422;">label =</span> <span class="fu" style="color: #4758AB;">paste</span>(<span class="st" style="color: #20794D;">'µ = '</span>, <span class="fu" style="color: #4758AB;">round</span>(<span class="fu" style="color: #4758AB;">coef</span>(fit_gomp)[<span class="dv" style="color: #AD0000;">3</span>], <span class="dv" style="color: #AD0000;">2</span>), <span class="st" style="color: #20794D;">' hr-1'</span>, <span class="at" style="color: #657422;">sep =</span> <span class="st" style="color: #20794D;">''</span>), <span class="at" style="color: #657422;">hjust =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">size =</span> MicrobioUoE<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pts</span>(<span class="dv" style="color: #AD0000;">16</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/rolling_regression/index_files/figure-html/plot_gompz-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>However, lets say our measurements end at 10 or 11 hours. When we have not reached stationary phase, the traditional bacterial growth models are likely to have trouble fitting.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1">d_a1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(d_a1, time <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="fl" style="color: #AD0000;">10.5</span>)</span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;"># plot data without stationary phase</span></span>
+<span id="cb4-3"><span class="fu" style="color: #4758AB;">ggplot</span>(d_a1, <span class="fu" style="color: #4758AB;">aes</span>(time, od)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb4-4">  <span class="fu" style="color: #4758AB;">geom_point</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb4-5">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">16</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb4-6">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'time (hours)'</span>,</span>
+<span id="cb4-7">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'OD'</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/rolling_regression/index_files/figure-html/plot_short-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</section>
+<section id="using-rolling-regression" class="level3">
+<h3 class="anchored" data-anchor-id="using-rolling-regression">Using rolling regression</h3>
+<p>Rolling regression allows us to calculate exponential growth rate even when we do not have the whole curve. First, we need to create our own rolling regression function. This method is mainly taken from G. Grothendieck’s <a href="https://stackoverflow.com/questions/49762128/rolling-regression-by-group-in-the-tidyverse">StackOverflow answer</a>. In the function, we specify our output from a standard <strong>lm</strong> object. So if you know how to access the output of <strong>lm()</strong>, you can add any extra details you want.</p>
+<p>One of the big decisions in rolling regression is deciding how many points you are going to calculate the growth rate over. In this example, measurements are taken every 0.167 hours, about every ten minutes. I want a shifting window to span a minimum of 1.5 hours, so I calculate <code>num_points</code> to define the number of points the rolling regression will act on.</p>
+<p>We then run the rolling regression, using <strong>zoo::rollapplyr()</strong> and <strong>dplyr::do()</strong>. Finally, in order to illustrate what the rolling regression is doing, I created a predictions dataframe for every single linear model that is fitted.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;"># create the rolling regression function</span></span>
+<span id="cb5-2">roll_regress <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(x){</span>
+<span id="cb5-3">  temp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">data.frame</span>(x)</span>
+<span id="cb5-4">  mod <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">lm</span>(temp)</span>
+<span id="cb5-5">  temp <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">slope =</span> <span class="fu" style="color: #4758AB;">coef</span>(mod)[[<span class="dv" style="color: #AD0000;">2</span>]],</span>
+<span id="cb5-6">                     <span class="at" style="color: #657422;">slope_lwr =</span> <span class="fu" style="color: #4758AB;">confint</span>(mod)[<span class="dv" style="color: #AD0000;">2</span>, ][[<span class="dv" style="color: #AD0000;">1</span>]],</span>
+<span id="cb5-7">                     <span class="at" style="color: #657422;">slope_upr =</span> <span class="fu" style="color: #4758AB;">confint</span>(mod)[<span class="dv" style="color: #AD0000;">2</span>, ][[<span class="dv" style="color: #AD0000;">2</span>]],</span>
+<span id="cb5-8">                     <span class="at" style="color: #657422;">intercept =</span> <span class="fu" style="color: #4758AB;">coef</span>(mod)[[<span class="dv" style="color: #AD0000;">1</span>]],</span>
+<span id="cb5-9">                     <span class="at" style="color: #657422;">rsq =</span> <span class="fu" style="color: #4758AB;">summary</span>(mod)<span class="sc" style="color: #5E5E5E;">$</span>r.squared, <span class="at" style="color: #657422;">stringsAsFactors =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)</span>
+<span id="cb5-10">  <span class="fu" style="color: #4758AB;">return</span>(temp)</span>
+<span id="cb5-11">}</span>
+<span id="cb5-12"><span class="co" style="color: #5E5E5E;"># define window - here every ~1.5 hours</span></span>
+<span id="cb5-13">num_points <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">ceiling</span>(<span class="fl" style="color: #AD0000;">1.5</span><span class="sc" style="color: #5E5E5E;">*</span><span class="dv" style="color: #AD0000;">60</span><span class="sc" style="color: #5E5E5E;">/</span>(<span class="dv" style="color: #AD0000;">60</span><span class="sc" style="color: #5E5E5E;">*</span><span class="fl" style="color: #AD0000;">0.167</span>)) </span>
+<span id="cb5-14"></span>
+<span id="cb5-15"><span class="co" style="color: #5E5E5E;"># run rolling regression on ln od ~ time</span></span>
+<span id="cb5-16">models <span class="ot" style="color: #003B4F;">&lt;-</span> d_a1 <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb5-17">  <span class="fu" style="color: #4758AB;">do</span>(<span class="fu" style="color: #4758AB;">cbind</span>(<span class="at" style="color: #657422;">model =</span> dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(., ln_od, time) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb5-18">           zoo<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">rollapplyr</span>(<span class="at" style="color: #657422;">width =</span> num_points, roll_regress, <span class="at" style="color: #657422;">by.column =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">fill =</span> <span class="cn" style="color: #8f5902;">NA</span>, <span class="at" style="color: #657422;">align =</span> <span class="st" style="color: #20794D;">'center'</span>),</span>
+<span id="cb5-19">           <span class="at" style="color: #657422;">time =</span> dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(., time),</span>
+<span id="cb5-20">           <span class="at" style="color: #657422;">ln_od =</span> dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(., ln_od))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb5-21">  <span class="fu" style="color: #4758AB;">rename_all</span>(., gsub, <span class="at" style="color: #657422;">pattern =</span> <span class="st" style="color: #20794D;">'model.'</span>, <span class="at" style="color: #657422;">replacement =</span> <span class="st" style="color: #20794D;">''</span>)</span>
+<span id="cb5-22"><span class="co" style="color: #5E5E5E;"># create predictions</span></span>
+<span id="cb5-23">preds <span class="ot" style="color: #003B4F;">&lt;-</span> models <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb5-24">  <span class="fu" style="color: #4758AB;">filter</span>(., <span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.na</span>(slope)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb5-25">  <span class="fu" style="color: #4758AB;">group_by</span>(time) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb5-26">  <span class="fu" style="color: #4758AB;">do</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">time2 =</span> <span class="fu" style="color: #4758AB;">c</span>(.<span class="sc" style="color: #5E5E5E;">$</span>time <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">2</span>, .<span class="sc" style="color: #5E5E5E;">$</span>time <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">2</span>))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb5-27">  <span class="fu" style="color: #4758AB;">left_join</span>(., models) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb5-28">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">pred =</span> (slope<span class="sc" style="color: #5E5E5E;">*</span>time2) <span class="sc" style="color: #5E5E5E;">+</span> intercept)</span></code></pre></div>
+</div>
+<p>We can plot the rolling regression through time. I have extracted the exponential growth rate as the maximum slope of any of the regressions. Reassuringly the value of <img src="https://latex.codecogs.com/png.latex?%5Cmu"> we get is very similar to that of using the gompertz model. I have also plotted the time at which the maximum slope occurred. It looks pretty close to mid-log to me.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;"># calculate the exponential growth rate</span></span>
+<span id="cb6-2">growth_rate <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(models, slope <span class="sc" style="color: #5E5E5E;">==</span> <span class="fu" style="color: #4758AB;">max</span>(slope, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>))</span>
+<span id="cb6-3"><span class="co" style="color: #5E5E5E;"># plot rolling regression</span></span>
+<span id="cb6-4"><span class="fu" style="color: #4758AB;">ggplot</span>(d_a1, <span class="fu" style="color: #4758AB;">aes</span>(time, ln_od)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-5">  <span class="fu" style="color: #4758AB;">geom_point</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-6">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(time2, pred, <span class="at" style="color: #657422;">group =</span> time), <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'red'</span>, preds, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-7">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">16</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-8">  <span class="fu" style="color: #4758AB;">geom_segment</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> time, <span class="at" style="color: #657422;">y =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">3</span>, <span class="at" style="color: #657422;">xend =</span> time, <span class="at" style="color: #657422;">yend =</span> ln_od), growth_rate) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-9">  <span class="fu" style="color: #4758AB;">geom_segment</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">y =</span> ln_od, <span class="at" style="color: #657422;">xend =</span> time, <span class="at" style="color: #657422;">yend =</span> ln_od), growth_rate) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-10">  <span class="fu" style="color: #4758AB;">annotate</span>(<span class="at" style="color: #657422;">geom =</span> <span class="st" style="color: #20794D;">'text'</span>, <span class="at" style="color: #657422;">x =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">y =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">label =</span> <span class="fu" style="color: #4758AB;">paste</span>(<span class="st" style="color: #20794D;">'µ = '</span>, <span class="fu" style="color: #4758AB;">round</span>(growth_rate<span class="sc" style="color: #5E5E5E;">$</span>slope, <span class="dv" style="color: #AD0000;">2</span>), <span class="st" style="color: #20794D;">' hr-1</span><span class="sc" style="color: #5E5E5E;">\n</span><span class="st" style="color: #20794D;">95%CI:('</span>,<span class="fu" style="color: #4758AB;">round</span>(growth_rate<span class="sc" style="color: #5E5E5E;">$</span>slope_lwr, <span class="dv" style="color: #AD0000;">2</span>), <span class="st" style="color: #20794D;">'-'</span>, <span class="fu" style="color: #4758AB;">round</span>(growth_rate<span class="sc" style="color: #5E5E5E;">$</span>slope_upr, <span class="dv" style="color: #AD0000;">2</span>), <span class="st" style="color: #20794D;">')'</span>, <span class="at" style="color: #657422;">sep =</span> <span class="st" style="color: #20794D;">''</span>), <span class="at" style="color: #657422;">hjust =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">size =</span> MicrobioUoE<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pts</span>(<span class="dv" style="color: #AD0000;">16</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-11">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'time (hours)'</span>,</span>
+<span id="cb6-12">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'OD'</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/rolling_regression/index_files/figure-html/plot-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</section>
+<section id="the-opportunities-are-endless" class="level3">
+<h3 class="anchored" data-anchor-id="the-opportunities-are-endless">The opportunities are endless</h3>
+<p>The great thing about this approach is its flexibility. It can easily be rolled out over all the wells in that plate, using <strong>group_by()</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># run rolling regression on ln od_cor ~ time</span></span>
+<span id="cb7-2">models <span class="ot" style="color: #003B4F;">&lt;-</span> d <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-3">  <span class="fu" style="color: #4758AB;">group_by</span>(well) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-4">  <span class="fu" style="color: #4758AB;">do</span>(<span class="fu" style="color: #4758AB;">cbind</span>(<span class="at" style="color: #657422;">model =</span> <span class="fu" style="color: #4758AB;">select</span>(., ln_od, time) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb7-5">           zoo<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">rollapplyr</span>(<span class="at" style="color: #657422;">width =</span> num_points, roll_regress, <span class="at" style="color: #657422;">by.column =</span> <span class="cn" style="color: #8f5902;">FALSE</span>, <span class="at" style="color: #657422;">fill =</span> <span class="cn" style="color: #8f5902;">NA</span>, <span class="at" style="color: #657422;">align =</span> <span class="st" style="color: #20794D;">'center'</span>),</span>
+<span id="cb7-6">           <span class="at" style="color: #657422;">time =</span> <span class="fu" style="color: #4758AB;">select</span>(., time),</span>
+<span id="cb7-7">           <span class="at" style="color: #657422;">ln_od =</span> <span class="fu" style="color: #4758AB;">select</span>(., ln_od))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-8">  <span class="fu" style="color: #4758AB;">rename_all</span>(., gsub, <span class="at" style="color: #657422;">pattern =</span> <span class="st" style="color: #20794D;">'model.'</span>, <span class="at" style="color: #657422;">replacement =</span> <span class="st" style="color: #20794D;">''</span>)</span>
+<span id="cb7-9"><span class="co" style="color: #5E5E5E;"># calculate growth rate for each one</span></span>
+<span id="cb7-10">growth_rates <span class="ot" style="color: #003B4F;">&lt;-</span> models <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-11">  <span class="fu" style="color: #4758AB;">filter</span>(slope <span class="sc" style="color: #5E5E5E;">==</span> <span class="fu" style="color: #4758AB;">max</span>(slope, <span class="at" style="color: #657422;">na.rm =</span> <span class="cn" style="color: #8f5902;">TRUE</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-12">  <span class="fu" style="color: #4758AB;">ungroup</span>()</span></code></pre></div>
+</div>
+<pre><code>|===========================================|100% ~0 s remaining </code></pre>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="fu" style="color: #4758AB;">glimpse</span>(models)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 13,920
+Columns: 8
+Groups: well [96]
+$ well      &lt;chr&gt; "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", "A1", …
+$ slope     &lt;dbl&gt; NA, NA, NA, NA, -0.077427705, -0.028208492, -0.021245636, 0.…
+$ slope_lwr &lt;dbl&gt; NA, NA, NA, NA, -0.199773163, -0.160658493, -0.157480637, -0…
+$ slope_upr &lt;dbl&gt; NA, NA, NA, NA, 0.04491775, 0.10424151, 0.11498936, 0.131953…
+$ intercept &lt;dbl&gt; NA, NA, NA, NA, -2.944791, -2.976248, -2.967393, -3.024750, …
+$ rsq       &lt;dbl&gt; NA, NA, NA, NA, 0.2423791383, 0.0349643445, 0.0190560342, 0.…
+$ time      &lt;dbl&gt; 0.0000000, 0.1666667, 0.3333333, 0.5000000, 0.6666667, 0.833…
+$ ln_od     &lt;dbl&gt; -2.928338, -3.036484, -2.884647, -2.969724, -3.097384, -2.93…</code></pre>
+</div>
+</div>
+<p>These growth rates can then be used for downstream analyses, and the method can easily be used over multiple plates and for many different types of data. Finally, you could also filter the regressions by <img src="https://latex.codecogs.com/png.latex?R%5E%7B2%7D"> values, making sure you only kept good fitting regressions. Or do a sensitivity analysis of different sized window sizes to make sure your chosen window is suitable.</p>
+<p>How do you get your data off of the OD reader? I have written scripts to collate hundreds of plate readings into a single dataframe in R. Let me know if you would like me to do a blog post on that process! Thanks for reading.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>bacteria</category>
+  <guid>https://padpadpadpad.netlify.app/posts/rolling_regression/index.html</guid>
+  <pubDate>Fri, 15 Nov 2019 00:00:00 GMT</pubDate>
+  <media:content url="https://padpadpadpad.netlify.app/posts/rolling_regression/preview.png" medium="image" type="image/png" height="108" width="144"/>
+</item>
+<item>
+  <title>rStrava and gganimate</title>
+  <dc:creator>Daniel Padfield</dc:creator>
+  <link>https://padpadpadpad.netlify.app/posts/animate_rstrava/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="getting-started-with-rstrava" class="level2">
+<h2 class="anchored" data-anchor-id="getting-started-with-rstrava">Getting started with rStrava</h2>
+<p><strong>rStrava</strong> is an R package that allows you to access data from Strava using the Strava API. Some of the functions of <strong>rStrava</strong> scrape data from the public Strava website but to access your own data you will need a Strava profile and an authentication token. Details on obtaining your unique token can be found on the <a href="https://github.com/fawda123/rStrava"><strong>rStrava</strong></a> GitHub In addition to this key, we use <code>rgbif::elevation()</code> to calculate the elevation of each route. This requires a Google API key which can be created here.</p>
+<p>Got a Strava authentication token? Got a Google API key? We are ready to create some animations! To create our animations, we use gganimate that requires ImageMagick to be installed.</p>
+</section>
+<section id="loading-packages-and-defining-tokens" class="level2">
+<h2 class="anchored" data-anchor-id="loading-packages-and-defining-tokens">Loading packages and defining tokens</h2>
+<p>First load the packages that are used in the script and our Strava and Google authentication tokens. The <code>app_scope</code> argument in <code>strava_oauth()</code> has to be one of “read” , “read_all”, “profile:read_all”, “profile:write”, “activity:read”, “activity:read_all” or “activity:write”. To access your activities, <code>activity:read_all</code> has to be included.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># load packages ####</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(rStrava) <span class="co" style="color: #5E5E5E;"># devtools::install_github('fawda123/rStrava')</span></span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(gganimate)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;">library</span>(sp)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;">library</span>(ggmap)</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;">library</span>(raster)</span>
+<span id="cb1-8"></span>
+<span id="cb1-9"><span class="co" style="color: #5E5E5E;"># initial setup ####</span></span>
+<span id="cb1-10"><span class="co" style="color: #5E5E5E;"># Strava key</span></span>
+<span id="cb1-11">app_name <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">'xxxx'</span></span>
+<span id="cb1-12">app_client_id <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">'xxxxx'</span></span>
+<span id="cb1-13">app_secret <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">'"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"'</span></span>
+<span id="cb1-14"></span>
+<span id="cb1-15"><span class="co" style="color: #5E5E5E;"># create strava token</span></span>
+<span id="cb1-16">my_token <span class="ot" style="color: #003B4F;">&lt;-</span> httr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">config</span>(<span class="at" style="color: #657422;">token =</span> <span class="fu" style="color: #4758AB;">strava_oauth</span>(app_name, app_client_id, app_secret, <span class="at" style="color: #657422;">app_scope =</span> <span class="st" style="color: #20794D;">'read_all,activity:read_all'</span>))</span>
+<span id="cb1-17"></span>
+<span id="cb1-18"><span class="co" style="color: #5E5E5E;"># Google elevation API key</span></span>
+<span id="cb1-19">GoogleAPI <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="st" style="color: #20794D;">'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'</span></span></code></pre></div>
+</div>
+<p>A browser window should open at this point saying Authentication complete. Please close this page and return to R. This means everything is going well!</p>
+<div class="cell">
+
+</div>
+</section>
+<section id="download-your-data" class="level2">
+<h2 class="anchored" data-anchor-id="download-your-data">Download your data</h2>
+<p>We can then download our personal activity data using the <code>rStrava::get_activity_list()</code>. This function needs your strava token and your strava athlete id. For example, my strava id is 2140248.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># download strava data</span></span>
+<span id="cb2-2">my_acts <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">get_activity_list</span>(my_token)</span>
+<span id="cb2-3"></span>
+<span id="cb2-4"><span class="fu" style="color: #4758AB;">length</span>(my_acts)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 1664</code></pre>
+</div>
+</div>
+<p>This returns a large list of all your previous activities. Mine has 1028 previous entries. If you want to explore your list, you can use <code>View(my_acts)</code> in RStudio which opens the Data Viewer window.</p>
+</section>
+<section id="compile-your-data-into-tidy-dataframe" class="level2">
+<h2 class="anchored" data-anchor-id="compile-your-data-into-tidy-dataframe">Compile your data into “tidy” dataframe</h2>
+<p><strong>rStrava</strong> has a function that compiles the information stored in the output of <code>get_activity_list()</code> to a “tidy” dataframe, with one row for each activity. <code>compile_activities()</code> finds all the columns across all activities and returns <code>NA</code> when a column is not present in a given activity. This means that if HR was not measured across all your strava activities, the function will still work!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;"># compile activities into a tidy dataframe</span></span>
+<span id="cb4-2">my_acts <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">compile_activities</span>(my_acts)</span>
+<span id="cb4-3"></span>
+<span id="cb4-4"><span class="co" style="color: #5E5E5E;"># have a look at the dataframe</span></span>
+<span id="cb4-5">dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">glimpse</span>(my_acts)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,664
+Columns: 60
+$ achievement_count             &lt;dbl&gt; 1, 11, 1, 23, 3, 2, 0, 0, 28, 10, 0, 0, …
+$ athlete_count                 &lt;dbl&gt; 1, 1, 1, 51, 1, 1, 1, 1, 1, 7, 1, 1, 1, …
+$ athlete.id                    &lt;chr&gt; "2140248", "2140248", "2140248", "214024…
+$ athlete.resource_state        &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1…
+$ average_cadence               &lt;chr&gt; "79.5", "81.3", "80.1", "84.9", "82.2", …
+$ average_heartrate             &lt;chr&gt; "142.1", "144.7", "153.4", "163.2", "134…
+$ average_speed                 &lt;dbl&gt; 12.1248, 12.7764, 12.2328, 15.4836, 12.7…
+$ comment_count                 &lt;dbl&gt; 2, 0, 0, 3, 0, 0, 0, 2, 1, 1, 0, 0, 0, 0…
+$ commute                       &lt;chr&gt; "FALSE", "FALSE", "FALSE", "FALSE", "FAL…
+$ display_hide_heartrate_option &lt;chr&gt; "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", …
+$ distance                      &lt;dbl&gt; 6.3254, 15.3099, 3.0110, 5.0749, 3.9523,…
+$ elapsed_time                  &lt;dbl&gt; 1923, 4469, 895, 1180, 1597, 3372, 5257,…
+$ elev_high                     &lt;dbl&gt; 75.9, 102.7, 75.9, 53.6, 75.9, 22.5, 200…
+$ elev_low                      &lt;dbl&gt; 68.3, 45.1, 55.6, 49.9, 49.9, 3.4, 14.8,…
+$ end_latlng1                   &lt;dbl&gt; 51.91218, 51.91868, 51.91910, 51.91133, …
+$ end_latlng2                   &lt;dbl&gt; -2.053098, -2.048171, -2.049546, -2.0769…
+$ external_id                   &lt;chr&gt; "garmin_ping_258943346472", "garmin_ping…
+$ flagged                       &lt;chr&gt; "FALSE", "FALSE", "FALSE", "FALSE", "FAL…
+$ from_accepted_tag             &lt;chr&gt; "FALSE", "FALSE", "FALSE", "FALSE", "FAL…
+$ gear_id                       &lt;chr&gt; "g12286967", "g12438516", "g12286967", "…
+$ has_heartrate                 &lt;chr&gt; "TRUE", "TRUE", "TRUE", "TRUE", "TRUE", …
+$ has_kudoed                    &lt;chr&gt; "FALSE", "FALSE", "FALSE", "FALSE", "FAL…
+$ heartrate_opt_out             &lt;chr&gt; "FALSE", "FALSE", "FALSE", "FALSE", "FAL…
+$ id                            &lt;dbl&gt; 8519266303, 8507709513, 8501999743, 8501…
+$ kudos_count                   &lt;dbl&gt; 3, 27, 5, 26, 4, 11, 14, 20, 37, 28, 1, …
+$ location_country              &lt;chr&gt; "United Kingdom", "United Kingdom", "Uni…
+$ manual                        &lt;chr&gt; "FALSE", "FALSE", "FALSE", "FALSE", "FAL…
+$ map.id                        &lt;chr&gt; "a8519266303", "a8507709513", "a85019997…
+$ map.resource_state            &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
+$ map.summary_polyline          &lt;chr&gt; "ec{{H|aoKPHP@bAb@h@L|ATh@@ZJb@?b@CJCrBA…
+$ max_heartrate                 &lt;chr&gt; "166", "173", "169", "174", "147", "173"…
+$ max_speed                     &lt;dbl&gt; 19.9656, 16.5240, 23.7168, 19.1880, 19.2…
+$ moving_time                   &lt;dbl&gt; 1878, 4314, 886, 1180, 1119, 3148, 5185,…
+$ name                          &lt;chr&gt; "Morning Run", "Morning Run", "Morning R…
+$ photo_count                   &lt;dbl&gt; 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0…
+$ pr_count                      &lt;chr&gt; "0", "7", "0", "9", "0", "1", "0", "0", …
+$ private                       &lt;chr&gt; "FALSE", "FALSE", "FALSE", "FALSE", "FAL…
+$ resource_state                &lt;dbl&gt; 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2…
+$ sport_type                    &lt;chr&gt; "Run", "Run", "Run", "Run", "Run", "Run"…
+$ start_date                    &lt;chr&gt; "2023-02-07T08:29:54Z", "2023-02-05T08:2…
+$ start_date_local              &lt;chr&gt; "2023-02-07T08:29:54Z", "2023-02-05T08:2…
+$ start_latlng1                 &lt;dbl&gt; 51.91904, 51.91906, 51.90978, 51.91065, …
+$ start_latlng2                 &lt;dbl&gt; -2.049192, -2.049080, -2.068779, -2.0750…
+$ suffer_score                  &lt;chr&gt; "33", "86", "27", "55", "14", "50", "29"…
+$ timezone                      &lt;chr&gt; "(GMT+00:00) Europe/London", "(GMT+00:00…
+$ total_elevation_gain          &lt;dbl&gt; 15.0, 121.2, 25.1, 9.9, 5.1, 4.7, 463.0,…
+$ total_photo_count             &lt;dbl&gt; 0, 3, 0, 3, 0, 3, 0, 5, 3, 1, 0, 0, 0, 0…
+$ trainer                       &lt;chr&gt; "FALSE", "FALSE", "FALSE", "FALSE", "FAL…
+$ type                          &lt;chr&gt; "Run", "Run", "Run", "Run", "Run", "Run"…
+$ upload_id                     &lt;chr&gt; "9143955806", "9131036041", "9124588035"…
+$ upload_id_str                 &lt;chr&gt; "9143955806", "9131036041", "9124588035"…
+$ utc_offset                    &lt;chr&gt; "0", "0", "0", "0", "0", "0", "0", "0", …
+$ visibility                    &lt;chr&gt; "everyone", "everyone", "everyone", "eve…
+$ average_temp                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, "9", NA, NA, NA,…
+$ average_watts                 &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 130.8, NA, NA, N…
+$ device_watts                  &lt;chr&gt; NA, NA, NA, NA, NA, NA, "FALSE", NA, NA,…
+$ kilojoules                    &lt;dbl&gt; NA, NA, NA, NA, NA, NA, 678.2, NA, NA, N…
+$ location_city                 &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ location_state                &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, …
+$ workout_type                  &lt;chr&gt; NA, "0", NA, "0", NA, "0", NA, "0", "0",…</code></pre>
+</div>
+</div>
+<p>There are so many columns here, so I remove some columns I am not interested in for this post and do some data transformations to get the date in a correct format. I also do not want to run the example on all my rides, instead I filter them for just 2020.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;"># columns to keep</span></span>
+<span id="cb6-2">desired_columns <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'distance'</span>, <span class="st" style="color: #20794D;">'elapsed_time'</span>, <span class="st" style="color: #20794D;">'moving_time'</span>, <span class="st" style="color: #20794D;">'start_date'</span>, <span class="st" style="color: #20794D;">'start_date_local'</span>, <span class="st" style="color: #20794D;">'type'</span>, <span class="st" style="color: #20794D;">'map.summary_polyline'</span>, <span class="st" style="color: #20794D;">'location_city'</span>, <span class="st" style="color: #20794D;">'upload_id'</span>)</span>
+<span id="cb6-3"></span>
+<span id="cb6-4"><span class="co" style="color: #5E5E5E;"># keep only desired columns</span></span>
+<span id="cb6-5">my_acts2 <span class="ot" style="color: #003B4F;">&lt;-</span> dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(my_acts, <span class="fu" style="color: #4758AB;">any_of</span>(desired_columns))</span>
+<span id="cb6-6"></span>
+<span id="cb6-7"><span class="co" style="color: #5E5E5E;"># transformations ####</span></span>
+<span id="cb6-8">my_acts <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mutate</span>(my_acts,</span>
+<span id="cb6-9">                  <span class="at" style="color: #657422;">activity_no =</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="dv" style="color: #AD0000;">1</span>,<span class="fu" style="color: #4758AB;">n</span>(), <span class="dv" style="color: #AD0000;">1</span>),</span>
+<span id="cb6-10">                  <span class="at" style="color: #657422;">elapsed_time =</span> elapsed_time<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">60</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">60</span>,</span>
+<span id="cb6-11">                  <span class="at" style="color: #657422;">moving_time =</span> moving_time<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">60</span><span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">60</span>, </span>
+<span id="cb6-12">                  <span class="at" style="color: #657422;">date =</span> <span class="fu" style="color: #4758AB;">gsub</span>(<span class="st" style="color: #20794D;">"T.*$"</span>, <span class="st" style="color: #20794D;">''</span>, start_date) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-13">                    <span class="fu" style="color: #4758AB;">as.POSIXct</span>(., <span class="at" style="color: #657422;">format =</span> <span class="st" style="color: #20794D;">'%Y-%m-%d'</span>),</span>
+<span id="cb6-14">                  <span class="at" style="color: #657422;">EUdate =</span> <span class="fu" style="color: #4758AB;">format</span>(date, <span class="st" style="color: #20794D;">'%d/%m/%Y'</span>),</span>
+<span id="cb6-15">                  <span class="at" style="color: #657422;">month =</span> <span class="fu" style="color: #4758AB;">format</span>(date, <span class="st" style="color: #20794D;">"%m"</span>),</span>
+<span id="cb6-16">                  <span class="at" style="color: #657422;">day =</span> <span class="fu" style="color: #4758AB;">format</span>(date, <span class="st" style="color: #20794D;">"%d"</span>),</span>
+<span id="cb6-17">                  <span class="at" style="color: #657422;">year =</span> <span class="fu" style="color: #4758AB;">format</span>(date, <span class="st" style="color: #20794D;">"%Y"</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-18">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="fu" style="color: #4758AB;">across</span>(<span class="fu" style="color: #4758AB;">c</span>(month, day), as.numeric)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-19">  <span class="fu" style="color: #4758AB;">filter</span>(.,year <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'2020'</span>)</span></code></pre></div>
+</div>
+</section>
+<section id="get-latitude-and-longitude-for-each-activity" class="level2">
+<h2 class="anchored" data-anchor-id="get-latitude-and-longitude-for-each-activity">Get latitude and longitude for each activity</h2>
+<p>Each activity has a bunch of data associated with it. For mapping, I am interested in the <code>map.summary_polyline</code>, which is a Google polyline which allows the encoding of multiple latitude and longitude points as a single string. We can get the latitude and longitude for each of the activities by using <code>get_latlon()</code> which decodes the polylines and using dplyr and purrr to iterate over every activity in the dataframe. I add my Google API key as a column so that <code>map()</code> can easily find it.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># get lat lon and distance of every ride ####</span></span>
+<span id="cb7-2">lat_lon <span class="ot" style="color: #003B4F;">&lt;-</span> my_acts <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-3">  <span class="fu" style="color: #4758AB;">filter</span>(<span class="sc" style="color: #5E5E5E;">!</span><span class="fu" style="color: #4758AB;">is.na</span>(map.summary_polyline)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-4">  <span class="fu" style="color: #4758AB;">filter</span>(type <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'Ride'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-5">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">key =</span> GoogleAPI) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-6">  <span class="fu" style="color: #4758AB;">group_by</span>(activity_no) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-7">  <span class="fu" style="color: #4758AB;">nest</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-8">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">coords =</span> <span class="fu" style="color: #4758AB;">map</span>(data, <span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">get_latlon</span>(.<span class="sc" style="color: #5E5E5E;">$</span>map.summary_polyline, <span class="at" style="color: #657422;">key =</span> .<span class="sc" style="color: #5E5E5E;">$</span>key)),</span>
+<span id="cb7-9">         <span class="at" style="color: #657422;">dist =</span> <span class="fu" style="color: #4758AB;">map</span>(coords, <span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">get_dists</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>lon, .x<span class="sc" style="color: #5E5E5E;">$</span>lat))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-10">  <span class="fu" style="color: #4758AB;">unnest</span>(., data) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-11">  <span class="fu" style="color: #4758AB;">unnest</span>(., <span class="fu" style="color: #4758AB;">c</span>(coords, dist))</span></code></pre></div>
+</div>
+<p>Having got the latitude and longitude for every ride, we can now get the elevation of each point and then calculate the gradient between points. To do this I use <code>elevation()</code> in the R package <strong>rgbif</strong>. To use this, you need to get a GeoNames username by registering for an account at <a href="http://www.geonames.org/login">http://www.geonames.org/login</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;"># get elevation and calculate gradient between points</span></span>
+<span id="cb8-2">lat_lon <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ungroup</span>(lat_lon) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-3">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="at" style="color: #657422;">ele =</span> rgbif<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">elevation</span>(<span class="at" style="color: #657422;">latitude =</span> .<span class="sc" style="color: #5E5E5E;">$</span>lat, <span class="at" style="color: #657422;">longitude =</span> .<span class="sc" style="color: #5E5E5E;">$</span>lon, <span class="at" style="color: #657422;">user =</span> <span class="st" style="color: #20794D;">'YOUR USERNAME HERE'</span>, <span class="at" style="color: #657422;">model =</span> <span class="st" style="color: #20794D;">'srtm1'</span>)<span class="sc" style="color: #5E5E5E;">$</span>elevation_geonames)</span>
+<span id="cb8-4"></span>
+<span id="cb8-5">lat_lon <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">group_by</span>(lat_lon, activity_no) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-6">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="at" style="color: #657422;">ele_diff =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="fu" style="color: #4758AB;">diff</span>(ele)),</span>
+<span id="cb8-7">         <span class="at" style="color: #657422;">dist_diff =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="fu" style="color: #4758AB;">diff</span>(dist)),</span>
+<span id="cb8-8">         <span class="at" style="color: #657422;">grad =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>, (ele_diff[<span class="dv" style="color: #AD0000;">2</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>()]<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">10</span>)<span class="sc" style="color: #5E5E5E;">/</span>dist_diff[<span class="dv" style="color: #AD0000;">2</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>()])) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-9">  <span class="fu" style="color: #4758AB;">ungroup</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb8-10">  dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(., <span class="sc" style="color: #5E5E5E;">-</span><span class="fu" style="color: #4758AB;">c</span>(ele_diff, dist_diff))</span></code></pre></div>
+</div>
+<div class="cell">
+
+</div>
+<p>This now gives us a data frame of all my rides from 2020 with the latitude, longitude, cumulative distance, elevation and gradient. It would now be super easy to create elevation profiles, but I will save that for another post.</p>
+</section>
+<section id="create-a-gif-of-a-single-ride" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-gif-of-a-single-ride">Create a gif of a single ride</h2>
+<p>We now have almost all the components to create a gif of a single ride.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">lat_lon_single <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(lat_lon, activity_no <span class="sc" style="color: #5E5E5E;">==</span> <span class="fu" style="color: #4758AB;">min</span>(activity_no))</span>
+<span id="cb9-2"><span class="fu" style="color: #4758AB;">nrow</span>(lat_lon_single)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 343</code></pre>
+</div>
+</div>
+<p>However, Google polylines do not give a consistent number of latitude and longitude points. This means it might be hard to get a smooth elevation profile for the ride and also for smooth transitions in a gif. To create a set number of points from the current polyline, we can use geospatial packages such as <strong>sp</strong> and <strong>raster</strong> to interpolate a desired number of points from the current ones. Here I create 250 points.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="co" style="color: #5E5E5E;"># reorder columns so lat lon are first</span></span>
+<span id="cb11-2">lat_lon_single <span class="ot" style="color: #003B4F;">&lt;-</span> dplyr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">select</span>(lat_lon_single, lat, lon, <span class="fu" style="color: #4758AB;">everything</span>())</span>
+<span id="cb11-3"></span>
+<span id="cb11-4"><span class="co" style="color: #5E5E5E;"># make new data with by interpolation</span></span>
+<span id="cb11-5">interp <span class="ot" style="color: #003B4F;">&lt;-</span> raster<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">spLines</span>(<span class="fu" style="color: #4758AB;">as.matrix</span>(lat_lon_single[,<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">2</span>])) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-6">  sp<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">spsample</span>(., <span class="at" style="color: #657422;">n =</span> <span class="dv" style="color: #AD0000;">250</span>, <span class="at" style="color: #657422;">type =</span> <span class="st" style="color: #20794D;">'regular'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-7">  <span class="fu" style="color: #4758AB;">data.frame</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-8">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="at" style="color: #657422;">dist =</span> <span class="fu" style="color: #4758AB;">get_dists</span>(lon, lat),</span>
+<span id="cb11-9">         <span class="at" style="color: #657422;">ele =</span> rgbif<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">elevation</span>(<span class="at" style="color: #657422;">latitude =</span> .<span class="sc" style="color: #5E5E5E;">$</span>lat, <span class="at" style="color: #657422;">longitude =</span> .<span class="sc" style="color: #5E5E5E;">$</span>lon, <span class="at" style="color: #657422;">user =</span> <span class="st" style="color: #20794D;">'padpadpadpad'</span>, <span class="at" style="color: #657422;">model =</span> <span class="st" style="color: #20794D;">'srtm1'</span>)<span class="sc" style="color: #5E5E5E;">$</span>elevation_geoname,</span>
+<span id="cb11-10">         <span class="at" style="color: #657422;">ele_diff =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="fu" style="color: #4758AB;">diff</span>(ele)),</span>
+<span id="cb11-11">         <span class="at" style="color: #657422;">dist_diff =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>, <span class="fu" style="color: #4758AB;">diff</span>(dist)),</span>
+<span id="cb11-12">         <span class="at" style="color: #657422;">grad =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">0</span>, (ele_diff[<span class="dv" style="color: #AD0000;">2</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>()]<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">10</span>)<span class="sc" style="color: #5E5E5E;">/</span>dist_diff[<span class="dv" style="color: #AD0000;">2</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>()]),</span>
+<span id="cb11-13">         <span class="at" style="color: #657422;">n =</span> <span class="fu" style="color: #4758AB;">row_number</span>())</span></code></pre></div>
+</div>
+<p>We can now put the gif together, using <strong>ggmap</strong> and <strong>ggplot2</strong>. We use <strong>gganimate</strong> to make the plot animated.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="co" style="color: #5E5E5E;"># make bbox</span></span>
+<span id="cb12-2">bbox <span class="ot" style="color: #003B4F;">&lt;-</span> ggmap<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">make_bbox</span>(lon, lat, <span class="at" style="color: #657422;">data =</span> lat_lon_single, <span class="at" style="color: #657422;">f =</span> <span class="fl" style="color: #AD0000;">1.3</span>)</span>
+<span id="cb12-3"></span>
+<span id="cb12-4"><span class="co" style="color: #5E5E5E;"># download map</span></span>
+<span id="cb12-5">map <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">get_map</span>(<span class="at" style="color: #657422;">location =</span> bbox, <span class="at" style="color: #657422;">source =</span> <span class="st" style="color: #20794D;">'google'</span>, <span class="at" style="color: #657422;">maptype =</span> <span class="st" style="color: #20794D;">'terrain'</span>)</span>
+<span id="cb12-6"></span>
+<span id="cb12-7">single_ride <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggmap</span>(map, <span class="at" style="color: #657422;">darken =</span> <span class="fl" style="color: #AD0000;">0.15</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-8">  <span class="fu" style="color: #4758AB;">geom_path</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> lon, <span class="at" style="color: #657422;">y =</span> lat,  <span class="at" style="color: #657422;">col =</span> grad, <span class="at" style="color: #657422;">group =</span> <span class="dv" style="color: #AD0000;">1</span>), <span class="at" style="color: #657422;">data =</span> interp, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="dv" style="color: #AD0000;">1</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-9">  <span class="fu" style="color: #4758AB;">scale_color_distiller</span>(<span class="st" style="color: #20794D;">'Gradient (%)'</span>, <span class="at" style="color: #657422;">palette =</span> <span class="st" style="color: #20794D;">'Spectral'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-10">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">''</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-11">  <span class="fu" style="color: #4758AB;">coord_cartesian</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-12">  ggforce<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_no_axes</span>(<span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">16</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-13">  <span class="fu" style="color: #4758AB;">transition_reveal</span>(dist)</span>
+<span id="cb12-14"></span>
+<span id="cb12-15"><span class="co" style="color: #5E5E5E;"># animate plot</span></span>
+<span id="cb12-16">gganimate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">anim_save</span>(<span class="st" style="color: #20794D;">'where_to_save.gif'</span>, single_ride, <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">1000</span>, <span class="at" style="color: #657422;">height =</span> <span class="dv" style="color: #AD0000;">700</span>)</span></code></pre></div>
+</div>
+<p>The output of this code can be seen below.</p>
+<p><img src="https://padpadpadpad.netlify.app/posts/animate_rstrava/single_ride.gif" class="img-fluid"></p>
+</section>
+<section id="create-a-gif-of-all-the-rides" class="level2">
+<h2 class="anchored" data-anchor-id="create-a-gif-of-all-the-rides">Create a gif of ALL the rides</h2>
+<p>We can also make a gif of multiple activities. I will filter my activities to only be bike rides over 15km.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="co" style="color: #5E5E5E;"># get a bbox for Cornwall</span></span>
+<span id="cb13-2">bbox <span class="ot" style="color: #003B4F;">&lt;-</span> ggmap<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">make_bbox</span>(lat_lon_single<span class="sc" style="color: #5E5E5E;">$</span>lon, lat_lon_single<span class="sc" style="color: #5E5E5E;">$</span>lat, <span class="at" style="color: #657422;">f =</span> <span class="fl" style="color: #AD0000;">1.2</span>)</span>
+<span id="cb13-3"></span>
+<span id="cb13-4"><span class="co" style="color: #5E5E5E;"># add column for frame and total distance per ride</span></span>
+<span id="cb13-5">lat_lon <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">group_by</span>(lat_lon, activity_no) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-6">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">n =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>(),</span>
+<span id="cb13-7">         <span class="at" style="color: #657422;">tot_dist =</span> <span class="fu" style="color: #4758AB;">max</span>(distance)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-8">  <span class="fu" style="color: #4758AB;">ungroup</span>()</span>
+<span id="cb13-9"></span>
+<span id="cb13-10"><span class="co" style="color: #5E5E5E;"># filter lat_lon for when points are within this</span></span>
+<span id="cb13-11">lat_lon <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(lat_lon, <span class="fu" style="color: #4758AB;">between</span>(start_longitude, bbox[<span class="dv" style="color: #AD0000;">1</span>], bbox[<span class="dv" style="color: #AD0000;">3</span>]) <span class="sc" style="color: #5E5E5E;">&amp;</span> <span class="fu" style="color: #4758AB;">between</span>(start_latitude, bbox[<span class="dv" style="color: #AD0000;">2</span>], bbox[<span class="dv" style="color: #AD0000;">4</span>]) <span class="sc" style="color: #5E5E5E;">&amp;</span> type <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'Ride'</span> <span class="sc" style="color: #5E5E5E;">&amp;</span> tot_dist <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="dv" style="color: #AD0000;">15</span>)</span>
+<span id="cb13-12"></span>
+<span id="cb13-13"><span class="co" style="color: #5E5E5E;"># add column for frame</span></span>
+<span id="cb13-14">lat_lon <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">group_by</span>(lat_lon, activity_no) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-15">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">n =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>()) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-16">  <span class="fu" style="color: #4758AB;">ungroup</span>()</span>
+<span id="cb13-17"></span>
+<span id="cb13-18"><span class="co" style="color: #5E5E5E;"># make bbox again</span></span>
+<span id="cb13-19">bbox <span class="ot" style="color: #003B4F;">&lt;-</span> ggmap<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">make_bbox</span>(lon, lat, <span class="at" style="color: #657422;">data =</span> lat_lon, <span class="at" style="color: #657422;">f =</span> <span class="fl" style="color: #AD0000;">0.1</span>)</span>
+<span id="cb13-20"></span>
+<span id="cb13-21"><span class="co" style="color: #5E5E5E;"># download map</span></span>
+<span id="cb13-22">map <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">get_map</span>(<span class="at" style="color: #657422;">location =</span> bbox, <span class="at" style="color: #657422;">source =</span> <span class="st" style="color: #20794D;">'google'</span>, <span class="at" style="color: #657422;">maptype =</span> <span class="st" style="color: #20794D;">'terrain'</span>)</span>
+<span id="cb13-23"></span>
+<span id="cb13-24">all_the_rides <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggmap</span>(map, <span class="at" style="color: #657422;">darken =</span> <span class="fl" style="color: #AD0000;">0.15</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-25">  <span class="fu" style="color: #4758AB;">geom_path</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> lon, <span class="at" style="color: #657422;">y =</span> lat, <span class="at" style="color: #657422;">group =</span> activity_no), <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'red'</span>, <span class="at" style="color: #657422;">data =</span> lat_lon, <span class="at" style="color: #657422;">size =</span> <span class="fl" style="color: #AD0000;">1.25</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-26">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'All the rides'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-27">  <span class="fu" style="color: #4758AB;">coord_cartesian</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-28">  ggforce<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_no_axes</span>(<span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">16</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-29">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">'none'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-30">  <span class="fu" style="color: #4758AB;">transition_reveal</span>(n)</span>
+<span id="cb13-31"></span>
+<span id="cb13-32"><span class="co" style="color: #5E5E5E;"># animate plot</span></span>
+<span id="cb13-33">gganimate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">anim_save</span>(<span class="st" style="color: #20794D;">'where_to_save.gif'</span>, all_the_rides, <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">750</span>, <span class="at" style="color: #657422;">height =</span> <span class="dv" style="color: #AD0000;">700</span>)</span></code></pre></div>
+</div>
+<p><img src="https://padpadpadpad.netlify.app/posts/animate_rstrava/all_the_rides.gif" class="img-fluid"></p>
+<p>And there we have it. A relatively simple way to animate your strava activities in R. I personally find that saving the output as .mp4 rather than .gif gives smaller and higher quality files when uploading them to Instagram, but these options are easy to change. Take back your own data and get plotting!</p>
+<p>There are loads of other functions and uses for the <strong>rStrava</strong> package. I hope to blog more about them soon.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>strava</category>
+  <category>gganimate</category>
+  <guid>https://padpadpadpad.netlify.app/posts/animate_rstrava/index.html</guid>
+  <pubDate>Thu, 17 May 2018 23:00:00 GMT</pubDate>
+  <media:content url="https://padpadpadpad.netlify.app/posts/animate_rstrava/preview.png" medium="image" type="image/png" height="130" width="144"/>
+</item>
+<item>
+  <title>Bootstrap nls models in R</title>
+  <dc:creator>Daniel Padfield</dc:creator>
+  <link>https://padpadpadpad.netlify.app/posts/bootstrap_nls/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p><em>This post was updated to reflect the improvement of using car to bootstrap nonlinear regressions.</em></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>For my first academic publication, a reviewer asked for the <img src="https://latex.codecogs.com/png.latex?r%5E%7B2%7D"> values of the thermal performance curves I fitted using non-linear regression. I bowed to the request as is often the case with reviewer comments, but would now resist as the <img src="https://latex.codecogs.com/png.latex?r%5E%7B2%7D"> is not necessarily an effective goodness of fit measure for non-linear regression (see this <a href="https://stackoverflow.com/questions/14530770/calculating-r2-for-a-nonlinear-model">SO answer</a>). It does raise the question of how to determine how well a biologically meaningful model fits the data it is fitted to. I generally just plot every curve to its data, but it tells me nothing of the uncertainty around the curve.</p>
+<p>Step forward the bootstrap! (Non-parametric) bootstrapping is a robust way of computing parameter and model prediction confidence intervals. Bootstrapping involves simulating “new” datasets produced from either the original data (case resampling) or from the original model (residual resampling).</p>
+<p>The same model is then fitted separately on each individual bootstrapped dataset. Doing this over and over allows us to visualise uncertainty of predictions and produce confidence intervals of estimated parameters. When previously implementing this, I used methods similar to previous blog posts by <a href="https://rstudio-pubs-static.s3.amazonaws.com/19698_a4c472606e3c43e4b94720506e49bb7b.html">Andrew MacDonald</a> and <a href="https://github.com/tidyverse/dplyr/issues/269">Hadley Wickham</a>, as well as a <a href="https://cran.r-project.org/web/packages/broom/vignettes/bootstrapping.html">broom vignette</a>.</p>
+<p>However, I have since applied a more efficient method using the package <strong>car</strong>, which contains the function <code>Boot()</code> that provides a wrapper for the widely used function <code>boot::boot()</code> that is tailored to bootstrapping regression models.</p>
+</section>
+<section id="case-resampling-resampling-the-original-data-with-replacement" class="level2">
+<h2 class="anchored" data-anchor-id="case-resampling-resampling-the-original-data-with-replacement">Case resampling: Resampling the original data with replacement</h2>
+<p>Bootstrapping using case resampling involves simulating “new” datasets produced from the existing data by sampling with replacement.</p>
+<section id="case-resampling-when-it-works" class="level4">
+<h4 class="anchored" data-anchor-id="case-resampling-when-it-works">Case resampling: When it works</h4>
+<p>We will demonstrate an example of when this case resampling approach works using data from a recent paper by Padfield <em>et al.</em> (2020), that measures the thermal performance of the bacteria, <em>Pseudomonas fluorescens</em>, in the presence and absence of its phage, <img src="https://latex.codecogs.com/png.latex?%5Cphi%202">. In this study, each single growth rate estimate is a technical replicate. As such, all the data points within each phage treatment can be used to estimate the same curve. The data is in the R package <a href="https://padpadpadpad.github.io/rTPC/index.html"><strong>rTPC</strong></a> and we can visualise one of the curves using <strong>ggplot2</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># load packages</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(boot)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(car)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;">library</span>(rTPC) <span class="co" style="color: #5E5E5E;">#remotes::install_github('padpadpadpad/rTPC')</span></span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;">library</span>(nls.multstart)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;">library</span>(broom)</span>
+<span id="cb1-7"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span>
+<span id="cb1-8"><span class="fu" style="color: #4758AB;">library</span>(patchwork)</span>
+<span id="cb1-9"><span class="fu" style="color: #4758AB;">library</span>(minpack.lm)</span>
+<span id="cb1-10"></span>
+<span id="cb1-11"><span class="co" style="color: #5E5E5E;"># load in data</span></span>
+<span id="cb1-12"><span class="fu" style="color: #4758AB;">data</span>(<span class="st" style="color: #20794D;">"bacteria_tpc"</span>)</span>
+<span id="cb1-13"></span>
+<span id="cb1-14"><span class="co" style="color: #5E5E5E;"># keep just a single curve</span></span>
+<span id="cb1-15">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(bacteria_tpc, phage <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'nophage'</span>)</span>
+<span id="cb1-16"></span>
+<span id="cb1-17"><span class="co" style="color: #5E5E5E;"># show the data</span></span>
+<span id="cb1-18"><span class="fu" style="color: #4758AB;">ggplot</span>(d, <span class="fu" style="color: #4758AB;">aes</span>(temp, rate)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb1-19">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb1-20">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb1-21">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'Temperature (ºC)'</span>,</span>
+<span id="cb1-22">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'Growth rate'</span>,</span>
+<span id="cb1-23">       <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Growth rate across temperatures'</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/bootstrap_nls/index_files/figure-html/setup-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As in the study, we can fit the Sharpe-Schoolfield model to the data. I take advantage of the packages <strong>nls.mulstart</strong> and <strong>rTPC</strong> to do this.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># fit Sharpe-Schoolfield model</span></span>
+<span id="cb2-2">d_fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">nest</span>(d, <span class="at" style="color: #657422;">data =</span> <span class="fu" style="color: #4758AB;">c</span>(temp, rate)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb2-3">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">sharpeschoolhigh =</span> <span class="fu" style="color: #4758AB;">map</span>(data, <span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">nls_multstart</span>(rate<span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">sharpeschoolhigh_1981</span>(<span class="at" style="color: #657422;">temp =</span> temp, r_tref,e,eh,th, <span class="at" style="color: #657422;">tref =</span> <span class="dv" style="color: #AD0000;">15</span>),</span>
+<span id="cb2-4">                        <span class="at" style="color: #657422;">data =</span> .x,</span>
+<span id="cb2-5">                        <span class="at" style="color: #657422;">iter =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">3</span>,<span class="dv" style="color: #AD0000;">3</span>,<span class="dv" style="color: #AD0000;">3</span>,<span class="dv" style="color: #AD0000;">3</span>),</span>
+<span id="cb2-6">                        <span class="at" style="color: #657422;">start_lower =</span> <span class="fu" style="color: #4758AB;">get_start_vals</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp, .x<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>) <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">10</span>,</span>
+<span id="cb2-7">                        <span class="at" style="color: #657422;">start_upper =</span> <span class="fu" style="color: #4758AB;">get_start_vals</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp, .x<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">10</span>,</span>
+<span id="cb2-8">                        <span class="at" style="color: #657422;">lower =</span> <span class="fu" style="color: #4758AB;">get_lower_lims</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp, .x<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>),</span>
+<span id="cb2-9">                        <span class="at" style="color: #657422;">upper =</span> <span class="fu" style="color: #4758AB;">get_upper_lims</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp, .x<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>),</span>
+<span id="cb2-10">                        <span class="at" style="color: #657422;">supp_errors =</span> <span class="st" style="color: #20794D;">'Y'</span>,</span>
+<span id="cb2-11">                        <span class="at" style="color: #657422;">convergence_count =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)),</span>
+<span id="cb2-12">         <span class="co" style="color: #5E5E5E;"># create new temperature data</span></span>
+<span id="cb2-13">         <span class="at" style="color: #657422;">new_data =</span> <span class="fu" style="color: #4758AB;">map</span>(data, <span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">tibble</span>(<span class="at" style="color: #657422;">temp =</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="fu" style="color: #4758AB;">min</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="fu" style="color: #4758AB;">max</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="at" style="color: #657422;">length.out =</span> <span class="dv" style="color: #AD0000;">100</span>))),</span>
+<span id="cb2-14">         <span class="co" style="color: #5E5E5E;"># predict over that data,</span></span>
+<span id="cb2-15">         <span class="at" style="color: #657422;">preds =</span>  <span class="fu" style="color: #4758AB;">map2</span>(sharpeschoolhigh, new_data, <span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">augment</span>(.x, <span class="at" style="color: #657422;">newdata =</span> .y)))</span>
+<span id="cb2-16"></span>
+<span id="cb2-17"><span class="co" style="color: #5E5E5E;"># unnest predictions</span></span>
+<span id="cb2-18">d_preds <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">select</span>(d_fit, preds) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb2-19">  <span class="fu" style="color: #4758AB;">unnest</span>(preds)</span>
+<span id="cb2-20"></span>
+<span id="cb2-21"><span class="co" style="color: #5E5E5E;"># plot data and predictions</span></span>
+<span id="cb2-22"><span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb2-23">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, .fitted), d_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb2-24">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, rate), d, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb2-25">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb2-26">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'Temperature (ºC)'</span>,</span>
+<span id="cb2-27">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'Growth rate'</span>,</span>
+<span id="cb2-28">       <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Growth rate across temperatures'</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/bootstrap_nls/index_files/figure-html/fit_and_plot-1.png" class="img-fluid" width="576"></p>
+</div>
+</div>
+<p><code>nls_multstart()</code> is designed to fit models across a wide possible parameter space, but as it samples multiple start parameters for each model, using it with bootstrapping becomes computationally expensive. Instead, we refit the model using <strong>minpack.lm::nlsLM()</strong>, using the coefficients of <code>nls_multstart()</code> as the start values. The <strong>Boot()</strong> function then refits the model 999 times and stores the model coefficients.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;"># refit model using nlsLM</span></span>
+<span id="cb3-2">fit_nlsLM <span class="ot" style="color: #003B4F;">&lt;-</span> minpack.lm<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">nlsLM</span>(rate<span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">sharpeschoolhigh_1981</span>(<span class="at" style="color: #657422;">temp =</span> temp, r_tref,e,eh,th, <span class="at" style="color: #657422;">tref =</span> <span class="dv" style="color: #AD0000;">15</span>),</span>
+<span id="cb3-3">                        <span class="at" style="color: #657422;">data =</span> d,</span>
+<span id="cb3-4">                        <span class="at" style="color: #657422;">start =</span> <span class="fu" style="color: #4758AB;">coef</span>(d_fit<span class="sc" style="color: #5E5E5E;">$</span>sharpeschoolhigh[[<span class="dv" style="color: #AD0000;">1</span>]]),</span>
+<span id="cb3-5">                        <span class="at" style="color: #657422;">lower =</span> <span class="fu" style="color: #4758AB;">get_lower_lims</span>(d<span class="sc" style="color: #5E5E5E;">$</span>temp, d<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>),</span>
+<span id="cb3-6">                        <span class="at" style="color: #657422;">upper =</span> <span class="fu" style="color: #4758AB;">get_upper_lims</span>(d<span class="sc" style="color: #5E5E5E;">$</span>temp, d<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>),</span>
+<span id="cb3-7">                        <span class="at" style="color: #657422;">weights =</span> <span class="fu" style="color: #4758AB;">rep</span>(<span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">times =</span> <span class="fu" style="color: #4758AB;">nrow</span>(d)))</span>
+<span id="cb3-8"></span>
+<span id="cb3-9"><span class="co" style="color: #5E5E5E;"># bootstrap using case resampling</span></span>
+<span id="cb3-10">boot1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">Boot</span>(fit_nlsLM, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'case'</span>)</span>
+<span id="cb3-11"></span>
+<span id="cb3-12"><span class="co" style="color: #5E5E5E;"># look at the data</span></span>
+<span id="cb3-13"><span class="fu" style="color: #4758AB;">head</span>(boot1<span class="sc" style="color: #5E5E5E;">$</span>t)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>        r_tref         e       eh       th
+[1,] 0.2387067 0.9452492 2.367318 29.24874
+[2,] 0.2511824 0.7655751 2.547971 31.27085
+[3,] 0.3173423 0.7499641 2.081992 29.59478
+[4,] 0.2586626 0.7592931 2.564117 31.18532
+[5,] 0.2871170 0.6627851 2.483048 31.94504
+[6,] 0.2434468 0.8695365 2.432169 30.15619</code></pre>
+</div>
+</div>
+<p>The parameters of each bootstrapped refit are returned. All methods that are available for <code>boot()</code> and <code>Boot()</code> are supported for these objects. This includes the <code>hist.boot()</code> function which looks at the distribution of each parameter.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="fu" style="color: #4758AB;">hist</span>(boot1, <span class="at" style="color: #657422;">layout =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">2</span>,<span class="dv" style="color: #AD0000;">2</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/bootstrap_nls/index_files/figure-html/hist_boot-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>We can easily create predictions for each of these models and through this confidence intervals around the original fitted predictions. We can then plot (1) the bootstrapped fits and (2) the confidence regions around the model predictions.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;"># create predictions of each bootstrapped model</span></span>
+<span id="cb6-2">boot1_preds <span class="ot" style="color: #003B4F;">&lt;-</span> boot1<span class="sc" style="color: #5E5E5E;">$</span>t <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-3">  <span class="fu" style="color: #4758AB;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-4">  <span class="fu" style="color: #4758AB;">drop_na</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-5">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">iter =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>()) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-6">  <span class="fu" style="color: #4758AB;">group_by_all</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-7">  <span class="fu" style="color: #4758AB;">do</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">temp =</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="fu" style="color: #4758AB;">min</span>(d<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="fu" style="color: #4758AB;">max</span>(d<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="at" style="color: #657422;">length.out =</span> <span class="dv" style="color: #AD0000;">100</span>))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-8">  <span class="fu" style="color: #4758AB;">ungroup</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-9">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">pred =</span> <span class="fu" style="color: #4758AB;">sharpeschoolhigh_1981</span>(temp, r_tref, e, eh, th, <span class="at" style="color: #657422;">tref =</span> <span class="dv" style="color: #AD0000;">15</span>))</span>
+<span id="cb6-10"></span>
+<span id="cb6-11"><span class="co" style="color: #5E5E5E;"># calculate bootstrapped confidence intervals</span></span>
+<span id="cb6-12">boot1_conf_preds <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">group_by</span>(boot1_preds, temp) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb6-13">  <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">conf_lower =</span> <span class="fu" style="color: #4758AB;">quantile</span>(pred, <span class="fl" style="color: #AD0000;">0.025</span>),</span>
+<span id="cb6-14">            <span class="at" style="color: #657422;">conf_upper =</span> <span class="fu" style="color: #4758AB;">quantile</span>(pred, <span class="fl" style="color: #AD0000;">0.975</span>),</span>
+<span id="cb6-15">            <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)</span>
+<span id="cb6-16"></span>
+<span id="cb6-17"><span class="co" style="color: #5E5E5E;"># plot bootstrapped CIs</span></span>
+<span id="cb6-18">p1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-19">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, .fitted), d_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-20">  <span class="fu" style="color: #4758AB;">geom_ribbon</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, <span class="at" style="color: #657422;">ymin =</span> conf_lower, <span class="at" style="color: #657422;">ymax =</span> conf_upper), boot1_conf_preds, <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">'blue'</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-21">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, rate), d, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-22">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-23">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'Temperature (ºC)'</span>,</span>
+<span id="cb6-24">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'Growth rate'</span>,</span>
+<span id="cb6-25">       <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Growth rate across temperatures'</span>)</span>
+<span id="cb6-26"></span>
+<span id="cb6-27"><span class="co" style="color: #5E5E5E;"># plot bootstrapped predictions</span></span>
+<span id="cb6-28">p2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-29">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, .fitted), d_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-30">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, pred, <span class="at" style="color: #657422;">group =</span> iter), boot1_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.007</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-31">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, rate), d, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-32">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb6-33">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'Temperature (ºC)'</span>,</span>
+<span id="cb6-34">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'Growth rate'</span>,</span>
+<span id="cb6-35">       <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Growth rate across temperatures'</span>)</span>
+<span id="cb6-36"></span>
+<span id="cb6-37">p1 <span class="sc" style="color: #5E5E5E;">+</span> p2</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/bootstrap_nls/index_files/figure-html/plot_boots-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>This method works well here, because there are many points beyond the peak of the curve and multiple independent points at each temperature.</p>
+</section>
+<section id="case-resampling-when-it-struggles" class="level4">
+<h4 class="anchored" data-anchor-id="case-resampling-when-it-struggles">Case resampling: When it struggles</h4>
+<p>This method becomes more problematic when there is a small sample size and the coverage of temperature values beyond the optimum temperature is small. This means that many of the bootstrapped datasets will not have any points beyond the optimum, which is problematic for mathematical models that expect a unimodal shape. The effect of this can be seen by case resampling a curve from the <code>chlorella_tpc</code> dataset also in <strong>rTPC</strong>. Here we again fit the model using <code>nls_multstart()</code>, refit the model using <code>nlsLM()</code>, then bootstrap the model using <code>Boot()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># load in chlorella data</span></span>
+<span id="cb7-2"><span class="fu" style="color: #4758AB;">data</span>(<span class="st" style="color: #20794D;">'chlorella_tpc'</span>) </span>
+<span id="cb7-3"></span>
+<span id="cb7-4">d2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(chlorella_tpc, curve_id <span class="sc" style="color: #5E5E5E;">==</span> <span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb7-5"></span>
+<span id="cb7-6"><span class="co" style="color: #5E5E5E;"># fit Sharpe-Schoolfield model to raw data</span></span>
+<span id="cb7-7">d_fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">nest</span>(d2, <span class="at" style="color: #657422;">data =</span> <span class="fu" style="color: #4758AB;">c</span>(temp, rate)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-8">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">sharpeschoolhigh =</span> <span class="fu" style="color: #4758AB;">map</span>(data, <span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">nls_multstart</span>(rate<span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">sharpeschoolhigh_1981</span>(<span class="at" style="color: #657422;">temp =</span> temp, r_tref,e,eh,th, <span class="at" style="color: #657422;">tref =</span> <span class="dv" style="color: #AD0000;">15</span>),</span>
+<span id="cb7-9">                        <span class="at" style="color: #657422;">data =</span> .x,</span>
+<span id="cb7-10">                        <span class="at" style="color: #657422;">iter =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="dv" style="color: #AD0000;">3</span>,<span class="dv" style="color: #AD0000;">3</span>,<span class="dv" style="color: #AD0000;">3</span>,<span class="dv" style="color: #AD0000;">3</span>),</span>
+<span id="cb7-11">                        <span class="at" style="color: #657422;">start_lower =</span> <span class="fu" style="color: #4758AB;">get_start_vals</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp, .x<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>) <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">10</span>,</span>
+<span id="cb7-12">                        <span class="at" style="color: #657422;">start_upper =</span> <span class="fu" style="color: #4758AB;">get_start_vals</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp, .x<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>) <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">10</span>,</span>
+<span id="cb7-13">                        <span class="at" style="color: #657422;">lower =</span> <span class="fu" style="color: #4758AB;">get_lower_lims</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp, .x<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>),</span>
+<span id="cb7-14">                        <span class="at" style="color: #657422;">upper =</span> <span class="fu" style="color: #4758AB;">get_upper_lims</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp, .x<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>),</span>
+<span id="cb7-15">                        <span class="at" style="color: #657422;">supp_errors =</span> <span class="st" style="color: #20794D;">'Y'</span>,</span>
+<span id="cb7-16">                        <span class="at" style="color: #657422;">convergence_count =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)),</span>
+<span id="cb7-17">         <span class="co" style="color: #5E5E5E;"># create new temperature data</span></span>
+<span id="cb7-18">         <span class="at" style="color: #657422;">new_data =</span> <span class="fu" style="color: #4758AB;">map</span>(data, <span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">tibble</span>(<span class="at" style="color: #657422;">temp =</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="fu" style="color: #4758AB;">min</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="fu" style="color: #4758AB;">max</span>(.x<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="at" style="color: #657422;">length.out =</span> <span class="dv" style="color: #AD0000;">100</span>))),</span>
+<span id="cb7-19">         <span class="co" style="color: #5E5E5E;"># predict over that data,</span></span>
+<span id="cb7-20">         <span class="at" style="color: #657422;">preds =</span>  <span class="fu" style="color: #4758AB;">map2</span>(sharpeschoolhigh, new_data, <span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">augment</span>(.x, <span class="at" style="color: #657422;">newdata =</span> .y)))</span>
+<span id="cb7-21"></span>
+<span id="cb7-22"><span class="co" style="color: #5E5E5E;"># refit model using nlsLM</span></span>
+<span id="cb7-23">fit_nlsLM2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">nlsLM</span>(rate<span class="sc" style="color: #5E5E5E;">~</span><span class="fu" style="color: #4758AB;">sharpeschoolhigh_1981</span>(<span class="at" style="color: #657422;">temp =</span> temp, r_tref,e,eh,th, <span class="at" style="color: #657422;">tref =</span> <span class="dv" style="color: #AD0000;">15</span>),</span>
+<span id="cb7-24">                        <span class="at" style="color: #657422;">data =</span> d2,</span>
+<span id="cb7-25">                        <span class="at" style="color: #657422;">start =</span> <span class="fu" style="color: #4758AB;">coef</span>(d_fit<span class="sc" style="color: #5E5E5E;">$</span>sharpeschoolhigh[[<span class="dv" style="color: #AD0000;">1</span>]]),</span>
+<span id="cb7-26">                        <span class="at" style="color: #657422;">lower =</span> <span class="fu" style="color: #4758AB;">get_lower_lims</span>(d2<span class="sc" style="color: #5E5E5E;">$</span>temp, d2<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>),</span>
+<span id="cb7-27">                        <span class="at" style="color: #657422;">upper =</span> <span class="fu" style="color: #4758AB;">get_upper_lims</span>(d2<span class="sc" style="color: #5E5E5E;">$</span>temp, d2<span class="sc" style="color: #5E5E5E;">$</span>rate, <span class="at" style="color: #657422;">model_name =</span> <span class="st" style="color: #20794D;">'sharpeschoolhigh_1981'</span>),</span>
+<span id="cb7-28">                        <span class="at" style="color: #657422;">control =</span> <span class="fu" style="color: #4758AB;">nls.lm.control</span>(<span class="at" style="color: #657422;">maxiter=</span><span class="dv" style="color: #AD0000;">500</span>),</span>
+<span id="cb7-29">                        <span class="at" style="color: #657422;">weights =</span> <span class="fu" style="color: #4758AB;">rep</span>(<span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">times =</span> <span class="fu" style="color: #4758AB;">nrow</span>(d2)))</span>
+<span id="cb7-30"></span>
+<span id="cb7-31"><span class="co" style="color: #5E5E5E;"># bootstrap using case resampling</span></span>
+<span id="cb7-32">boot2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">Boot</span>(fit_nlsLM2, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'case'</span>)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Number of bootstraps was 995 out of 999 attempted </code></pre>
+</div>
+</div>
+<p>We can then create predictions for each bootstrapped model and calculate 95% confidence intervals around the predictions. Models that don’t fit and return <code>NA</code> for the parameter estimates are dropped.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><span class="co" style="color: #5E5E5E;"># unnest predictions of original model fit</span></span>
+<span id="cb9-2">d_preds <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">select</span>(d_fit, preds) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-3">  <span class="fu" style="color: #4758AB;">unnest</span>(preds)</span>
+<span id="cb9-4"></span>
+<span id="cb9-5"><span class="co" style="color: #5E5E5E;"># predict over new data</span></span>
+<span id="cb9-6">boot2_preds <span class="ot" style="color: #003B4F;">&lt;-</span> boot2<span class="sc" style="color: #5E5E5E;">$</span>t <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-7">  <span class="fu" style="color: #4758AB;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-8">  <span class="fu" style="color: #4758AB;">drop_na</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-9">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">iter =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>()) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-10">  <span class="fu" style="color: #4758AB;">group_by_all</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-11">  <span class="fu" style="color: #4758AB;">do</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">temp =</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="fu" style="color: #4758AB;">min</span>(d2<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="fu" style="color: #4758AB;">max</span>(d2<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="at" style="color: #657422;">length.out =</span> <span class="dv" style="color: #AD0000;">100</span>))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-12">  <span class="fu" style="color: #4758AB;">ungroup</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-13">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">pred =</span> <span class="fu" style="color: #4758AB;">sharpeschoolhigh_1981</span>(temp, r_tref, e, eh, th, <span class="at" style="color: #657422;">tref =</span> <span class="dv" style="color: #AD0000;">15</span>))</span>
+<span id="cb9-14"></span>
+<span id="cb9-15"><span class="co" style="color: #5E5E5E;"># calculate bootstrapped confidence intervals</span></span>
+<span id="cb9-16">boot2_conf_preds <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">group_by</span>(boot2_preds, temp) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb9-17">  <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">conf_lower =</span> <span class="fu" style="color: #4758AB;">quantile</span>(pred, <span class="fl" style="color: #AD0000;">0.025</span>),</span>
+<span id="cb9-18">            <span class="at" style="color: #657422;">conf_upper =</span> <span class="fu" style="color: #4758AB;">quantile</span>(pred, <span class="fl" style="color: #AD0000;">0.975</span>),</span>
+<span id="cb9-19">            <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)</span>
+<span id="cb9-20"></span>
+<span id="cb9-21"><span class="co" style="color: #5E5E5E;"># plot bootstrapped CIs</span></span>
+<span id="cb9-22">p1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-23">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, .fitted), d_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-24">  <span class="fu" style="color: #4758AB;">geom_ribbon</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, <span class="at" style="color: #657422;">ymin =</span> conf_lower, <span class="at" style="color: #657422;">ymax =</span> conf_upper), boot2_conf_preds, <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">'blue'</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-25">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, rate), d2, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-26">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-27">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'Temperature (ºC)'</span>,</span>
+<span id="cb9-28">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'Growth rate'</span>,</span>
+<span id="cb9-29">       <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Growth rate across temperatures'</span>)</span>
+<span id="cb9-30"></span>
+<span id="cb9-31"><span class="co" style="color: #5E5E5E;"># plot bootstrapped predictions</span></span>
+<span id="cb9-32">p2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-33">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, .fitted), d_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-34">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, pred, <span class="at" style="color: #657422;">group =</span> iter), boot2_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.007</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-35">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, rate), d2, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-36">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb9-37">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'Temperature (ºC)'</span>,</span>
+<span id="cb9-38">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'Growth rate'</span>,</span>
+<span id="cb9-39">       <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Growth rate across temperatures'</span>)</span>
+<span id="cb9-40"></span>
+<span id="cb9-41">p1 <span class="sc" style="color: #5E5E5E;">+</span> p2</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/bootstrap_nls/index_files/figure-html/bootstrap_case2_plot-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+<p>As can be seen, bootstrapping-with-replacement with only a single point at each temperature can lead to a large variety of fits. In the second panel, we can see the variation of the curve fits, clustering around 4 possible paths for the decrease in rate beyond the optimum temperature. This occurs because in many instances there are no points sampled at the very high temperatures, leading to this clustering in curve fits.</p>
+</section>
+</section>
+<section id="residual-resampling" class="level2">
+<h2 class="anchored" data-anchor-id="residual-resampling">Residual resampling</h2>
+<p>Case resampling is the most common way of thinking about bootstrapping. However, bootstrapping ordinary least squares regression models is often done using bootstrapping residuals. This method - where the values of the predictors in a study remain fixed during resampling - is especially useful in a designed experiment where the values of the predictors are set by the experimenter.</p>
+<p>Re-sampling residuals, at its heart, follows a simple set of steps:</p>
+<ol type="1">
+<li>Fit the model and for each data point, <img src="https://latex.codecogs.com/png.latex?i">, retain the fitted values <img src="https://latex.codecogs.com/png.latex?%5Chat%7By_%7Bi%7D%7D"> and the residuals, <img src="https://latex.codecogs.com/png.latex?%5Chat%7Be_%7Bi%7D%7D%20=%20y_%7Bi%7D%20-%20%5Chat%7By_%7Bi%7D%7D"></li>
+<li>For each data pair, (<img src="https://latex.codecogs.com/png.latex?x_i">, <img src="https://latex.codecogs.com/png.latex?y_i">), where <img src="https://latex.codecogs.com/png.latex?x_i"> is the measured temperature value, we add a randomly re-sampled residual, <img src="https://latex.codecogs.com/png.latex?%5Chat%7Be%7D"> to the fitted value <img src="https://latex.codecogs.com/png.latex?%5Chat%7By_i%7D">. This becomes the new <img src="https://latex.codecogs.com/png.latex?y_i"> value, such that <img src="https://latex.codecogs.com/png.latex?y_i%20=%20%5Chat%7By_i%7D%20+%20%5Chat%7Be%7D">. The new response variable is created based on the random re-allocation of the variation around the original model fit</li>
+<li>The model is refit using the newly created <img src="https://latex.codecogs.com/png.latex?y_i"> response variable</li>
+<li>Repeat steps 2 and 3 a number of times</li>
+</ol>
+<p>This method makes the assumption that the original model fit is a good representation of the data, and that the error terms in the model are normally distributed and independent. If the model is incorrectly specified – for example, if there is unmodelled non-linearity, non-constant error variance, or outliers – these characteristics will not carry over into the re-sampled data sets.</p>
+<p><strong>car::Boot()</strong> has an argument that allows us to easily implement residual resampling instead of case resampling, by setting <code>method = 'residual'</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="co" style="color: #5E5E5E;"># bootstrap using residual resampling</span></span>
+<span id="cb10-2">boot3 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">Boot</span>(fit_nlsLM2, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'residual'</span>)</span>
+<span id="cb10-3"></span>
+<span id="cb10-4"><span class="co" style="color: #5E5E5E;"># predict over new data</span></span>
+<span id="cb10-5">boot3_preds <span class="ot" style="color: #003B4F;">&lt;-</span> boot3<span class="sc" style="color: #5E5E5E;">$</span>t <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-6">  <span class="fu" style="color: #4758AB;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-7">  <span class="fu" style="color: #4758AB;">drop_na</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-8">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">iter =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="fu" style="color: #4758AB;">n</span>()) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-9">  <span class="fu" style="color: #4758AB;">group_by_all</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-10">  <span class="fu" style="color: #4758AB;">do</span>(<span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">temp =</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="fu" style="color: #4758AB;">min</span>(d2<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="fu" style="color: #4758AB;">max</span>(d2<span class="sc" style="color: #5E5E5E;">$</span>temp), <span class="at" style="color: #657422;">length.out =</span> <span class="dv" style="color: #AD0000;">100</span>))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-11">  <span class="fu" style="color: #4758AB;">ungroup</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-12">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">pred =</span> <span class="fu" style="color: #4758AB;">sharpeschoolhigh_1981</span>(temp, r_tref, e, eh, th, <span class="at" style="color: #657422;">tref =</span> <span class="dv" style="color: #AD0000;">15</span>))</span>
+<span id="cb10-13"></span>
+<span id="cb10-14"><span class="co" style="color: #5E5E5E;"># calculate bootstrapped confidence intervals</span></span>
+<span id="cb10-15">boot3_conf_preds <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">group_by</span>(boot3_preds, temp) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb10-16">  <span class="fu" style="color: #4758AB;">summarise</span>(<span class="at" style="color: #657422;">conf_lower =</span> <span class="fu" style="color: #4758AB;">quantile</span>(pred, <span class="fl" style="color: #AD0000;">0.025</span>),</span>
+<span id="cb10-17">            <span class="at" style="color: #657422;">conf_upper =</span> <span class="fu" style="color: #4758AB;">quantile</span>(pred, <span class="fl" style="color: #AD0000;">0.975</span>),</span>
+<span id="cb10-18">            <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)</span>
+<span id="cb10-19"></span>
+<span id="cb10-20"><span class="co" style="color: #5E5E5E;"># plot bootstrapped CIs</span></span>
+<span id="cb10-21">p1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-22">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, .fitted), d_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-23">  <span class="fu" style="color: #4758AB;">geom_ribbon</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, <span class="at" style="color: #657422;">ymin =</span> conf_lower, <span class="at" style="color: #657422;">ymax =</span> conf_upper), boot3_conf_preds, <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">'blue'</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.3</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-24">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, rate), d2, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-25">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-26">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'Temperature (ºC)'</span>,</span>
+<span id="cb10-27">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'Growth rate'</span>,</span>
+<span id="cb10-28">       <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Growth rate across temperatures'</span>)</span>
+<span id="cb10-29"></span>
+<span id="cb10-30"><span class="co" style="color: #5E5E5E;"># plot bootstrapped predictions</span></span>
+<span id="cb10-31">p2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-32">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, .fitted), d_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-33">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, pred, <span class="at" style="color: #657422;">group =</span> iter), boot3_preds, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'blue'</span>, <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.007</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-34">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(temp, rate), d2, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-35">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb10-36">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">x =</span> <span class="st" style="color: #20794D;">'Temperature (ºC)'</span>,</span>
+<span id="cb10-37">       <span class="at" style="color: #657422;">y =</span> <span class="st" style="color: #20794D;">'Growth rate'</span>,</span>
+<span id="cb10-38">       <span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Growth rate across temperatures'</span>)</span>
+<span id="cb10-39"></span>
+<span id="cb10-40">p1 <span class="sc" style="color: #5E5E5E;">+</span> p2</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/bootstrap_nls/index_files/figure-html/residual_resample_data-1.png" class="img-fluid" width="768"></p>
+</div>
+</div>
+</section>
+<section id="calculating-confidence-intervals-of-estimated-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="calculating-confidence-intervals-of-estimated-parameters">Calculating confidence intervals of estimated parameters</h2>
+<p>Bootstrapping can be used to estimate confidence intervals of the parameters explicitly modelled in the regression. We can compare these approaches to profiled confidence intervals (using <strong>confint-MASS</strong>) and asymptotic confidence intervals (using <strong>nlstools::confint2()</strong>). For the bootstrapped parameter distributions, <strong>confint.boot()</strong> supports the calculation of BCa, basic, normal, and percentile confidence intervals. We use BCa here, and we will calculate all CIs on the two models done previously in this vignette. First with the bacteria TPC.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><span class="co" style="color: #5E5E5E;"># First for the bacteria</span></span>
+<span id="cb11-2"></span>
+<span id="cb11-3"><span class="co" style="color: #5E5E5E;"># get parameters of fitted model</span></span>
+<span id="cb11-4">param_bact <span class="ot" style="color: #003B4F;">&lt;-</span> broom<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">tidy</span>(fit_nlsLM) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-5">  <span class="fu" style="color: #4758AB;">select</span>(<span class="at" style="color: #657422;">param =</span> term, estimate)</span>
+<span id="cb11-6"></span>
+<span id="cb11-7"><span class="co" style="color: #5E5E5E;"># calculate confidence intervals of models</span></span>
+<span id="cb11-8">ci_bact1 <span class="ot" style="color: #003B4F;">&lt;-</span> nlstools<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">confint2</span>(fit_nlsLM, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'asymptotic'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-9">  <span class="fu" style="color: #4758AB;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-10">  <span class="fu" style="color: #4758AB;">rename</span>(<span class="at" style="color: #657422;">conf_lower =</span> <span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">conf_upper =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-11">  <span class="fu" style="color: #4758AB;">rownames_to_column</span>(., <span class="at" style="color: #657422;">var =</span> <span class="st" style="color: #20794D;">'param'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-12">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'asymptotic'</span>)</span>
+<span id="cb11-13">ci_bact2 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">confint</span>(fit_nlsLM) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-14">  <span class="fu" style="color: #4758AB;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-15">  <span class="fu" style="color: #4758AB;">rename</span>(<span class="at" style="color: #657422;">conf_lower =</span> <span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">conf_upper =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-16">  <span class="fu" style="color: #4758AB;">rownames_to_column</span>(., <span class="at" style="color: #657422;">var =</span> <span class="st" style="color: #20794D;">'param'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-17">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'profile'</span>)</span>
+<span id="cb11-18"></span>
+<span id="cb11-19"><span class="co" style="color: #5E5E5E;"># CIs from case resampling</span></span>
+<span id="cb11-20">ci_bact3 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">confint</span>(boot1, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'bca'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-21">  <span class="fu" style="color: #4758AB;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-22">  <span class="fu" style="color: #4758AB;">rename</span>(<span class="at" style="color: #657422;">conf_lower =</span> <span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">conf_upper =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-23">  <span class="fu" style="color: #4758AB;">rownames_to_column</span>(., <span class="at" style="color: #657422;">var =</span> <span class="st" style="color: #20794D;">'param'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-24">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'case bootstrap'</span>)</span>
+<span id="cb11-25"></span>
+<span id="cb11-26"><span class="co" style="color: #5E5E5E;"># CIs from residual resampling</span></span>
+<span id="cb11-27">ci_bact4 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">Boot</span>(fit_nlsLM, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'residual'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-28">  <span class="fu" style="color: #4758AB;">confint</span>(., <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'bca'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-29">  <span class="fu" style="color: #4758AB;">as.data.frame</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-30">  <span class="fu" style="color: #4758AB;">rename</span>(<span class="at" style="color: #657422;">conf_lower =</span> <span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">conf_upper =</span> <span class="dv" style="color: #AD0000;">2</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-31">  <span class="fu" style="color: #4758AB;">rownames_to_column</span>(., <span class="at" style="color: #657422;">var =</span> <span class="st" style="color: #20794D;">'param'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-32">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'residual bootstrap'</span>)</span>
+<span id="cb11-33"></span>
+<span id="cb11-34">ci_bact <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">bind_rows</span>(ci_bact1, ci_bact2, ci_bact3, ci_bact4) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb11-35">  <span class="fu" style="color: #4758AB;">left_join</span>(., param_bact)</span>
+<span id="cb11-36"></span>
+<span id="cb11-37"><span class="co" style="color: #5E5E5E;"># plot</span></span>
+<span id="cb11-38"><span class="fu" style="color: #4758AB;">ggplot</span>(ci_bact, <span class="fu" style="color: #4758AB;">aes</span>(forcats<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">fct_relevel</span>(method, <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'profile'</span>, <span class="st" style="color: #20794D;">'asymptotic'</span>)), estimate, <span class="at" style="color: #657422;">col =</span> method)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb11-39">  <span class="fu" style="color: #4758AB;">geom_hline</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">yintercept =</span> conf_lower), <span class="at" style="color: #657422;">linetype =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="fu" style="color: #4758AB;">filter</span>(ci_bact, method <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'profile'</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb11-40">  <span class="fu" style="color: #4758AB;">geom_hline</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">yintercept =</span> conf_upper), <span class="at" style="color: #657422;">linetype =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="fu" style="color: #4758AB;">filter</span>(ci_bact, method <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'profile'</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb11-41">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">4</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb11-42">  <span class="fu" style="color: #4758AB;">geom_linerange</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">ymin =</span> conf_lower, <span class="at" style="color: #657422;">ymax =</span> conf_upper)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb11-43">  <span class="fu" style="color: #4758AB;">theme_bw</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb11-44">  <span class="fu" style="color: #4758AB;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;">~</span>param, <span class="at" style="color: #657422;">scales =</span> <span class="st" style="color: #20794D;">'free'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb11-45">  <span class="fu" style="color: #4758AB;">scale_x_discrete</span>(<span class="st" style="color: #20794D;">''</span>, <span class="at" style="color: #657422;">labels =</span> <span class="cf" style="color: #003B4F;">function</span>(x) stringr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">str_wrap</span>(x, <span class="at" style="color: #657422;">width =</span> <span class="dv" style="color: #AD0000;">10</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb11-46">  <span class="fu" style="color: #4758AB;">labs</span>(<span class="at" style="color: #657422;">title =</span> <span class="st" style="color: #20794D;">'Calculation of confidence intervals for model parameters'</span>,</span>
+<span id="cb11-47">       <span class="at" style="color: #657422;">subtitle =</span> <span class="st" style="color: #20794D;">'For the bacteria TPC; dashed lines are CI of profiling method'</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/bootstrap_nls/index_files/figure-html/confint_bact-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Each panel is a different explicitly modelled parameter. The dashed lines represent the 95% intervals for the profiling method. In general, the different bootstrap methods are similar to the profiled intervals, but not all parameters are the same. For example, <code>r_tref</code> and <code>e</code> give wider (and asymmetric) confidence intervals using the case resampling method. The residual method gives estimates that are more similar to those calculated from profiling.</p>
+</section>
+<section id="calculate-confidence-intervals-of-generated-parameters" class="level2">
+<h2 class="anchored" data-anchor-id="calculate-confidence-intervals-of-generated-parameters">Calculate confidence intervals of generated parameters</h2>
+<p>Crucially, bootstrapping allows the calculation of confidence intervals for parameters derived from the model that were not present in the initial fitting process. For example, the optimum temperature of a thermal performance curve, <img src="https://latex.codecogs.com/png.latex?T_%7Bopt%7D"> is calculated as:</p>
+<p><img src="https://latex.codecogs.com/png.latex?T_%7Bopt%7D%20=%20%5Cfrac%7BE_%7Bh%7DT_%7Bh%7D%7D%7BE_%7Bh%7D%20+%20k%20T_%7Bh%7D%20ln(%5Cfrac%7BE_%7Bh%7D%7D%7BE%7D%20-%201)%7D"> We can calculate <img src="https://latex.codecogs.com/png.latex?T_%7Bopt%7D"> by writing a custom function that we feed into <code>Boot()</code>. We will do this using the case resampling approach for the first curve in this blog post.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">get_topt <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(model){</span>
+<span id="cb12-2">  coefs <span class="ot" style="color: #003B4F;">=</span> <span class="fu" style="color: #4758AB;">coef</span>(model)</span>
+<span id="cb12-3">  </span>
+<span id="cb12-4">  e <span class="ot" style="color: #003B4F;">=</span> coefs[<span class="fu" style="color: #4758AB;">names</span>(coefs) <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'e'</span>]</span>
+<span id="cb12-5">  eh <span class="ot" style="color: #003B4F;">=</span> coefs[<span class="fu" style="color: #4758AB;">names</span>(coefs) <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'eh'</span>]</span>
+<span id="cb12-6">  th <span class="ot" style="color: #003B4F;">=</span> coefs[<span class="fu" style="color: #4758AB;">names</span>(coefs) <span class="sc" style="color: #5E5E5E;">==</span> <span class="st" style="color: #20794D;">'th'</span>]</span>
+<span id="cb12-7">  </span>
+<span id="cb12-8">  <span class="fu" style="color: #4758AB;">return</span>(((eh<span class="sc" style="color: #5E5E5E;">*</span>(th <span class="sc" style="color: #5E5E5E;">+</span> <span class="fl" style="color: #AD0000;">273.15</span>))<span class="sc" style="color: #5E5E5E;">/</span>(eh <span class="sc" style="color: #5E5E5E;">+</span> (<span class="fl" style="color: #AD0000;">8.62e-05</span> <span class="sc" style="color: #5E5E5E;">*</span>(th <span class="sc" style="color: #5E5E5E;">+</span> <span class="fl" style="color: #AD0000;">273.15</span>)<span class="sc" style="color: #5E5E5E;">*</span><span class="fu" style="color: #4758AB;">log</span>((eh<span class="sc" style="color: #5E5E5E;">/</span>e) <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)))) <span class="sc" style="color: #5E5E5E;">-</span> <span class="fl" style="color: #AD0000;">273.15</span>)</span>
+<span id="cb12-9">}</span>
+<span id="cb12-10"></span>
+<span id="cb12-11">topt <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">Boot</span>(fit_nlsLM, <span class="at" style="color: #657422;">f =</span> <span class="cf" style="color: #003B4F;">function</span>(x){<span class="fu" style="color: #4758AB;">get_topt</span>(x)}, <span class="at" style="color: #657422;">labels =</span> <span class="st" style="color: #20794D;">'topt'</span>, <span class="at" style="color: #657422;">R =</span> <span class="dv" style="color: #AD0000;">999</span>, <span class="at" style="color: #657422;">method =</span> <span class="st" style="color: #20794D;">'case'</span>)</span>
+<span id="cb12-12"></span>
+<span id="cb12-13"><span class="fu" style="color: #4758AB;">hist</span>(topt, <span class="at" style="color: #657422;">legend =</span> <span class="st" style="color: #20794D;">'none'</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/bootstrap_nls/index_files/figure-html/ci_calc_param-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This approach of using <strong>purrr</strong>, <strong>nls.multstart</strong>, and <strong>car</strong> can easily be scaled up to multiple curves.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ul>
+<li>Padfield, D., Castledine, M., &amp; Buckling, A. (2020). Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host. The ISME Journal, 14(2), 389-398.</li>
+</ul>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>nonlinear regression</category>
+  <category>car</category>
+  <category>tidyverse</category>
+  <guid>https://padpadpadpad.netlify.app/posts/bootstrap_nls/index.html</guid>
+  <pubDate>Sun, 21 Jan 2018 00:00:00 GMT</pubDate>
+  <media:content url="https://padpadpadpad.netlify.app/posts/bootstrap_nls/preview.png" medium="image" type="image/png" height="108" width="144"/>
+</item>
+<item>
+  <title>Doing robust nls regression in R</title>
+  <dc:creator>Daniel Padfield</dc:creator>
+  <link>https://padpadpadpad.netlify.app/posts/nlsmultstart/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>With my research, I often use non-linear least squares regression to fit a model with biologically meaningful parameters to data. Specifically, I measure the thermal performance of phytoplankon growth, respiration and photosynthesis over a wide range of assay temperatures to see how the organisms are adapted to the temperatures they live at.</p>
+<p>These thermal performance curves generally follow a unimodal shape and parameters for which are widely used in climate change research to predict whether organisms will be able to cope with increasing temperatures.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://padpadpadpad.netlify.app/posts/nlsmultstart/TPC.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Example Thermal Performance Curve</figcaption><p></p>
+</figure>
+</div>
+<p>These curves can be modelled with a variety of equations, such as the Sharpe-Schoolfield equation, which I have log-transformed here:</p>
+<p><img src="https://latex.codecogs.com/png.latex?log(rate)%20=%20lnc%20+%20E(%5Cfrac%7B1%7D%7BT_%7Bc%7D%7D%20-%20%5Cfrac%7B1%7D%7BkT%7D)%20-%20ln(1%20+%20e%5E%7BE_h(%5Cfrac%7B1%7D%7BkT_h%7D%20-%20%5Cfrac%7B1%7D%7BkT%7D)%7D)"> where <img src="https://latex.codecogs.com/png.latex?lnc"> is a normalisation constant at a common temperature, <img src="https://latex.codecogs.com/png.latex?T_%7Bc%7D">, <img src="https://latex.codecogs.com/png.latex?E"> is an activation energy that describes the rate of increase before the optimum temperature, <img src="https://latex.codecogs.com/png.latex?T_%7Bopt%7D">. <img src="https://latex.codecogs.com/png.latex?k"> is Boltzmann’s constant, <img src="https://latex.codecogs.com/png.latex?E_%7Bh%7D"> is the deactivation energy that controls the decline in rate past the optimum temperature and <img src="https://latex.codecogs.com/png.latex?T_%7Bh%7D"> is the temperature where, after the optimu, the rate is half of the maximal rate.</p>
+<p>Say I want to fit the same equation to 10, 50, or 100s of these curves. I could loop through a call to <strong>nls()</strong>, <strong>nlsLM()</strong>, or use <strong>nlsList()</strong> from <strong>nlme</strong>. However, non-linear least squares regression in R is sensitive to the start parameters, meaning that different start parameters can give different “best estimated parameters”. This becomes more likely when fitting more curves with only a single set of start parameters, where the variation in estimated parameter values is likely to be much larger. For example, some curves could have much higher rates (<img src="https://latex.codecogs.com/png.latex?lnc">), higher optimum temperatures (i.e.&nbsp;<img src="https://latex.codecogs.com/png.latex?T_%7Bh%7D">) or have different values of temperature-dependence (<img src="https://latex.codecogs.com/png.latex?E">).</p>
+<p>To combat this, I wrote an R package which allows for multiple start parameters for non-linear regression. I wrapped this method in an R package called <a href="https://github.com/padpadpadpad/nlsLoop"><strong>nlsLoop</strong></a> and submitted it to The Journal of Open Source Software. Everything was good with the world and I went to a Christmas party.</p>
+<p>The next day, I had an epiphany surrounding the redundancies and needless complexities of my R package, withdrew my submission and rewrote the entire package in a weekend to give rise to a single function package, <strong>nls.multstart::nls_multstart()</strong>. Essentially since I first wrote <strong>nlsLoop</strong> ~3 years ago I have realised that <strong>broom</strong> and <strong>purrr</strong> can do what I wrote clunkier functions to achieve. In contrast, <a href="https://github.com/padpadpadpad/nls.multstart"><strong>nls.multstart</strong></a> works perfectly with the tools of the <strong>tidyverse</strong> to fit multiple models.</p>
+</section>
+<section id="multiple-model-fitting-in-practice" class="level2">
+<h2 class="anchored" data-anchor-id="multiple-model-fitting-in-practice">Multiple model fitting in practice</h2>
+<p>Load in all packages that are used in this analysis. Packages can be installed from GitHub using <strong>devtools</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># load packages</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(nls.multstart)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(ggplot2)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;">library</span>(broom)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;">library</span>(nlstools)</span></code></pre></div>
+</div>
+<p>We can then load in the data and have a look at it using <strong>glimpse()</strong>. Here we shall use a dataset of thermal performance curves of metabolism of <em>Chlorella vulgaris</em> from Padfield <em>et al.</em> 2016.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># load in example data set</span></span>
+<span id="cb2-2"><span class="fu" style="color: #4758AB;">data</span>(<span class="st" style="color: #20794D;">"Chlorella_TRC"</span>)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;">glimpse</span>(Chlorella_TRC)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 649
+Columns: 7
+$ curve_id    &lt;dbl&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2…
+$ growth.temp &lt;dbl&gt; 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20, 20…
+$ process     &lt;chr&gt; "acclimation", "acclimation", "acclimation", "acclimation"…
+$ flux        &lt;chr&gt; "respiration", "respiration", "respiration", "respiration"…
+$ temp        &lt;dbl&gt; 16, 19, 22, 25, 28, 31, 34, 37, 40, 43, 46, 49, 16, 19, 22…
+$ K           &lt;dbl&gt; 289.15, 292.15, 295.15, 298.15, 301.15, 304.15, 307.15, 31…
+$ ln.rate     &lt;dbl&gt; -2.06257833, -1.32437939, -0.95416807, -0.79443675, -0.182…</code></pre>
+</div>
+</div>
+<p>Next we define the Sharpe-Schoolfield equation discussed earlier.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;"># define the Sharpe-Schoolfield equation</span></span>
+<span id="cb4-2">schoolfield_high <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="cf" style="color: #003B4F;">function</span>(lnc, E, Eh, Th, temp, Tc) {</span>
+<span id="cb4-3">  Tc <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fl" style="color: #AD0000;">273.15</span> <span class="sc" style="color: #5E5E5E;">+</span> Tc</span>
+<span id="cb4-4">  k <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fl" style="color: #AD0000;">8.62e-5</span></span>
+<span id="cb4-5">  boltzmann.term <span class="ot" style="color: #003B4F;">&lt;-</span> lnc <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">log</span>(<span class="fu" style="color: #4758AB;">exp</span>(E<span class="sc" style="color: #5E5E5E;">/</span>k<span class="sc" style="color: #5E5E5E;">*</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span>Tc <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span>temp)))</span>
+<span id="cb4-6">  inactivation.term <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">log</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span>(<span class="dv" style="color: #AD0000;">1</span> <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">exp</span>(Eh<span class="sc" style="color: #5E5E5E;">/</span>k<span class="sc" style="color: #5E5E5E;">*</span>(<span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span>Th <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">/</span>temp))))</span>
+<span id="cb4-7">  <span class="fu" style="color: #4758AB;">return</span>(boltzmann.term <span class="sc" style="color: #5E5E5E;">+</span> inactivation.term)</span>
+<span id="cb4-8">  }</span></code></pre></div>
+</div>
+<p>There are 60 curves in this dataset, 30 each of photosynthesis and respiration. The treatments are growth temperature (20, 23, 27, 30, 33 ºC) and adaptive process (acclimation or adaptation) that reflects the number of generations cultures were grown at each temperature.</p>
+<p>We can see how <strong>nls_multstart()</strong> works by subsetting the data for a single curve.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><span class="co" style="color: #5E5E5E;"># subset dataset</span></span>
+<span id="cb5-2">d_1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">subset</span>(Chlorella_TRC, curve_id <span class="sc" style="color: #5E5E5E;">==</span> <span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb5-3"><span class="co" style="color: #5E5E5E;"># run nls_multstart</span></span>
+<span id="cb5-4">fit <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">nls_multstart</span>(ln.rate <span class="sc" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;">schoolfield_high</span>(lnc, E, Eh, Th, <span class="at" style="color: #657422;">temp =</span> K, <span class="at" style="color: #657422;">Tc =</span> <span class="dv" style="color: #AD0000;">20</span>),</span>
+<span id="cb5-5">                     <span class="at" style="color: #657422;">data =</span> d_1,</span>
+<span id="cb5-6">                     <span class="at" style="color: #657422;">iter =</span> <span class="dv" style="color: #AD0000;">500</span>,</span>
+<span id="cb5-7">                     <span class="at" style="color: #657422;">start_lower =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">lnc =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">E =</span> <span class="fl" style="color: #AD0000;">0.1</span>, <span class="at" style="color: #657422;">Eh =</span> <span class="fl" style="color: #AD0000;">0.2</span>, <span class="at" style="color: #657422;">Th =</span> <span class="dv" style="color: #AD0000;">285</span>),</span>
+<span id="cb5-8">                     <span class="at" style="color: #657422;">start_upper =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">lnc =</span> <span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">E =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">Eh =</span> <span class="dv" style="color: #AD0000;">5</span>, <span class="at" style="color: #657422;">Th =</span> <span class="dv" style="color: #AD0000;">330</span>),</span>
+<span id="cb5-9">                     <span class="at" style="color: #657422;">supp_errors =</span> <span class="st" style="color: #20794D;">'Y'</span>,</span>
+<span id="cb5-10">                     <span class="at" style="color: #657422;">na.action =</span> na.omit,</span>
+<span id="cb5-11">                     <span class="at" style="color: #657422;">lower =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">lnc =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">E =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">Eh =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">Th =</span> <span class="dv" style="color: #AD0000;">0</span>))</span>
+<span id="cb5-12">fit</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Nonlinear regression model
+  model: ln.rate ~ schoolfield_high(lnc, E, Eh, Th, temp = K, Tc = 20)
+   data: data
+     lnc        E       Eh       Th 
+ -1.3462   0.9877   4.3326 312.1887 
+ residual sum-of-squares: 7.257
+
+Number of iterations to convergence: 15 
+Achieved convergence tolerance: 1.49e-08</code></pre>
+</div>
+</div>
+<p><strong>nls_multstart()</strong> allows boundaries for each parameter to be set. A uniform distribution between these values is created and start values for each iteration of the fitting process are then picked randomly. The function returns the best available model by picking the model with the lowest AIC score. Additional info on the function can be found <a href="https://github.com/padpadpadpad/nls.multstart">here</a> or by typing <code>?nls_multstart</code> into the R console.</p>
+<p>This fit can then be “tidied” in various ways using the R package <strong>broom</strong>. Each different function in <strong>broom</strong> returns a different set of information. <strong>tidy()</strong> returns the estimated parameters, <strong>augment()</strong> returns the predictions and <strong>glance()</strong> returns information about the model such as the AIC score and whether the model has reached convergence. Confidence intervals of non-linear regression can also be estimated using <strong>nlstools::confint2()</strong></p>
+<p>The amazing thing about these tools is the ease at which they can then be used on multiple curves at once, an approach Hadley Wickham has previously <a href="https://blog.rstudio.com/2016/02/02/tidyr-0-4-0/">written about</a>. The approach nests the data based on grouping variables using <strong>nest()</strong>, then creates a list column of the best fit for each curve using <strong>map()</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># fit over each set of groupings</span></span>
+<span id="cb7-2">fits <span class="ot" style="color: #003B4F;">&lt;-</span> Chlorella_TRC <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-3">  <span class="fu" style="color: #4758AB;">group_by</span>(., flux, growth.temp, process, curve_id) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-4">  <span class="fu" style="color: #4758AB;">nest</span>() <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb7-5">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">fit =</span> purrr<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">map</span>(data, <span class="sc" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;">nls_multstart</span>(ln.rate <span class="sc" style="color: #5E5E5E;">~</span> <span class="fu" style="color: #4758AB;">schoolfield_high</span>(lnc, E, Eh, Th, <span class="at" style="color: #657422;">temp =</span> K, <span class="at" style="color: #657422;">Tc =</span> <span class="dv" style="color: #AD0000;">20</span>),</span>
+<span id="cb7-6">                                   <span class="at" style="color: #657422;">data =</span> .x,</span>
+<span id="cb7-7">                                   <span class="at" style="color: #657422;">iter =</span> <span class="dv" style="color: #AD0000;">1000</span>,</span>
+<span id="cb7-8">                                   <span class="at" style="color: #657422;">start_lower =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">lnc =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">E =</span> <span class="fl" style="color: #AD0000;">0.1</span>, <span class="at" style="color: #657422;">Eh =</span> <span class="fl" style="color: #AD0000;">0.2</span>, <span class="at" style="color: #657422;">Th =</span> <span class="dv" style="color: #AD0000;">285</span>),</span>
+<span id="cb7-9">                                   <span class="at" style="color: #657422;">start_upper =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">lnc =</span> <span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">E =</span> <span class="dv" style="color: #AD0000;">2</span>, <span class="at" style="color: #657422;">Eh =</span> <span class="dv" style="color: #AD0000;">5</span>, <span class="at" style="color: #657422;">Th =</span> <span class="dv" style="color: #AD0000;">330</span>),</span>
+<span id="cb7-10">                                   <span class="at" style="color: #657422;">supp_errors =</span> <span class="st" style="color: #20794D;">'Y'</span>,</span>
+<span id="cb7-11">                                   <span class="at" style="color: #657422;">na.action =</span> na.omit,</span>
+<span id="cb7-12">                                   <span class="at" style="color: #657422;">lower =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="at" style="color: #657422;">lnc =</span> <span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">10</span>, <span class="at" style="color: #657422;">E =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">Eh =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">Th =</span> <span class="dv" style="color: #AD0000;">0</span>))))</span></code></pre></div>
+</div>
+<p>If you are confused, then you are not alone. This took me a long time to understand and I imagine there are still better ways for me to do it! However, to check it has worked, we can look at a single fit to check it looks ok. We can also look at <code>fits</code> to see that there is now a <code>fit</code> list column containing each of the non-linear fits for each combination of our grouping variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;"># look at a single fit</span></span>
+<span id="cb8-2"><span class="fu" style="color: #4758AB;">summary</span>(fits<span class="sc" style="color: #5E5E5E;">$</span>fit[[<span class="dv" style="color: #AD0000;">1</span>]])</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Formula: ln.rate ~ schoolfield_high(lnc, E, Eh, Th, temp = K, Tc = 20)
+
+Parameters:
+    Estimate Std. Error t value Pr(&gt;|t|)    
+lnc  -1.3462     0.4656  -2.891   0.0202 *  
+E     0.9877     0.4521   2.185   0.0604 .  
+Eh    4.3326     1.4878   2.912   0.0195 *  
+Th  312.1887     3.8782  80.499 6.32e-13 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 0.9524 on 8 degrees of freedom
+
+Number of iterations to convergence: 19 
+Achieved convergence tolerance: 1.49e-08</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="co" style="color: #5E5E5E;"># look at output object</span></span>
+<span id="cb10-2"><span class="fu" style="color: #4758AB;">select</span>(fits, curve_id, data, fit)</span></code></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Adding missing grouping variables: `flux`, `growth.temp`, `process`</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 60 × 6
+# Groups:   flux, growth.temp, process, curve_id [60]
+   flux        growth.temp process     curve_id data              fit   
+   &lt;chr&gt;             &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt; &lt;list&gt;            &lt;list&gt;
+ 1 respiration          20 acclimation        1 &lt;tibble [12 × 3]&gt; &lt;nls&gt; 
+ 2 respiration          20 acclimation        2 &lt;tibble [12 × 3]&gt; &lt;nls&gt; 
+ 3 respiration          23 acclimation        3 &lt;tibble [12 × 3]&gt; &lt;nls&gt; 
+ 4 respiration          27 acclimation        4 &lt;tibble [9 × 3]&gt;  &lt;nls&gt; 
+ 5 respiration          27 acclimation        5 &lt;tibble [12 × 3]&gt; &lt;nls&gt; 
+ 6 respiration          30 acclimation        6 &lt;tibble [12 × 3]&gt; &lt;nls&gt; 
+ 7 respiration          30 acclimation        7 &lt;tibble [12 × 3]&gt; &lt;nls&gt; 
+ 8 respiration          33 acclimation        8 &lt;tibble [10 × 3]&gt; &lt;nls&gt; 
+ 9 respiration          33 acclimation        9 &lt;tibble [8 × 3]&gt;  &lt;nls&gt; 
+10 respiration          20 acclimation       10 &lt;tibble [10 × 3]&gt; &lt;nls&gt; 
+# … with 50 more rows</code></pre>
+</div>
+</div>
+<p>These fits can be cleaned up using the <strong>broom</strong> functions and <strong>purrr::map()</strong> to iterate over the grouping variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="co" style="color: #5E5E5E;"># get summary info</span></span>
+<span id="cb13-2">info <span class="ot" style="color: #003B4F;">&lt;-</span> fits <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-3">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="at" style="color: #657422;">info =</span> <span class="fu" style="color: #4758AB;">map</span>(fit, glance)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-4">  <span class="fu" style="color: #4758AB;">unnest</span>(info)</span>
+<span id="cb13-5"></span>
+<span id="cb13-6"><span class="co" style="color: #5E5E5E;"># get params</span></span>
+<span id="cb13-7">params <span class="ot" style="color: #003B4F;">&lt;-</span> fits <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-8">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="at" style="color: #657422;">params =</span> <span class="fu" style="color: #4758AB;">map</span>(fit, tidy)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-9">  <span class="fu" style="color: #4758AB;">unnest</span>(params)</span>
+<span id="cb13-10">  </span>
+<span id="cb13-11"><span class="co" style="color: #5E5E5E;"># get confidence intervals</span></span>
+<span id="cb13-12">CI <span class="ot" style="color: #003B4F;">&lt;-</span> fits <span class="sc" style="color: #5E5E5E;">%&gt;%</span> </span>
+<span id="cb13-13">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="at" style="color: #657422;">CI =</span> <span class="fu" style="color: #4758AB;">map</span>(fit, <span class="cf" style="color: #003B4F;">function</span>(x)<span class="fu" style="color: #4758AB;">data.frame</span>(<span class="fu" style="color: #4758AB;">confint2</span>(x)))) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-14">  <span class="fu" style="color: #4758AB;">unnest</span>(CI) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-15">  <span class="fu" style="color: #4758AB;">select</span>(<span class="sc" style="color: #5E5E5E;">-</span>data, <span class="sc" style="color: #5E5E5E;">-</span>fit) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-16">  <span class="fu" style="color: #4758AB;">rename</span>(., <span class="at" style="color: #657422;">conf.low =</span> <span class="st" style="color: #20794D;">`</span><span class="at" style="color: #657422;">X2.5..</span><span class="st" style="color: #20794D;">`</span>, <span class="at" style="color: #657422;">conf.high =</span> <span class="st" style="color: #20794D;">`</span><span class="at" style="color: #657422;">X97.5..</span><span class="st" style="color: #20794D;">`</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-17">  <span class="fu" style="color: #4758AB;">group_by</span>(., curve_id) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-18">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="at" style="color: #657422;">term =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'lnc'</span>, <span class="st" style="color: #20794D;">'E'</span>, <span class="st" style="color: #20794D;">'Eh'</span>, <span class="st" style="color: #20794D;">'Th'</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-19">  <span class="fu" style="color: #4758AB;">ungroup</span>()</span>
+<span id="cb13-20"><span class="co" style="color: #5E5E5E;"># merge parameters and CI estimates</span></span>
+<span id="cb13-21">params <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">merge</span>(params, CI, <span class="at" style="color: #657422;">by =</span> <span class="fu" style="color: #4758AB;">intersect</span>(<span class="fu" style="color: #4758AB;">names</span>(params), <span class="fu" style="color: #4758AB;">names</span>(CI)))</span>
+<span id="cb13-22"></span>
+<span id="cb13-23"><span class="co" style="color: #5E5E5E;"># get predictions</span></span>
+<span id="cb13-24">preds <span class="ot" style="color: #003B4F;">&lt;-</span> fits <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-25">  <span class="fu" style="color: #4758AB;">mutate</span>(., <span class="at" style="color: #657422;">preds =</span> <span class="fu" style="color: #4758AB;">map</span>(fit, augment)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb13-26">  <span class="fu" style="color: #4758AB;">unnest</span>(preds)</span></code></pre></div>
+</div>
+<p>Looking at <strong>info</strong> allows us to see if all the models converged.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><span class="fu" style="color: #4758AB;">ungroup</span>(info) <span class="sc" style="color: #5E5E5E;">%&gt;%</span> <span class="fu" style="color: #4758AB;">select</span>(., curve_id, logLik, AIC, BIC, deviance, df.residual)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 60 × 6
+   curve_id  logLik   AIC   BIC deviance df.residual
+      &lt;dbl&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;    &lt;dbl&gt;       &lt;int&gt;
+ 1        1 -14.0   38.0  40.4     7.26            8
+ 2        2  -1.20  12.4  14.8     0.858           8
+ 3        3  -7.39  24.8  27.2     2.41            8
+ 4        4  -0.523 11.0  12.0     0.592           5
+ 5        5 -10.8   31.7  34.1     4.29            8
+ 6        6  -8.52  27.0  29.5     2.91            8
+ 7        7  -1.29  12.6  15.0     0.871           8
+ 8        8 -13.4   36.7  38.2     8.48            6
+ 9        9   1.82   6.36  6.76    0.297           4
+10       10  -1.27  12.5  14.1     0.755           6
+# … with 50 more rows</code></pre>
+</div>
+</div>
+<p>When plotting non-linear fits, I prefer to have a smooth curve, even when there are not many points underlying the fit. This can be achieved by including <code>newdata</code> in the <strong>augment()</strong> function and creating a higher resolution set of predictor values.</p>
+<p>However, when predicting for many different fits, it is not certain that each curve has the same range of predictor variables. We can get around this by setting the limits of each prediction by the <strong>min()</strong> and <strong>max()</strong> of the predictor variables.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><span class="co" style="color: #5E5E5E;"># new data frame of predictions</span></span>
+<span id="cb16-2">new_preds <span class="ot" style="color: #003B4F;">&lt;-</span> Chlorella_TRC <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-3">  <span class="fu" style="color: #4758AB;">do</span>(., <span class="fu" style="color: #4758AB;">data.frame</span>(<span class="at" style="color: #657422;">K =</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="fu" style="color: #4758AB;">min</span>(.<span class="sc" style="color: #5E5E5E;">$</span>K), <span class="fu" style="color: #4758AB;">max</span>(.<span class="sc" style="color: #5E5E5E;">$</span>K), <span class="at" style="color: #657422;">length.out =</span> <span class="dv" style="color: #AD0000;">150</span>), <span class="at" style="color: #657422;">stringsAsFactors =</span> <span class="cn" style="color: #8f5902;">FALSE</span>))</span>
+<span id="cb16-4"><span class="co" style="color: #5E5E5E;"># max and min for each curve</span></span>
+<span id="cb16-5">max_min <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">group_by</span>(Chlorella_TRC, curve_id) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-6">  <span class="fu" style="color: #4758AB;">summarise</span>(., <span class="at" style="color: #657422;">min_K =</span> <span class="fu" style="color: #4758AB;">min</span>(K), <span class="at" style="color: #657422;">max_K =</span> <span class="fu" style="color: #4758AB;">max</span>(K), <span class="at" style="color: #657422;">.groups =</span> <span class="st" style="color: #20794D;">'drop'</span>)</span>
+<span id="cb16-7"></span>
+<span id="cb16-8"><span class="co" style="color: #5E5E5E;"># create new predictions</span></span>
+<span id="cb16-9">preds2 <span class="ot" style="color: #003B4F;">&lt;-</span> fits <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-10">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">preds =</span> <span class="fu" style="color: #4758AB;">map</span>(fit, augment, <span class="at" style="color: #657422;">newdata =</span> new_preds)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-11">  <span class="fu" style="color: #4758AB;">unnest</span>(preds) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-12">  <span class="fu" style="color: #4758AB;">merge</span>(., max_min, <span class="at" style="color: #657422;">by =</span> <span class="st" style="color: #20794D;">'curve_id'</span>) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-13">  <span class="fu" style="color: #4758AB;">group_by</span>(., curve_id) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-14">  <span class="fu" style="color: #4758AB;">filter</span>(., K <span class="sc" style="color: #5E5E5E;">&gt;</span> <span class="fu" style="color: #4758AB;">unique</span>(min_K) <span class="sc" style="color: #5E5E5E;">&amp;</span> K <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="fu" style="color: #4758AB;">unique</span>(max_K)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-15">  <span class="fu" style="color: #4758AB;">rename</span>(., <span class="at" style="color: #657422;">ln.rate =</span> .fitted) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb16-16">  <span class="fu" style="color: #4758AB;">ungroup</span>()</span></code></pre></div>
+</div>
+<p>These can then be plotted using <strong>ggplot2</strong>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><span class="co" style="color: #5E5E5E;"># plot</span></span>
+<span id="cb17-2"><span class="fu" style="color: #4758AB;">ggplot</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb17-3">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(K <span class="sc" style="color: #5E5E5E;">-</span> <span class="fl" style="color: #AD0000;">273.15</span>, ln.rate, <span class="at" style="color: #657422;">col =</span> flux), <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">2</span>, Chlorella_TRC) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb17-4">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(K <span class="sc" style="color: #5E5E5E;">-</span> <span class="fl" style="color: #AD0000;">273.15</span>, ln.rate, <span class="at" style="color: #657422;">col =</span> flux, <span class="at" style="color: #657422;">group =</span> curve_id), <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.5</span>, preds2) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb17-5">  <span class="fu" style="color: #4758AB;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;">~</span> growth.temp <span class="sc" style="color: #5E5E5E;">+</span> process, <span class="at" style="color: #657422;">labeller =</span> <span class="fu" style="color: #4758AB;">labeller</span>(<span class="at" style="color: #657422;">.multi_line =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb17-6">  <span class="fu" style="color: #4758AB;">scale_colour_manual</span>(<span class="at" style="color: #657422;">values =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'green4'</span>, <span class="st" style="color: #20794D;">'black'</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb17-7">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>, <span class="at" style="color: #657422;">base_family =</span> <span class="st" style="color: #20794D;">'Helvetica'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb17-8">  <span class="fu" style="color: #4758AB;">ylab</span>(<span class="st" style="color: #20794D;">'log Metabolic rate'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb17-9">  <span class="fu" style="color: #4758AB;">xlab</span>(<span class="st" style="color: #20794D;">'Assay temperature (ºC)'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb17-10">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="fl" style="color: #AD0000;">0.9</span>, <span class="fl" style="color: #AD0000;">0.15</span>))</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/nlsmultstart/index_files/figure-html/plot_many_fits-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The confidence intervals of each parameter for each curve fit can also be easily visualised.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><span class="co" style="color: #5E5E5E;"># plot</span></span>
+<span id="cb18-2"><span class="fu" style="color: #4758AB;">ggplot</span>(params, <span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col =</span> flux)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-3">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="fu" style="color: #4758AB;">aes</span>(curve_id, estimate)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-4">  <span class="fu" style="color: #4758AB;">facet_wrap</span>(<span class="sc" style="color: #5E5E5E;">~</span> term, <span class="at" style="color: #657422;">scale =</span> <span class="st" style="color: #20794D;">'free_x'</span>, <span class="at" style="color: #657422;">ncol =</span> <span class="dv" style="color: #AD0000;">4</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-5">  <span class="fu" style="color: #4758AB;">geom_linerange</span>(<span class="fu" style="color: #4758AB;">aes</span>(curve_id, <span class="at" style="color: #657422;">ymin =</span> conf.low, <span class="at" style="color: #657422;">ymax =</span> conf.high)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-6">  <span class="fu" style="color: #4758AB;">coord_flip</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-7">  <span class="fu" style="color: #4758AB;">scale_color_manual</span>(<span class="at" style="color: #657422;">values =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'green4'</span>, <span class="st" style="color: #20794D;">'black'</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-8">  <span class="fu" style="color: #4758AB;">theme_bw</span>(<span class="at" style="color: #657422;">base_size =</span> <span class="dv" style="color: #AD0000;">12</span>, <span class="at" style="color: #657422;">base_family =</span> <span class="st" style="color: #20794D;">'Helvetica'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-9">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">'top'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-10">  <span class="fu" style="color: #4758AB;">xlab</span>(<span class="st" style="color: #20794D;">'curve'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb18-11">  <span class="fu" style="color: #4758AB;">ylab</span>(<span class="st" style="color: #20794D;">'parameter estimate'</span>)</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/nlsmultstart/index_files/figure-html/confint_plot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This method of modelling can be used for different data, different non-linear models (and linear models for that matter) and combined with the <strong>tidyverse</strong> can make very useful visualisations.</p>
+<p>The next stage of these curve fits is to try and better understand the uncertainty of these curve fits and their predictions. One approach to achieve this could be bootstrapping new datasets from the existing data. I hope to demonstrate how this could be done soon in another post.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>[1] Padfield, D., Yvon-durocher, G., Buckling, A., Jennings, S. &amp; Yvon-durocher, G. (2016). Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton. Ecology Letters, 19(2), 133-142.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>nonlinear regression</category>
+  <category>tidyverse</category>
+  <guid>https://padpadpadpad.netlify.app/posts/nlsmultstart/index.html</guid>
+  <pubDate>Sun, 07 Jan 2018 00:00:00 GMT</pubDate>
+  <media:content url="https://padpadpadpad.netlify.app/posts/nlsmultstart/preview.png" medium="image" type="image/png" height="108" width="144"/>
+</item>
+</channel>
+</rss>

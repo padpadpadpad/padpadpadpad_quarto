@@ -1,0 +1,17 @@
+[
+  {
+    "listing": "/publications.html",
+    "items": [
+      "/publications/articles/bartlett_2022.html"
+    ]
+  },
+  {
+    "listing": "/posts.html",
+    "items": [
+      "/posts/rolling_regression/index.html",
+      "/posts/animate_rstrava/index.html",
+      "/posts/bootstrap_nls/index.html",
+      "/posts/nlsmultstart/index.html"
+    ]
+  }
+]

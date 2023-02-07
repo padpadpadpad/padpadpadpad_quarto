@@ -1,0 +1,224 @@
+---
+title: Doing robust nls regression in R
+description: |
+  Fitting non-linear regressions with broom, purrr and nls.multstart
+author: Daniel Padfield
+date: '2018-01-07'
+categories:
+  - R
+  - nonlinear regression
+  - tidyverse
+image: "/posts/nlsmultstart/preview.png"
+---
+
+## Introduction
+
+With my research, I often use non-linear least squares regression to fit a model with biologically meaningful parameters to data. Specifically, I measure the thermal performance of phytoplankon growth, respiration and photosynthesis over a wide range of assay temperatures to see how the organisms are adapted to the temperatures they live at. 
+
+These thermal performance curves generally follow a unimodal shape and parameters for which are widely used in climate change research to predict whether organisms will be able to cope with increasing temperatures.
+
+![Example Thermal Performance Curve](TPC.png)
+
+These curves can be modelled with a variety of equations, such as the Sharpe-Schoolfield equation, which I have log-transformed here:
+
+$$log(rate) = lnc + E(\frac{1}{T_{c}} - \frac{1}{kT}) - ln(1 + e^{E_h(\frac{1}{kT_h} - \frac{1}{kT})})$$
+where $lnc$ is a normalisation constant at a common temperature, $T_{c}$, $E$ is an activation energy that describes the rate of increase before the optimum temperature, $T_{opt}$. $k$ is Boltzmann's constant, $E_{h}$ is the deactivation energy that controls the decline in rate past the optimum temperature and $T_{h}$ is the temperature where, after the optimu, the rate is half of the maximal rate.
+
+Say I want to fit the same equation to 10, 50, or 100s of these curves. I could loop through a call to __nls()__, __nlsLM()__, or use __nlsList()__ from __nlme__. However, non-linear least squares regression in R is sensitive to the start parameters, meaning that different start parameters can give different "best estimated parameters". This becomes more likely when fitting more curves with only a single set of start parameters, where the variation in estimated parameter values is likely to be much larger. For example, some curves could have much higher rates ($lnc$), higher optimum temperatures (i.e. $T_{h}$) or have different values of temperature-dependence ($E$).
+
+To combat this, I wrote an R package which allows for multiple start parameters for non-linear regression. I wrapped this method in an R package called [__nlsLoop__](https://github.com/padpadpadpad/nlsLoop) and submitted it to The Journal of Open Source Software. Everything was good with the world and I went to a Christmas party.
+
+The next day, I had an epiphany surrounding the redundancies and needless complexities of my R package, withdrew my submission and rewrote the entire package in a weekend to give rise to a single function package, __nls.multstart::nls_multstart()__. Essentially since I first wrote __nlsLoop__ ~3 years ago I have realised that __broom__ and __purrr__ can do what I wrote clunkier functions to achieve. In contrast, [__nls.multstart__](https://github.com/padpadpadpad/nls.multstart) works perfectly with the tools of the __tidyverse__ to fit multiple models.
+
+
+## Multiple model fitting in practice
+
+Load in all packages that are used in this analysis. Packages can be installed from GitHub using __devtools__.
+
+```{r install_and_load}
+#| message: false
+#| warning: false
+#| results: 'hide'
+
+# load packages
+library(nls.multstart)
+library(ggplot2)
+library(broom)
+library(tidyverse)
+library(nlstools)
+```
+
+We can then load in the data and have a look at it using __glimpse()__. Here we shall use a dataset of thermal performance curves of metabolism of _Chlorella vulgaris_ from Padfield _et al._ 2016.
+
+```{r glimpse_data}
+# load in example data set
+data("Chlorella_TRC")
+glimpse(Chlorella_TRC)
+```
+
+Next we define the Sharpe-Schoolfield equation discussed earlier.
+
+```{r define_eq}
+# define the Sharpe-Schoolfield equation
+schoolfield_high <- function(lnc, E, Eh, Th, temp, Tc) {
+  Tc <- 273.15 + Tc
+  k <- 8.62e-5
+  boltzmann.term <- lnc + log(exp(E/k*(1/Tc - 1/temp)))
+  inactivation.term <- log(1/(1 + exp(Eh/k*(1/Th - 1/temp))))
+  return(boltzmann.term + inactivation.term)
+  }
+```
+
+There are 60 curves in this dataset, 30 each of photosynthesis and respiration. The treatments are growth temperature (20, 23, 27, 30, 33 ºC) and adaptive process (acclimation or adaptation) that reflects the number of generations cultures were grown at each temperature.
+
+We can see how __nls_multstart()__ works by subsetting the data for a single curve.
+
+```{r run_nls_mulstart}
+# subset dataset
+d_1 <- subset(Chlorella_TRC, curve_id == 1)
+# run nls_multstart
+fit <- nls_multstart(ln.rate ~ schoolfield_high(lnc, E, Eh, Th, temp = K, Tc = 20),
+                     data = d_1,
+                     iter = 500,
+                     start_lower = c(lnc = -10, E = 0.1, Eh = 0.2, Th = 285),
+                     start_upper = c(lnc = 10, E = 2, Eh = 5, Th = 330),
+                     supp_errors = 'Y',
+                     na.action = na.omit,
+                     lower = c(lnc = -10, E = 0, Eh = 0, Th = 0))
+fit
+```
+
+__nls_multstart()__ allows boundaries for each parameter to be set. A uniform distribution between these values is created and start values for each iteration of the fitting process are then picked randomly. The function returns the best available model by picking the model with the lowest AIC score. Additional info on the function can be found [here](https://github.com/padpadpadpad/nls.multstart) or by typing `?nls_multstart` into the R console.
+
+This fit can then be "tidied" in various ways using the R package __broom__. Each different function in __broom__ returns a different set of information. __tidy()__ returns the estimated parameters, __augment()__ returns the predictions and __glance()__ returns information about the model such as the AIC score and whether the model has reached convergence. Confidence intervals of non-linear regression can also be estimated using __nlstools::confint2()__
+
+The amazing thing about these tools is the ease at which they can then be used on multiple curves at once, an approach Hadley Wickham has previously [written about](https://blog.rstudio.com/2016/02/02/tidyr-0-4-0/). The approach nests the data based on grouping variables using __nest()__, then creates a list column of the best fit for each curve using __map()__.
+
+```{r multiple_models}
+# fit over each set of groupings
+fits <- Chlorella_TRC %>%
+  group_by(., flux, growth.temp, process, curve_id) %>%
+  nest() %>%
+  mutate(fit = purrr::map(data, ~ nls_multstart(ln.rate ~ schoolfield_high(lnc, E, Eh, Th, temp = K, Tc = 20),
+                                   data = .x,
+                                   iter = 1000,
+                                   start_lower = c(lnc = -10, E = 0.1, Eh = 0.2, Th = 285),
+                                   start_upper = c(lnc = 10, E = 2, Eh = 5, Th = 330),
+                                   supp_errors = 'Y',
+                                   na.action = na.omit,
+                                   lower = c(lnc = -10, E = 0, Eh = 0, Th = 0))))
+```
+
+If you are confused, then you are not alone. This took me a long time to understand and I imagine there are still better ways for me to do it! However, to check it has worked, we can look at a single fit to check it looks ok. We can also look at `fits` to see that there is now a `fit` list column containing each of the non-linear fits for each combination of our grouping variables.
+
+```{r check_fit}
+# look at a single fit
+summary(fits$fit[[1]])
+# look at output object
+select(fits, curve_id, data, fit)
+```
+
+These fits can be cleaned up using the __broom__ functions and __purrr::map()__ to iterate over the grouping variables.
+
+```{r tidy_many_fits}
+# get summary info
+info <- fits %>%
+  mutate(., info = map(fit, glance)) %>%
+  unnest(info)
+
+# get params
+params <- fits %>%
+  mutate(., params = map(fit, tidy)) %>%
+  unnest(params)
+  
+# get confidence intervals
+CI <- fits %>% 
+  mutate(., CI = map(fit, function(x)data.frame(confint2(x)))) %>%
+  unnest(CI) %>%
+  select(-data, -fit) %>%
+  rename(., conf.low = `X2.5..`, conf.high = `X97.5..`) %>%
+  group_by(., curve_id) %>%
+  mutate(., term = c('lnc', 'E', 'Eh', 'Th')) %>%
+  ungroup()
+# merge parameters and CI estimates
+params <- merge(params, CI, by = intersect(names(params), names(CI)))
+
+# get predictions
+preds <- fits %>%
+  mutate(., preds = map(fit, augment)) %>%
+  unnest(preds)
+```
+
+Looking at __info__ allows us to see if all the models converged.
+
+```{r info}
+ungroup(info) %>% select(., curve_id, logLik, AIC, BIC, deviance, df.residual)
+```
+
+When plotting non-linear fits, I prefer to have a smooth curve, even when there are not many points underlying the fit. This can be achieved by including `newdata` in the __augment()__ function and creating a higher resolution set of predictor values. 
+
+However, when predicting for many different fits, it is not certain that each curve has the same range of predictor variables. We can get around this by setting the limits of each prediction by the __min()__ and __max()__ of the predictor variables.
+
+```{r create_new_preds}
+# new data frame of predictions
+new_preds <- Chlorella_TRC %>%
+  do(., data.frame(K = seq(min(.$K), max(.$K), length.out = 150), stringsAsFactors = FALSE))
+# max and min for each curve
+max_min <- group_by(Chlorella_TRC, curve_id) %>%
+  summarise(., min_K = min(K), max_K = max(K), .groups = 'drop')
+
+# create new predictions
+preds2 <- fits %>%
+  mutate(preds = map(fit, augment, newdata = new_preds)) %>%
+  unnest(preds) %>%
+  merge(., max_min, by = 'curve_id') %>%
+  group_by(., curve_id) %>%
+  filter(., K > unique(min_K) & K < unique(max_K)) %>%
+  rename(., ln.rate = .fitted) %>%
+  ungroup()
+```
+
+These can then be plotted using __ggplot2__.
+
+```{r plot_many_fits}
+#| fig.height: 7
+#| fig.width: 7
+
+# plot
+ggplot() +
+  geom_point(aes(K - 273.15, ln.rate, col = flux), size = 2, Chlorella_TRC) +
+  geom_line(aes(K - 273.15, ln.rate, col = flux, group = curve_id), alpha = 0.5, preds2) +
+  facet_wrap(~ growth.temp + process, labeller = labeller(.multi_line = FALSE)) +
+  scale_colour_manual(values = c('green4', 'black')) +
+  theme_bw(base_size = 12, base_family = 'Helvetica') +
+  ylab('log Metabolic rate') +
+  xlab('Assay temperature (ºC)') +
+  theme(legend.position = c(0.9, 0.15))
+```
+
+The confidence intervals of each parameter for each curve fit can also be easily visualised.
+
+```{r, confint_plot}
+#| fig.width: 7
+#| fig.height: 8
+
+# plot
+ggplot(params, aes(col = flux)) +
+  geom_point(aes(curve_id, estimate)) +
+  facet_wrap(~ term, scale = 'free_x', ncol = 4) +
+  geom_linerange(aes(curve_id, ymin = conf.low, ymax = conf.high)) +
+  coord_flip() +
+  scale_color_manual(values = c('green4', 'black')) +
+  theme_bw(base_size = 12, base_family = 'Helvetica') +
+  theme(legend.position = 'top') +
+  xlab('curve') +
+  ylab('parameter estimate')
+```
+
+This method of modelling can be used for different data, different non-linear models (and linear models for that matter) and combined with the __tidyverse__ can make very useful visualisations.
+
+The next stage of these curve fits is to try and better understand the uncertainty of these curve fits and their predictions. One approach to achieve this could be bootstrapping new datasets from the existing data. I hope to demonstrate how this could be done soon in another post.
+
+## References
+
+[1] Padfield, D., Yvon-durocher, G., Buckling, A., Jennings, S. & Yvon-durocher, G. (2016). Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton. Ecology Letters, 19(2), 133-142.
