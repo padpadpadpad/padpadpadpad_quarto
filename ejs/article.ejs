@@ -20,6 +20,11 @@
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
     <% } %>
+    <% if (item.open_access) { %>
+    <a href="<%- item.open_access %>" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-text"></i> Open Access
+    </a>
+    <% } %>
     <% if (item.code) { %>
     <a href="<%- item.code %>" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code

@@ -1,0 +1,21 @@
+---
+title: "Warming impairs trophic transfer efficiency in a long-term field experiment"
+type: "article"
+author: "Diego R Barneche, Chris J Hulatt, Matteo Dossena, Daniel Padfield, Guy Woodward, Mark Trimmer, Gabriel Yvon-Durocher"
+year: "2021"
+publication: "Nature"
+open_access: "https://ore.exeter.ac.uk/repository/bitstream/handle/10871/125009/nature20200508666_MS%20_merged.pdf?sequence=1"
+doi: "https://doi.org/10.1038/s41586-021-03352-2"
+code: "https://github.com/dbarneche/nature20200508666"
+data: "https://doi.org/10.5281/zenodo.4468371"
+toc: false
+comments: false
+---
+
+## Citation
+
+Barneche, D. R., Hulatt, C. J., Dossena, M., Padfield, D., Woodward, G., Trimmer, M., & Yvon-Durocher, G. (2021). Warming impairs trophic transfer efficiency in a long-term field experiment. **Nature**, *592(7852)*, 76-79.
+
+## Abstract
+
+In ecosystems, the efficiency of energy transfer from resources to consumers determines the biomass structure of food webs. As a general rule, about 10% of the energy produced in one trophic level makes it up to the next1,2,3. Recent theory suggests that this energy transfer could be further constrained if rising temperatures increase metabolic growth costs4, although experimental confirmation in whole ecosystems is lacking. Here we quantify nitrogen transfer efficiency—a proxy for overall energy transfer—in freshwater plankton in artificial ponds that have been exposed to seven years of experimental warming. We provide direct experimental evidence that, relative to ambient conditions, 4 °C of warming can decrease trophic transfer efficiency by up to 56%. In addition, the biomass of both phytoplankton and zooplankton was lower in the warmed ponds, which indicates major shifts in energy uptake, transformation and transfer5,6. These findings reconcile observed warming-driven changes in individual-level growth costs and in carbon-use efficiency across diverse taxa4,7,8,9,10 with increases in the ratio of total respiration to gross primary production at the ecosystem level11,12,13. Our results imply that an increasing proportion of the carbon fixed by photosynthesis will be lost to the atmosphere as the planet warms, impairing energy flux through food chains, which will have negative implications for larger consumers and for the functioning of entire ecosystems.

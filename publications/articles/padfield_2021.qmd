@@ -1,0 +1,23 @@
+---
+title: "rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R"
+type: "article"
+author: "Daniel Padfield, Hannah O'Sullivan, Samraat Pawar"
+year: "2021"
+publication: "Methods in Ecology & Evolution"
+doi: "https://doi.org/10.1111/2041-210X.13585"
+code: "https://github.com/padpadpadpad/rTPC"
+toc: false
+comments: false
+---
+
+## Citation
+
+Padfield, D., O'Sullivan, H., & Pawar, S. (2021). rTPC and nls. multstart: a new pipeline to fit thermal performance curves in R. **Methods in Ecology and Evolution**, *12(6)*, 1138-1143.
+
+## Abstract
+
+1. Quantifying thermal performance curves (TPCs) for biological rates has many applications to important problems such as predicting responses of biological systems—from individuals to communities—to directional climate change or climatic fluctuations.
+2. Current software tools for fitting TPC models to data are not adequate for dealing with the immense size of new datasets that are increasingly becoming available. We require tools capable of tackling this issue in a simple, reproducible and accessible way.
+3. We present a new, reproducible pipeline in r that allows for relatively simple fitting of 24 different TPC models using nonlinear least squares (NLLS) regression. The pipeline consists of two packages—rTPC and nls.multstart—that provide functions which conveniently address common problems with NLLS fitting such as the NLLS parameter starting values problem. rTPC also includes functions to set starting values, estimate key TPC parameters and calculate uncertainty around parameter estimates as well as the fitted model as a whole.
+4. We demonstrate how this pipeline can be combined with other packages in r to robustly and reproducibly fit multiple mathematical models to multiple TPC datasets at once. In addition, we show how model selection or averaging, weighted model fitting and bootstrapping can be easily implemented within the pipeline.
+5. This new pipeline provides a flexible and reproducible approach that makes the challenging task of fitting multiple TPC models to data accessible to a wide range of users across ecology and evolution.
