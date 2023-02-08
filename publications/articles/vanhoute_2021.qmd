@@ -1,0 +1,21 @@
+---
+title: "Compost spatial heterogeneity promotes evolutionary diversification of a bacterium"
+type: "article"
+author: "Stineke van Houte, Daniel Padfield, Pedro Gómez, Adela M Luján, Michael A Brockhurst, Steve Paterson, Angus Buckling"
+year: "2021"
+publication: "Journal of Evolutionary Biology"
+preprint: "https://doi.org/10.1101/838110"
+doi: "https://doi.org/10.1111/jeb.13722"
+code: "https://github.com/padpadpadpad/vanHoute_et_al_2020_JEB"
+data: "https://www.ebi.ac.uk/ena/browser/view/PRJEB41017"
+toc: false
+comments: false
+---
+
+## Citation
+
+van Houte, S., Padfield, D., Gómez, P., Luján, A. M., Brockhurst, M. A., Paterson, S., & Buckling, A. (2021). Compost spatial heterogeneity promotes evolutionary diversification of a bacterium. **Journal of Evolutionary Biology**, *34(2)*, 246-255.
+
+## Abstract
+
+Spatial resource heterogeneity is expected to be a key driver for the evolution of diversity. However, direct empirical support for this prediction is limited to studies carried out in simplified laboratory environments. Here, we investigate how altering spatial heterogeneity of potting compost—by the addition of water and mixing—affects the evolutionary diversification of a bacterial species, *Pseudomonas fluorescens*, that is naturally found in the environment. There was a greater propensity of resource specialists to evolve in the unmanipulated compost, while more generalist phenotypes dominated the compost–water mix. Genomic data were consistent with these phenotypic findings. Competition experiments strongly suggest these results are due to diversifying selection as a result of resource heterogeneity, as opposed to other covariables. Overall, our findings corroborate theoretical and in vitro findings, but in semi-natural, more realistic conditions.

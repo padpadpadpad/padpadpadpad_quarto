@@ -23,7 +23,7 @@ comments:
       
 format:
   html:
-    theme: sandstone
+    theme: flatly
     css: styles.css
     toc: true
 

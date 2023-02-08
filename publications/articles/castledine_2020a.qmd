@@ -1,0 +1,21 @@
+---
+title: "Experimental (co)evolution in a multi‐species microbial community results in local maladaptation"
+type: "article"
+author: "Meaghan Castledine, Daniel Padfield, Angus Buckling"
+year: "2020"
+publication: "Ecology Letters"
+preprint: "https://doi.org/10.1101/2020.04.26.062067"
+doi: "https://doi.org/10.1111/ele.13599"
+code: "https://doi.org/10.5061/10.5281/zenodo.3985093"
+toc: false
+comments: false
+---
+
+## Citation
+
+Castledine, M., Padfield, D., & Buckling, A. (2020). Experimental (co) evolution in a multi‐species microbial community results in local maladaptation. **Ecology Letters**, *23(11)*, 1673-1681.
+
+## Abstract
+
+Interspecific coevolutionary interactions can result in rapid biotic adaptation, but most studies have focused only on species pairs. Here, we (co)evolved five microbial species in replicate polycultures and monocultures and quantified local adaptation. Specifically, growth rate assays were used to determine adaptations of each species’ populations to (1) the presence of the other four species in general and (2) sympatric vs. allopatric communities. We found that species did not show an increase in net biotic adaptation:ancestral, polyculture- and monoculture-evolved populations did not have significantly different growth rates within communities. However, 4/5 species’ growth rates were significantly lower within the community they evolved in relative to an allopatric community. ‘Local maladaptation’ suggests that species evolved increased competitive interactions to sympatric species’ populations. This increased competition did not affect community stability or productivity. Our results suggest that (co)evolution within communities can increase competitive interactions that are specific to (co)evolved community members.
+

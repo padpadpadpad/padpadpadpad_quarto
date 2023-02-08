@@ -1,0 +1,21 @@
+---
+title: "CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data"
+type: "article"
+author: "Matthew J Silk, Robbie A McDonald, Richard J Delahay, Daniel Padfield, David J Hodgson"
+year: "2021"
+publication: "Methods in Ecology & Evolution"
+doi: "https://doi.org/10.1111/2041-210X.13502"
+code: "https://github.com/matthewsilk/CMRnet"
+toc: false
+comments: false
+---
+
+## Citation
+
+Silk, M. J., McDonald, R. A., Delahay, R. J., Padfield, D., & Hodgson, D. J. (2021). CMRnet: An r package to derive networks of social interactions and movement from mark–recapture data. **Methods in Ecology and Evolution**, *12(1)*, 70-75.
+
+## Abstract
+
+1. Long-term capture–mark–recapture data provide valuable information on the movements of individuals between locations, and the contemporary and/or co-located captures of individuals can be used to approximate the social structure of populations.
+2. We introduce an r package (CMRnet) that generates social and movement networks from spatially explicit capture–mark–recapture data. It also provides functions for network and datastream permutations for these networks. Here we describe the package and key considerations for its application, providing two example case studies.
+3. The conversion of spatially explicit mark–recapture data into social and movement networks will provide insights into the interplay between demography and behaviour in wild animal populations, with important applications in their management and conservation.

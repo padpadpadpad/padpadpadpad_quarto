@@ -1,0 +1,22 @@
+---
+title: "Evolution of diversity explains the impact of pre-adaptation of a focal species on the structure of a natural microbial community"
+type: "article"
+author: "Daniel Padfield, Alex Vujakovic, Steve Paterson, Rob Griffiths, Angus Buckling, Elze Hesse"
+year: "2020"
+publication: "ISME"
+open_access: "https://ore.exeter.ac.uk/repository/bitstream/handle/10871/123029/padfield_2020_preadapt_soil_diversity_isme_accepted_ORE.pdf?sequence=2&isAllowed=y"
+doi: "https://doi.org/10.1038/s41396-020-00755-3"
+code: "https://git.io/JUOpE"
+data: "https://www.ebi.ac.uk/ena/browser/view/PRJEB40882"
+toc: false
+comments: false
+---
+
+## Citation
+
+Padfield, D., Vujakovic, A., Paterson, S., Griffiths, R., Buckling, A., & Hesse, E. (2020). Evolution of diversity explains the impact of pre-adaptation of a focal species on the structure of a natural microbial community. **The ISME journal**, *14(11)*, 2877-2889.
+
+## Abstract
+
+Rapid within-species evolution can alter community structure, yet the mechanisms underpinning this effect remain unknown. Populations that rapidly evolve large amounts of phenotypic diversity are likely to interact with more species and have the largest impact on community structure. However, the evolution of phenotypic diversity is, in turn, influenced by the presence of other species. Here, we investigate how microbial community structure changes as a consequence of rapidly evolved within-species diversity using *Pseudomonas fluorescens* as a focal species. Evolved *P. fluorescens* populations showed substantial phenotypic diversification in resource-use (and correlated genomic change) irrespective of whether they were pre-adapted in isolation or in a community context. Manipulating diversity revealed that more diverse P. fluorescens populations had the greatest impact on community structure, by suppressing some bacterial taxa, but facilitating others. These findings suggest that conditions that promote the evolution of high within-population diversity should result in a larger impact on community structure.
+

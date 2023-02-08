@@ -71,7 +71,8 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-title','listing-type','listing-author','listing-year','listing-publication','listing-open_access','listing-doi','listing-code','listing-data','listing-toc','listing-comments','listing-path','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-preprint','listing-image',{ data: ['index'] },{ data: ['categories'] }],
-      
+      page: 10,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author","listing-publication","listing-year"],
     };
 
@@ -138,7 +139,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(9)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(16)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -289,7 +290,45 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <br><br>
   </li>
-  <li data-index="6" data-listing-file-modified-sort="1675808583252" data-listing-reading-time-sort="1">
+  <li data-index="6" data-listing-file-modified-sort="1675888232542" data-listing-reading-time-sort="0.745">
+    <span class="listing-title lead">CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data</span><br>
+    <span class="listing-author">Matthew J Silk, Robbie A McDonald, Richard J Delahay, Daniel Padfield, David J Hodgson</span><br>
+    <span class="listing-publication fw-bolder ">Methods in Ecology &amp; Evolution</span>
+    <span class="listing-year">(2021)</span><br>
+    <a href="./publications/articles/silk_2021.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1111/2041-210X.13502" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <a href="https://github.com/matthewsilk/CMRnet" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-code"></i> Code
+    </a>
+    <br><br>
+  </li>
+  <li data-index="7" data-listing-file-modified-sort="1675887933337" data-listing-reading-time-sort="0.825">
+    <span class="listing-title lead">Compost spatial heterogeneity promotes evolutionary diversification of a bacterium</span><br>
+    <span class="listing-author">Stineke van Houte, Daniel Padfield, Pedro Gómez, Adela M Luján, Michael A Brockhurst, Steve Paterson, Angus Buckling</span><br>
+    <span class="listing-publication fw-bolder ">Journal of Evolutionary Biology</span>
+    <span class="listing-year">(2021)</span><br>
+    <a href="./publications/articles/vanhoute_2021.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1111/jeb.13722" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <a href="https://doi.org/10.1101/838110" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-text"></i> Preprint
+    </a>
+    <a href="https://github.com/padpadpadpad/vanHoute_et_al_2020_JEB" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-code"></i> Code
+    </a>
+    <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB41017" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-zip"></i> Data
+    </a>
+    <br><br>
+  </li>
+  <li data-index="8" data-listing-file-modified-sort="1675808583252" data-listing-reading-time-sort="1">
     <span class="listing-title lead">The impact of propagule pressure on whole community invasions in biomethane-producing communities</span><br>
     <span class="listing-author">Pawel Sierocinski, Jesica Soria Pascual, Daniel Padfield, Mike Salter, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">iScience</span>
@@ -308,7 +347,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <br><br>
   </li>
-  <li data-index="7" data-listing-file-modified-sort="1675884719681" data-listing-reading-time-sort="1.225">
+  <li data-index="9" data-listing-file-modified-sort="1675884719681" data-listing-reading-time-sort="1.225">
     <span class="listing-title lead">Warming impairs trophic transfer efficiency in a long-term field experiment</span><br>
     <span class="listing-author">Diego R Barneche, Chris J Hulatt, Matteo Dossena, Daniel Padfield, Guy Woodward, Mark Trimmer, Gabriel Yvon-Durocher</span><br>
     <span class="listing-publication fw-bolder ">Nature</span>
@@ -330,7 +369,7 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <br><br>
   </li>
-  <li data-index="8" data-listing-file-modified-sort="1675884800377" data-listing-reading-time-sort="1.295">
+  <li data-index="10" data-listing-file-modified-sort="1675884800377" data-listing-reading-time-sort="1.295">
     <span class="listing-title lead">rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R</span><br>
     <span class="listing-author">Daniel Padfield, Hannah O'Sullivan, Samraat Pawar</span><br>
     <span class="listing-publication fw-bolder ">Methods in Ecology &amp; Evolution</span>
@@ -346,10 +385,105 @@ ul.task-list li input[type="checkbox"] {
     </a>
     <br><br>
   </li>
+  <li data-index="11" data-listing-file-modified-sort="1675888639499" data-listing-reading-time-sort="0.73">
+    <span class="listing-title lead">Community coalescence: an eco-evolutionary perspective</span><br>
+    <span class="listing-author">Meaghan Castledine, Pawel Sierocinski, Daniel Padfield, Angus Buckling</span><br>
+    <span class="listing-publication fw-bolder ">Philosophical Transactions of the Royal Society B</span>
+    <span class="listing-year">(2020)</span><br>
+    <a href="./publications/articles/castledine_2020b.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1098/rstb.2019.0252" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <br><br>
+  </li>
+  <li data-index="12" data-listing-file-modified-sort="1675888955705" data-listing-reading-time-sort="0.95">
+    <span class="listing-title lead">Evolution of diversity explains the impact of pre-adaptation of a focal species on the structure of a natural microbial community</span><br>
+    <span class="listing-author">Daniel Padfield, Alex Vujakovic, Steve Paterson, Rob Griffiths, Angus Buckling, Elze Hesse</span><br>
+    <span class="listing-publication fw-bolder ">ISME</span>
+    <span class="listing-year">(2020)</span><br>
+    <a href="./publications/articles/padfield_2020a.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1038/s41396-020-00755-3" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <a href="https://ore.exeter.ac.uk/repository/bitstream/handle/10871/123029/padfield_2020_preadapt_soil_diversity_isme_accepted_ORE.pdf?sequence=2&amp;isAllowed=y" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-text"></i> Open Access
+    </a>
+    <a href="https://git.io/JUOpE" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-code"></i> Code
+    </a>
+    <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB40882" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-zip"></i> Data
+    </a>
+    <br><br>
+  </li>
+  <li data-index="13" data-listing-file-modified-sort="1675888486696" data-listing-reading-time-sort="0.865">
+    <span class="listing-title lead">Experimental (co)evolution in a multi‐species microbial community results in local maladaptation</span><br>
+    <span class="listing-author">Meaghan Castledine, Daniel Padfield, Angus Buckling</span><br>
+    <span class="listing-publication fw-bolder ">Ecology Letters</span>
+    <span class="listing-year">(2020)</span><br>
+    <a href="./publications/articles/castledine_2020a.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1111/ele.13599" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <a href="https://doi.org/10.1101/2020.04.26.062067" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-text"></i> Preprint
+    </a>
+    <a href="https://doi.org/10.5061/10.5281/zenodo.3985093" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-code"></i> Code
+    </a>
+    <br><br>
+  </li>
+  <li data-index="14" data-listing-file-modified-sort="1675889275436" data-listing-reading-time-sort="1.49">
+    <span class="listing-title lead">Postrelease movement and habitat selection of translocated pine martens Martes martes</span><br>
+    <span class="listing-author">Catherine M McNicol, David Bavin, Stuart Bearhop, Josie Bridges, Elizabeth Croose, Robin Gill, Cecily ED Goodwin, John Lewis, Jenny MacPherson, Daniel Padfield, Henry Schofield, Matthew J Silk, Alexandra J Tomlinson, Robbie A McDonald</span><br>
+    <span class="listing-publication fw-bolder ">Ecology &amp; Evolution</span>
+    <span class="listing-year">(2020)</span><br>
+    <a href="./publications/articles/mcnicol_2020.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1002/ece3.6265" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <a href="https://doi.org/10.5061/dryad.3tx95x6c4" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-zip"></i> Data
+    </a>
+    <br><br>
+  </li>
+  <li data-index="15" data-listing-file-modified-sort="1675889479815" data-listing-reading-time-sort="1">
+    <span class="listing-title lead">Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host</span><br>
+    <span class="listing-author">Daniel Padfield, Meaghan Castledine, Angus Buckling</span><br>
+    <span class="listing-publication fw-bolder ">ISME</span>
+    <span class="listing-year">(2020)</span><br>
+    <a href="./publications/articles/padfield_2020b.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1038/s41396-019-0526-5" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <a href="https://ore.exeter.ac.uk/repository/handle/10871/39738" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-text"></i> Open Access
+    </a>
+    <a href="https://github.com/padpadpadpad/Padfield_2019_ISME_bact_phage_temperature" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-code"></i> Code
+    </a>
+    <a href="https://doi.org/10.5281/zenodo.3492192" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-zip"></i> Data
+    </a>
+    <br><br>
+  </li>
 </ul>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
+<nav id="articles-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {

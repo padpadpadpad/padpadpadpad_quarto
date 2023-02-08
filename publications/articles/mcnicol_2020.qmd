@@ -1,0 +1,19 @@
+---
+title: "Postrelease movement and habitat selection of translocated pine martens Martes martes"
+type: "article"
+author: "Catherine M McNicol, David Bavin, Stuart Bearhop, Josie Bridges, Elizabeth Croose, Robin Gill, Cecily ED Goodwin, John Lewis, Jenny MacPherson, Daniel Padfield, Henry Schofield, Matthew J Silk, Alexandra J Tomlinson, Robbie A McDonald"
+year: "2020"
+publication: "Ecology & Evolution"
+doi: "https://doi.org/10.1002/ece3.6265"
+data: "https://doi.org/10.5061/dryad.3tx95x6c4"
+toc: false
+comments: false
+---
+
+## Citation
+
+McNicol, C. M., Bavin, D., Bearhop, S., Bridges, J., Croose, E., Gill, R., ... & McDonald, R. A. (2020). Postrelease movement and habitat selection of translocated pine martens Martes martes. **Ecology and evolution**, *10(11)*, 5106-5118.
+
+## Abstract
+
+Monitoring postrelease establishment and movement of animals is important in evaluating conservation translocations. We translocated 39 wild pine martens *Martes martes* (19 females, 20 males) from Scotland to Wales. We released them into forested areas with no conspecifics in 2015, followed by a second release in 2016, alongside the previously released animals. We used radio-tracking to describe postrelease movement and habitat selection. Six martens (15%) were not re-encountered during the tracking period, of which four undertook long-distance dispersal. For the remaining individuals, we characterized two phases of movement, “exploration” followed by “settlement,” that differed between releases. In the first release, martens remained in exploration phase for a mean of 14.5 days (SE = 3.9 days) and settled at a mean distance of 8.7 km (SE = 1.8 km) from release sites, whereas martens released in year two, alongside resident conspecifics, traveled away from release sites at a faster rate, settling sooner, at a mean of 6.6 days (SE = 1.8 days), but further, at a mean distance of 14.0 km (SE = 1.7 km) from release sites. Animals released in year one did not exhibit habitat preferences overall but within forests they favored recently felled areas, whereas animals released in year two showed strong selection for forested habitat but did not discriminate between forest types. The presence of conspecifics appeared influential for settlement and site fidelity of translocated martens and was associated with more rapid but more distant dispersal of the later cohort. Releases of animals in close proximity appeared to promote site fidelity and rapid establishment of ranges in the recipient environment.
