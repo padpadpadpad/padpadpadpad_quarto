@@ -1,0 +1,17 @@
+---
+title: "Role of carbon allocation efficiency in the temperature dependence of autotroph growth rates"
+type: "article"
+author: "Bernardo García-Carreras, Sofía Sal, Daniel Padfield, Dimitrios-Georgios Kontopoulos, Elvire Bestion, C-Elisa Schaum, Gabriel Yvon-Durocher, Samraat Pawar"
+year: "2018"
+publication: "PNAS"
+toc: false
+comments: false
+---
+
+## Citation
+
+García-Carreras, B., Sal, S., Padfield, D., Kontopoulos, D. G., Bestion, E., Schaum, C. E., ... & Pawar, S. (2018). Role of carbon allocation efficiency in the temperature dependence of autotroph growth rates. **Proceedings of the National Academy of Sciences**, *115(31)*, E7361-E7368.
+
+## Abstract
+
+Relating the temperature dependence of photosynthetic biomass production to underlying metabolic rates in autotrophs is crucial for predicting the effects of climatic temperature fluctuations on the carbon balance of ecosystems. We present a mathematical model that links thermal performance curves (TPCs) of photosynthesis, respiration, and carbon allocation efficiency to the exponential growth rate of a population of photosynthetic autotroph cells. Using experiments with the green alga, *Chlorella vulgaris*, we apply the model to show that the temperature dependence of carbon allocation efficiency is key to understanding responses of growth rates to warming at both ecological and longer-term evolutionary timescales. Finally, we assemble a dataset of multiple terrestrial and aquatic autotroph species to show that the effects of temperature-dependent carbon allocation efficiency on potential growth rate TPCs are expected to be consistent across taxa. In particular, both the thermal sensitivity and the optimal temperature of growth rates are expected to change significantly due to temperature dependence of carbon allocation efficiency alone. Our study provides a foundation for understanding how the temperature dependence of carbon allocation determines how population growth rates respond to temperature.

@@ -1,0 +1,18 @@
+---
+title: "Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton"
+type: "article"
+author: "Daniel Padfield, Genevieve Yvon‐Durocher, Angus Buckling, Simon Jennings, Gabriel Yvon‐Durocher"
+year: "2016"
+publication: "Ecology Letters"
+doi: "https://doi.org/10.1111/ele.12545"
+toc: false
+comments: false
+---
+
+## Citation
+
+Padfield, D., Yvon‐Durocher, G., Buckling, A., Jennings, S., & Yvon‐Durocher, G. (2016). Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton. **Ecology letters**, *19(2)*, 133-142.
+
+## Abstract
+
+Understanding the mechanisms that determine how phytoplankton adapt to warming will substantially improve the realism of models describing ecological and biogeochemical effects of climate change. Here, we quantify the evolution of elevated thermal tolerance in the phytoplankton, *Chlorella vulgaris*. Initially, population growth was limited at higher temperatures because respiration was more sensitive to temperature than photosynthesis meaning less carbon was available for growth. Tolerance to high temperature evolved after ≈ 100 generations via greater down-regulation of respiration relative to photosynthesis. By down-regulating respiration, phytoplankton overcame the metabolic constraint imposed by the greater temperature sensitivity of respiration and more efficiently allocated fixed carbon to growth. Rapid evolution of carbon-use efficiency provides a potentially general mechanism for thermal adaptation in phytoplankton and implies that evolutionary responses in phytoplankton will modify biogeochemical cycles and hence food web structure and function under warming. Models of climate futures that ignore adaptation would usefully be revisited.

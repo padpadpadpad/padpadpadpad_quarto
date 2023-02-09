@@ -1,0 +1,21 @@
+---
+title: "Metabolic compensation constrains the temperature dependence of gross primary production"
+type: "article"
+author: "Daniel Padfield, Chris Lowe, Angus Buckling, Richard Ffrench‐Constant, Student Research Team, Simon Jennings, Felicity Shelley, Jón S Ólafsson, Gabriel Yvon‐Durocher"
+year: "2017"
+publication: "Ecology Letters"
+preprint: "https://doi.org/10.1101/108696"
+doi: "https://doi.org/10.1111/ele.12820"
+code: "https://git.io/v5TUG"
+data: "https://doi.org/10.5281/zenodo.1285680"
+toc: false
+comments: false
+---
+
+## Citation
+
+Padfield, D., Lowe, C., Buckling, A., Ffrench‐Constant, R., Student Research Team, Jennings, S., ... & Yvon‐Durocher, G. (2017). Metabolic compensation constrains the temperature dependence of gross primary production. **Ecology Letters**, *20(10)*, 1250-1260.
+
+## Abstract
+
+Gross primary production (GPP) is the largest flux in the carbon cycle, yet its response to global warming is highly uncertain. The temperature dependence of GPP is directly linked to photosynthetic physiology, but the response of GPP to warming over longer timescales could also be shaped by ecological and evolutionary processes that drive variation in community structure and functional trait distributions. Here, we show that selection on photosynthetic traits within and across taxa dampens the effects of temperature on GPP across a catchment of geothermally heated streams. Autotrophs from cold streams had higher photosynthetic rates and after accounting for differences in biomass among sites, biomass-specific GPP was independent of temperature in spite of a 20 °C thermal gradient. Our results suggest that temperature compensation of photosynthetic rates constrains the long-term temperature dependence of GPP, and highlights the importance of considering physiological, ecological and evolutionary mechanisms when predicting how ecosystem-level processes respond to warming.

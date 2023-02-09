@@ -1,0 +1,20 @@
+---
+title: "Anthropogenic remediation of heavy metals selects against natural microbial remediation"
+type: "article"
+author: "Elze Hesse, Daniel Padfield, Florian Bayer, Eleanor M Van Veen, Christopher G Bryan, Angus Buckling"
+year: "2019"
+publication: "Proceedings of the Royal Society B"
+preprint: "https://doi.org/10.1101/441873"
+doi: "https://doi.org/10.1098/rspb.2019.0804"
+data: "https://doi.org/10.5061/dryad.843814d"
+toc: false
+comments: false
+---
+
+## Citation
+
+Hesse, E., Padfield, D., Bayer, F., Van Veen, E. M., Bryan, C. G., & Buckling, A. (2019). Anthropogenic remediation of heavy metals selects against natural microbial remediation. **Proceedings of the Royal Society B**, *286(1905)*, 20190804.
+
+## Abstract
+
+In an era of unprecedented environmental change, there have been increasing ecological and global public health concerns associated with exposure to anthropogenic pollutants. While there is a pressing need to remediate polluted ecosystems, human intervention might unwittingly oppose selection for natural detoxification, which is primarily carried out by microbes. We test this possibility in the context of a ubiquitous chemical remediation strategy aimed at targeting metal pollution: the addition of lime-containing materials. Here, we show that raising pH by liming decreased the availability of toxic metals in acidic mine-degraded soils, but as a consequence selected against microbial taxa that naturally remediate soil through the production of metal-binding siderophores. Our results therefore highlight the crucial need to consider the eco-evolutionary consequences of human environmental strategies on microbial ecosystem services and other traits.

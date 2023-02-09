@@ -1,0 +1,20 @@
+---
+title: "A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens"
+type: "article"
+author: "Meaghan Castledine, Angus Buckling, Daniel Padfield"
+year: "2019"
+publication: "Journal of Evolutionary Biology"
+doi: "https://doi.org/10.1111/jeb.13394"
+code: "https://bit.ly/2NKTkCA"
+data: "https://doi.org/10.5281/zenodo.1464583"
+toc: false
+comments: false
+---
+
+## Citation
+
+Castledine, M., Buckling, A., & Padfield, D. (2019). A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of *Pseudomonas fluorescens*. **Journal of evolutionary biology**, *32(1)*, 58-65.
+
+## Abstract
+
+Community coalescence, the mixing of multiple communities, is ubiquitous in natural microbial communities. During coalescence, theory suggests the success of a population will be enhanced by the presence of species it has coevolved with (relative to foreign species), because coevolution will result in greater resource specialization to minimize competition. Thus, more coevolved communities should dominate over less coevolved communities during coalescence events. We test these hypotheses using the bacterium *Pseudomonas fluorescens* which diversifies into coexisting niche-specialist morphotypes. We first evolved replicate populations for ~40 generations and then isolated evolved genotypes. In a series of competition trials, we determined if using coevolved versus random genotypes affected the relative performance of “communities” of single and multiple genotypes. We found no effect of coevolutionary history on either genotype fitness or community performance, which suggests parallel (co)evolution between communities. However, fitness was enhanced by the presence of other genotypes of the same strain type (wild-type or an isogenic strain with a LacZ marker; the inclusion of the latter necessary to distinguish genotypes during competition), indicative of local adaptation with respect to genetic background. Our results are the first to investigate the effect of (co)evolution on the outcome of coalescence and suggest that when input populations are functionally similar and added at equal mixing ratios, the outcome community may not be asymmetrically dominated by either input population.

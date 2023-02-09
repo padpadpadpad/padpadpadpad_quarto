@@ -1,0 +1,19 @@
+---
+title: "Linking phytoplankton community metabolism to the individual size distribution"
+type: "article"
+author: "Daniel Padfield, Angus Buckling, Ruth Warfield, Chris Lowe, Gabriel Yvon‐Durocher"
+year: "2018"
+publication: "Ecology Letters"
+doi: "https://doi.org/10.1111/ele.13082"
+code: "https://git.io/vpzfu"
+toc: false
+comments: false
+---
+
+## Citation
+
+Padfield, D., Buckling, A., Warfield, R., Lowe, C., & Yvon‐Durocher, G. (2018). Linking phytoplankton community metabolism to the individual size distribution. **Ecology Letters**, *21(8)*, 1152-1161.
+
+## Abstract
+
+Quantifying variation in ecosystem metabolism is critical to predicting the impacts of environmental change on the carbon cycle. We used a metabolic scaling framework to investigate how body size and temperature influence phytoplankton community metabolism. We tested this framework using phytoplankton sampled from an outdoor mesocosm experiment, where communities had been either experimentally warmed (+ 4 °C) for 10 years or left at ambient temperature. Warmed and ambient phytoplankton communities differed substantially in their taxonomic composition and size structure. Despite this, the response of primary production and community respiration to long- and short-term warming could be estimated using a model that accounted for the size- and temperature dependence of individual metabolism, and the community abundance-body size distribution. This work demonstrates that the key metabolic fluxes that determine the carbon balance of planktonic ecosystems can be approximated using metabolic scaling theory, with knowledge of the individual size distribution and environmental temperature.

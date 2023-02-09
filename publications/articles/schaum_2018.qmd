@@ -1,0 +1,19 @@
+---
+title: "Temperature‐driven selection on metabolic traits increases the strength of an algal–grazer interaction in naturally warmed streams"
+type: "article"
+author: "C Elisa Schaum, Student Research Team, Richard ffrench‐Constant, Chris Lowe, Jón S Ólafsson, Daniel Padfield, Gabriel Yvon‐Durocher, Yasmin Ashton, Romina Botoli, Peter Coles, Joe Crisp, Emma Dwan, Stella Enoch‐Pledger, Briony Flello, Kate Freegard, Ceri Haines, Matthew Holland, Luke Lear, Emma Lokuciejewski, Heather McPhee, Toby Newport, Liisa Pahk, Sienna Somers, Caspar Swindells, Maria Wild, Ethan Wrigglesworth"
+year: "2018"
+publication: "Global Change Biology"
+preprint: "https://doi.org/10.1101/104513"
+doi: "https://doi.org/10.1111/gcb.14033"
+toc: false
+comments: false
+---
+
+## Citation
+
+Schaum, C. E., Student Research Team, ffrench‐Constant, R., Lowe, C., Ólafsson, J. S., Padfield, D., ... & Wrigglesworth, E. (2018). Temperature‐driven selection on metabolic traits increases the strength of an algal–grazer interaction in naturally warmed streams. **Global Change Biology**, *24(4)*, 1793-1803.
+
+## Abstract
+
+
