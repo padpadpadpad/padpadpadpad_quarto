@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="">
 
-<title>DanPadLab -</title>
+<title>DanPadLab - Software</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -64,7 +63,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed fullcontent">
+<body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -93,7 +92,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./software.html">
+    <a class="nav-link active" href="./software.html" aria-current="page">
  <span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
@@ -110,17 +109,63 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#nls.multstart" id="toc-nls.multstart" class="nav-link active" data-scroll-target="#nls.multstart">nls.multstart</a></li>
+  <li><a href="#rtpc" id="toc-rtpc" class="nav-link" data-scroll-target="#rtpc">rTPC</a></li>
+  <li><a href="#rstrava" id="toc-rstrava" class="nav-link" data-scroll-target="#rstrava">rStrava</a></li>
+  </ul>
+</nav>
+    </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Software</h1>
+</div>
 
 
-<section id="citation" class="level2">
-<h2 class="anchored" data-anchor-id="citation">Citation</h2>
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="nls.multstart" class="level2">
+<h2 class="anchored" data-anchor-id="nls.multstart">nls.multstart</h2>
+<p><strong>nls.multstart</strong> is an R package that allows more robust and reproducible non-linear regression compared to <strong>nls()</strong> or <strong>nlsLM()</strong>. These functions allow only a single starting value, meaning that it can be hard to get the best estimated model. This is especially true if the same model is fitted over the levels of a factor, which may have the same shape of curve, but be much different in terms of parameter estimates.</p>
+<p><strong>nls_multstart()</strong> is the main function of <strong>nls.multstart</strong>. Similar to the R package nls2, it allows multiple starting values for each parameter and then iterates through multiple starting values, attempting a fit with each set of start parameters. The best model is then picked on AIC score. This results in a more reproducible and reliable method of fitting non-linear least squares regression in R.</p>
+<p>This package is designed to work with the <strong>tidyverse</strong>, harnessing the functions within <strong>broom</strong>, <strong>tidyr</strong>, <strong>dplyr</strong> and <strong>purrr</strong> to extract estimates and plot things easily with <strong>ggplot2</strong>.</p>
+<p><a href="https://github.com/padpadpadpad/nls.multstart" class="btn btn-light" target="_blank" rel="noopener noreferrer"> <i class="bi bi-github"></i> GitHub </a> <a href="https://cran.r-project.org/web/packages/nls.multstart/index.html" class="btn btn-light" target="_blank" rel="noopener noreferrer"> <i class="bi bi-r-circle"></i> CRAN </a></p>
 </section>
-<section id="abstract" class="level2">
-<h2 class="anchored" data-anchor-id="abstract">Abstract</h2>
+<section id="rtpc" class="level2">
+<h2 class="anchored" data-anchor-id="rtpc">rTPC</h2>
+<p><strong>rTPC</strong> is an R package that helps fit thermal performance curves (TPCs) in R. <strong>rTPC</strong> contains 24 model formulations previously used to fit TPCs and has helper functions to help set sensible start parameters, upper and lower parameter limits and estimate parameters useful in downstream analyses, such as cardinal temperatures, maximum rate and optimum temperature.</p>
+<p>The idea behind <strong>rTPC</strong> is to make fitting thermal performance curves easier, to provide workflows and examples of fitting TPCs without saying which model works best. Which model and which workflow is “best” is going to be down to the question that is being asked. Throughout the vignettes, <em>Things to consider</em> sections give some key considerations about what to consider before and during the analysis.</p>
+<p>When developing <strong>rTPC</strong>, we made a conscious decision not to repeat code and methods that are already optimised and available in the R ecosystem. Consequently, the workflows take advantage of <strong>nls.multstart</strong> for fitting non-linear least squares regression and packages from the <strong>tidyverse</strong> for data manipulation, fitting multiple models, and visualisation. The R package <strong>car</strong> is used extensively for the bootstrapping approaches.</p>
+<p><a href="https://github.com/padpadpadpad/rTPC" class="btn btn-light" target="_blank" rel="noopener noreferrer"> <i class="bi bi-github"></i> GitHub </a> <a href="https://padpadpadpad.github.io/rTPC/index.html" class="btn btn-light" target="_blank" rel="noopener noreferrer"> <i class="bi bi-globe"></i> website </a> <a href="https://doi.org/10.1111/2041-210X.13585" class="btn btn-light" target="_blank" rel="noopener noreferrer"> <i class="bi bi-file-earmark-text"></i> publication </a></p>
+</section>
+<section id="rstrava" class="level2">
+<h2 class="anchored" data-anchor-id="rstrava">rStrava</h2>
+<p>I contributed to the R package <strong>rStrava</strong>, which provides an interface to the Strava API in R. Using <strong>rStrava</strong>, you can access and manipulate data related to your own activities, as well as retrieve data about athletes and activities on Strava. Some of the main functionality of <strong>rStrava</strong> includes:</p>
+<ul>
+<li>Authenticating and connecting to the Strava API</li>
+<li>Retrieving information about the user’s profile and activities</li>
+<li>Retrieving information about other athletes and their activities</li>
+<li>Downloading data from activities and working with it in R</li>
+<li>Easy visualisation of ride maps and elevation profiles</li>
+</ul>
+<p>The main developer and maintainer of <strong>rStrava</strong> is <a href="https://beckmw.wordpress.com/">Marcus Beck</a>.</p>
+<p><a href="https://github.com/fawda123/rStrava" class="btn btn-light" target="_blank" rel="noopener noreferrer"> <i class="bi bi-github"></i> GitHub </a></p>
 
 
 </section>

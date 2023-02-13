@@ -490,6 +490,27 @@
     "text": "I am a microbial ecologist working at the University of Exeter in Penryn, Cornwall. I have broad interests that span climate change, evolution, and community ecology. My research has concentrated on how environmental change alters the interplay of ecological and evolutionary dynamics in microbial communities. I do this by combining theory and simulations with experimental evolution. In January 2023 I started a NERC Independent Research Fellowship at the University of Exeter to explore the links between climate warming and antibiotic resistance in microbial communities.\nI am an avid R programmer - authoring the R packages nls.multstart and rTPC - and specialise in the wrangling and manipulation of large datasets and statistical analysis. I also have experience in bioinformatics from 16S sequencing to de novo genome assembly, the latter using bash scripting.\nI am also a carer for my partner. She has full-body neuropathic pain, severe ME/CFS and has been bed-bound for around 4 years. She lives with her parents in Cheltenham and I visit for long weekends every three to four weeks.\nIf you are interested in collaborating or have any questions or comments I would love to hear from you."
   },
   {
+    "objectID": "software.html",
+    "href": "software.html",
+    "title": "Software",
+    "section": "",
+    "text": "nls.multstart is an R package that allows more robust and reproducible non-linear regression compared to nls() or nlsLM(). These functions allow only a single starting value, meaning that it can be hard to get the best estimated model. This is especially true if the same model is fitted over the levels of a factor, which may have the same shape of curve, but be much different in terms of parameter estimates.\nnls_multstart() is the main function of nls.multstart. Similar to the R package nls2, it allows multiple starting values for each parameter and then iterates through multiple starting values, attempting a fit with each set of start parameters. The best model is then picked on AIC score. This results in a more reproducible and reliable method of fitting non-linear least squares regression in R.\nThis package is designed to work with the tidyverse, harnessing the functions within broom, tidyr, dplyr and purrr to extract estimates and plot things easily with ggplot2.\n  GitHub    CRAN"
+  },
+  {
+    "objectID": "software.html#rtpc",
+    "href": "software.html#rtpc",
+    "title": "Software",
+    "section": "rTPC",
+    "text": "rTPC\nrTPC is an R package that helps fit thermal performance curves (TPCs) in R. rTPC contains 24 model formulations previously used to fit TPCs and has helper functions to help set sensible start parameters, upper and lower parameter limits and estimate parameters useful in downstream analyses, such as cardinal temperatures, maximum rate and optimum temperature.\nThe idea behind rTPC is to make fitting thermal performance curves easier, to provide workflows and examples of fitting TPCs without saying which model works best. Which model and which workflow is “best” is going to be down to the question that is being asked. Throughout the vignettes, Things to consider sections give some key considerations about what to consider before and during the analysis.\nWhen developing rTPC, we made a conscious decision not to repeat code and methods that are already optimised and available in the R ecosystem. Consequently, the workflows take advantage of nls.multstart for fitting non-linear least squares regression and packages from the tidyverse for data manipulation, fitting multiple models, and visualisation. The R package car is used extensively for the bootstrapping approaches.\n  GitHub    website    publication"
+  },
+  {
+    "objectID": "software.html#rstrava",
+    "href": "software.html#rstrava",
+    "title": "Software",
+    "section": "rStrava",
+    "text": "rStrava\nI contributed to the R package rStrava, which provides an interface to the Strava API in R. Using rStrava, you can access and manipulate data related to your own activities, as well as retrieve data about athletes and activities on Strava. Some of the main functionality of rStrava includes:\n\nAuthenticating and connecting to the Strava API\nRetrieving information about the user’s profile and activities\nRetrieving information about other athletes and their activities\nDownloading data from activities and working with it in R\nEasy visualisation of ride maps and elevation profiles\n\nThe main developer and maintainer of rStrava is Marcus Beck.\n  GitHub"
+  },
+  {
     "objectID": "posts.html",
     "href": "posts.html",
     "title": "Posts",

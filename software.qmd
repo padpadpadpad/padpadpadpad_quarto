@@ -1,0 +1,51 @@
+---
+title: "Software"
+comments: false
+---
+
+## nls.multstart
+
+**nls.multstart** is an R package that allows more robust and reproducible non-linear regression compared to **nls()** or **nlsLM()**. These functions allow only a single starting value, meaning that it can be hard to get the best estimated model. This is especially true if the same model is fitted over the levels of a factor, which may have the same shape of curve, but be much different in terms of parameter estimates.
+
+**nls_multstart()** is the main function of **nls.multstart**. Similar to the R package nls2, it allows multiple starting values for each parameter and then iterates through multiple starting values, attempting a fit with each set of start parameters. The best model is then picked on AIC score. This results in a more reproducible and reliable method of fitting non-linear least squares regression in R.
+
+This package is designed to work with the **tidyverse**, harnessing the functions within **broom**, **tidyr**, **dplyr** and **purrr** to extract estimates and plot things easily with **ggplot2**. 
+
+<a href="https://github.com/padpadpadpad/nls.multstart" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-github"></i> GitHub
+    </a> <a href="https://cran.r-project.org/web/packages/nls.multstart/index.html" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-r-circle"></i> CRAN
+    </a>
+
+## rTPC
+
+**rTPC** is an R package that helps fit thermal performance curves (TPCs) in R. **rTPC** contains 24 model formulations previously used to fit TPCs and has helper functions to help set sensible start parameters, upper and lower parameter limits and estimate parameters useful in downstream analyses, such as cardinal temperatures, maximum rate and optimum temperature.
+
+The idea behind **rTPC** is to make fitting thermal performance curves easier, to provide workflows and examples of fitting TPCs without saying which model works best. Which model and which workflow is “best” is going to be down to the question that is being asked. Throughout the vignettes, *Things to consider* sections give some key considerations about what to consider before and during the analysis.
+
+When developing **rTPC**, we made a conscious decision not to repeat code and methods that are already optimised and available in the R ecosystem. Consequently, the workflows take advantage of **nls.multstart** for fitting non-linear least squares regression and packages from the **tidyverse** for data manipulation, fitting multiple models, and visualisation. The R package **car** is used extensively for the bootstrapping approaches.
+
+<a href="https://github.com/padpadpadpad/rTPC" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-github"></i> GitHub
+    </a> <a href="https://padpadpadpad.github.io/rTPC/index.html" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-globe"></i> website
+    </a> <a href="https://doi.org/10.1111/2041-210X.13585" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-text"></i> publication
+    </a>
+    
+## rStrava
+
+I contributed to the R package **rStrava**, which provides an interface to the Strava API in R. Using **rStrava**, you can access and manipulate data related to your own activities, as well as retrieve data about athletes and activities on Strava. Some of the main functionality of **rStrava** includes:
+
+- Authenticating and connecting to the Strava API
+- Retrieving information about the user's profile and activities
+- Retrieving information about other athletes and their activities
+- Downloading data from activities and working with it in R
+- Easy visualisation of ride maps and elevation profiles
+
+The main developer and maintainer of **rStrava** is [Marcus Beck](https://beckmw.wordpress.com/).
+
+<a href="https://github.com/fawda123/rStrava" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-github"></i> GitHub
+    </a>
+    
