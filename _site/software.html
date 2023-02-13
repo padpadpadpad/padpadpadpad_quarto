@@ -99,6 +99,16 @@ ul.task-list li input[type="checkbox"] {
     <a class="nav-link" href="./publications.html">
  <span class="menu-text">Publications</span></a>
   </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&amp;hl=en"><i class="bi bi-mortarboard-fill" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/padpadpadpad"><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
 </ul>
               <div id="quarto-search" class="" title="Search"></div>
           </div> <!-- /navcollapse -->
@@ -143,7 +153,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="nls.multstart" class="level2">
 <h2 class="anchored" data-anchor-id="nls.multstart">nls.multstart</h2>
 <p><strong>nls.multstart</strong> is an R package that allows more robust and reproducible non-linear regression compared to <strong>nls()</strong> or <strong>nlsLM()</strong>. These functions allow only a single starting value, meaning that it can be hard to get the best estimated model. This is especially true if the same model is fitted over the levels of a factor, which may have the same shape of curve, but be much different in terms of parameter estimates.</p>
-<p><strong>nls_multstart()</strong> is the main function of <strong>nls.multstart</strong>. Similar to the R package nls2, it allows multiple starting values for each parameter and then iterates through multiple starting values, attempting a fit with each set of start parameters. The best model is then picked on AIC score. This results in a more reproducible and reliable method of fitting non-linear least squares regression in R.</p>
+<p><strong>nls_multstart()</strong> is the main function of <strong>nls.multstart</strong>. Similar to the R package <strong>nls2</strong>, it allows multiple starting values for each parameter and then iterates through multiple starting values, attempting a fit with each set of start parameters. The best model is then picked on AIC score. This results in a more reproducible and reliable method of fitting non-linear least squares regression in R.</p>
 <p>This package is designed to work with the <strong>tidyverse</strong>, harnessing the functions within <strong>broom</strong>, <strong>tidyr</strong>, <strong>dplyr</strong> and <strong>purrr</strong> to extract estimates and plot things easily with <strong>ggplot2</strong>.</p>
 <p><a href="https://github.com/padpadpadpad/nls.multstart" class="btn btn-light" target="_blank" rel="noopener noreferrer"> <i class="bi bi-github"></i> GitHub </a> <a href="https://cran.r-project.org/web/packages/nls.multstart/index.html" class="btn btn-light" target="_blank" rel="noopener noreferrer"> <i class="bi bi-r-circle"></i> CRAN </a></p>
 </section>

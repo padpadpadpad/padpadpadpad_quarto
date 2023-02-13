@@ -18,6 +18,10 @@ website:
         text: Software
       - href: publications.qmd
         text: Publications
+      - icon: mortarboard-fill
+        href: https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&hl=en
+      - icon: github
+        href: https://github.com/padpadpadpad
 
 comments:
   giscus:
