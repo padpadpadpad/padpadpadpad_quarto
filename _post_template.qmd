@@ -1,0 +1,13 @@
+---
+title:
+description: |
+  
+author: Daniel Padfield
+date: "MM/DD/YYYY"
+date-modified: last-modified
+categories: 
+image: ""
+execute:
+  message: false
+  warning: false
+---
