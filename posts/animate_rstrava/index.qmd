@@ -1,6 +1,5 @@
 ---
 title: rStrava and gganimate
-comments: false
 description: |
   Animate your Strava activities in R using rStrava and gganimate
 author: Daniel Padfield
