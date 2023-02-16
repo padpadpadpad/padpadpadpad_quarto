@@ -10,7 +10,238 @@
 <atom:link href="https://padpadpadpad.netlify.app/posts.xml" rel="self" type="application/rss+xml"/>
 <description></description>
 <generator>quarto-1.2.269</generator>
-<lastBuildDate>Fri, 15 Nov 2019 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 16 Feb 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Recreate Ed Hawkins’ climate spiral in R</title>
+  <dc:creator>Daniel Padfield</dc:creator>
+  <link>https://padpadpadpad.netlify.app/posts/climate_spiral/index.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Climate change is happening, and changes in average temperatures are happening quickly. The 5 hottest years on record have occurred in the last six years for which we have data. One of the best ways to demonstrate climate warming is through data visualisations, and one of the best examples of this are Ed Hawkins’ <a href="https://www.reading.ac.uk/planet/climate-resources/climate-stripes">climate stripes</a>.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://padpadpadpad.netlify.app/posts/climate_spiral/climate-stripes.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Ed Hawkins’ Climate Stripes</figcaption><p></p>
+</figure>
+</div>
+<p>This visualisation is made up of vertical stripes, each representing the average temperature for a single year, relative to the average temperature over the whole period (from 1880 to the most recent year for which we have data). Blue colours indicate cooler-than-average years, while red colours indicate years that were hotter than average. As you can see, the increasing redness on the right-hand side of the graphic shows the rapid heating over recent years.</p>
+<p>I love the simplicity of this graphic, and it has proved a very effective tool for improving people’s awareness of climate warming (see the <a href="https://twitter.com/search?q=%23climatestripes&amp;src=typed_query&amp;f=top">#climatestripes</a> for amazing examples of its use across the world).</p>
+<p>I also loved the climate spiral animation created by Ed and re-created by <a href="https://climate.nasa.gov/climate_resources/300/video-climate-spiral/">NASA</a> to help people understand the concept of global warming and the change in global temperatures over time. The spiral presents a visual representation of temperature changes over the past century or more, by showing a line that spirals outwards from the center of the graph as time progresses.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe src="https://www.youtube.com/embed/jWoCXLuTIkI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>In the centre of the spiral is the average temperature of a baseline period, typically the 20th century average. As the line moves outwards, the temperature increases, with each full rotation of the spiral representing one year of data. The thickness of the line represents the magnitude of the temperature change in each year, with thicker lines indicating larger temperature increases.</p>
+<p>Having played with <strong>ggplot2</strong> and <strong>gganimate</strong> a bit, I was interested if I could recreate this animation in R (unfortunately without the amazing axis flip at the end)!</p>
+</section>
+<section id="make-the-climate-spiral-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="make-the-climate-spiral-in-r">Make the climate spiral in R</h2>
+<p><em>At the time of writing this blog post, using <strong>gganimate</strong> for <strong>geom_path()</strong> and <strong>transition_reveal()</strong> is <a href="https://github.com/thomasp85/gganimate/issues/473">unfortunately bugged</a> in version 1.0.8, meaning that some frames would be missing. As such we will install a previous version (1.0.7).</em></p>
+<p>This post will walkthrough how to recreate Ed Hawkins’ famous climate spiral in R. We will mainly use the <strong>tidyverse</strong> packages and <strong>gganimate</strong> to do this. Firstly we will load in these required packages.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="co" style="color: #5E5E5E;"># load packages</span></span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;">library</span>(tidyverse)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;">library</span>(gganimate) <span class="co" style="color: #5E5E5E;"># remotes::install_github('thomasp85/gganimate@v1.0.7')</span></span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;">library</span>(janitor)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;">library</span>(MetBrewer)</span>
+<span id="cb1-6"><span class="fu" style="color: #4758AB;">library</span>(ggforce)</span></code></pre></div>
+</div>
+<p>We can next load in the dataset used from the NASA website.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><span class="co" style="color: #5E5E5E;"># load in dataset from NASA</span></span>
+<span id="cb2-2">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">read.csv</span>(<span class="st" style="color: #20794D;">'https://data.giss.nasa.gov/gistemp/tabledata_v4/GLB.Ts+dSST.csv'</span>, <span class="at" style="color: #657422;">skip =</span> <span class="dv" style="color: #AD0000;">1</span>)</span>
+<span id="cb2-3"><span class="fu" style="color: #4758AB;">head</span>(d)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  Year   Jan  Feb  Mar  Apr  May  Jun  Jul  Aug  Sep  Oct  Nov  Dec  J.D  D.N
+1 1880 -0.18 -.24 -.09 -.16 -.10 -.21 -.18 -.10 -.15 -.23 -.22 -.17 -.17  ***
+2 1881 -0.19 -.14  .03  .05  .06 -.18  .00 -.03 -.15 -.22 -.18 -.07 -.09 -.09
+3 1882  0.16  .14  .04 -.16 -.14 -.22 -.17 -.08 -.15 -.23 -.17 -.36 -.11 -.09
+4 1883 -0.29 -.37 -.12 -.18 -.18 -.07 -.07 -.14 -.22 -.11 -.24 -.11 -.18 -.20
+5 1884 -0.13 -.08 -.36 -.40 -.34 -.35 -.30 -.28 -.27 -.25 -.33 -.31 -.28 -.27
+6 1885 -0.58 -.33 -.26 -.42 -.45 -.43 -.34 -.31 -.28 -.23 -.24 -.10 -.33 -.35
+   DJF  MAM  JJA  SON
+1  *** -.11 -.16 -.20
+2 -.17  .05 -.07 -.18
+3  .08 -.08 -.16 -.18
+4 -.34 -.16 -.10 -.19
+5 -.11 -.37 -.31 -.28
+6 -.41 -.38 -.36 -.25</code></pre>
+</div>
+</div>
+<p>This dataset has month across the top with some other columns I do not necessarily understand, and the values in the month columns are the temperature anomaly. Right now all the columns have been read in character format, so we can do some data wrangling to get the data in the correct format for <strong>ggplot2</strong>. This includes going from wide to long format, stacking all the months on top of each other in a single column.</p>
+<p>These commands could all be linked together using successive pipe commands, but I kept them separate to better document what each line is doing.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;"># wrangle the data set</span></span>
+<span id="cb4-2"><span class="co" style="color: #5E5E5E;"># make all columns numeric - there are some *** that i dont know what they mean</span></span>
+<span id="cb4-3">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mutate</span>(d, <span class="fu" style="color: #4758AB;">across</span>(<span class="fu" style="color: #4758AB;">everything</span>(), as.numeric))</span>
+<span id="cb4-4"></span>
+<span id="cb4-5"><span class="co" style="color: #5E5E5E;"># replace NAs with 0 - just make them to have no positive or negative anomaly</span></span>
+<span id="cb4-6">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mutate</span>(d, <span class="fu" style="color: #4758AB;">across</span>(<span class="fu" style="color: #4758AB;">everything</span>(), <span class="sc" style="color: #5E5E5E;">~</span>(<span class="fu" style="color: #4758AB;">replace_na</span>(.x, <span class="dv" style="color: #AD0000;">0</span>))))</span>
+<span id="cb4-7"></span>
+<span id="cb4-8"><span class="co" style="color: #5E5E5E;"># tidy the dataframe</span></span>
+<span id="cb4-9">d <span class="ot" style="color: #003B4F;">&lt;-</span> janitor<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">clean_names</span>(d) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb4-10">  <span class="fu" style="color: #4758AB;">pivot_longer</span>(<span class="at" style="color: #657422;">cols =</span> jan<span class="sc" style="color: #5E5E5E;">:</span>dec, <span class="at" style="color: #657422;">names_to =</span> <span class="st" style="color: #20794D;">'month'</span>, <span class="at" style="color: #657422;">values_to =</span> <span class="st" style="color: #20794D;">'anomaly'</span>)</span>
+<span id="cb4-11"></span>
+<span id="cb4-12"><span class="co" style="color: #5E5E5E;"># add a time column</span></span>
+<span id="cb4-13">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mutate</span>(d, <span class="at" style="color: #657422;">time =</span> <span class="fu" style="color: #4758AB;">paste</span>(year, <span class="fu" style="color: #4758AB;">toupper</span>(month), <span class="at" style="color: #657422;">sep =</span> <span class="st" style="color: #20794D;">'-'</span>),</span>
+<span id="cb4-14">            <span class="at" style="color: #657422;">time =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">ym</span>(time),</span>
+<span id="cb4-15">            <span class="at" style="color: #657422;">month2 =</span> lubridate<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">month</span>(time)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb4-16">  <span class="co" style="color: #5E5E5E;"># select only necessary columns</span></span>
+<span id="cb4-17">  <span class="fu" style="color: #4758AB;">select</span>(year, month, month2, time, anomaly)</span>
+<span id="cb4-18"></span>
+<span id="cb4-19"><span class="co" style="color: #5E5E5E;"># look at dataset</span></span>
+<span id="cb4-20"><span class="fu" style="color: #4758AB;">head</span>(d)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 5
+   year month month2 time       anomaly
+  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;       &lt;dbl&gt;
+1  1880 jan        1 1880-01-01   -0.18
+2  1880 feb        2 1880-02-01   -0.24
+3  1880 mar        3 1880-03-01   -0.09
+4  1880 apr        4 1880-04-01   -0.16
+5  1880 may        5 1880-05-01   -0.1 
+6  1880 jun        6 1880-06-01   -0.21</code></pre>
+</div>
+</div>
+<p>The most recent data in the spreadsheet from 2023, but we will remove this at the moment because it is mid-year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;"># remove 2023</span></span>
+<span id="cb6-2">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(d, year <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="dv" style="color: #AD0000;">2023</span>)</span></code></pre></div>
+</div>
+<p>We are now ready to make our first plot. I have chosen a <a href="https://github.com/BlakeRMills/MetBrewer">MetBrewer</a> colour palette which goes from blue to red to represent the hot and cold colours. For the plot I will use a theme I defined previously in a random <a href="https://github.com/padpadpadpad/MicrobioUoE">R package</a> called <strong>theme_black()</strong> (lots of other themes are available).</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># create first plot</span></span>
+<span id="cb7-2">p1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(d, <span class="fu" style="color: #4758AB;">aes</span>(month2, anomaly, <span class="at" style="color: #657422;">col =</span> anomaly)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-3">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">group =</span> year)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-4">  <span class="fu" style="color: #4758AB;">scale_color_gradientn</span>(<span class="st" style="color: #20794D;">'Temperature anomaly'</span>, <span class="at" style="color: #657422;">colors =</span> <span class="fu" style="color: #4758AB;">met.brewer</span>(<span class="at" style="color: #657422;">name=</span><span class="st" style="color: #20794D;">'Homer1'</span>, <span class="at" style="color: #657422;">direction=</span><span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">override.order =</span> <span class="cn" style="color: #8f5902;">FALSE</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-5">  MicrobioUoE<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_black</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-6">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">panel.grid.major =</span> <span class="fu" style="color: #4758AB;">element_blank</span>(),</span>
+<span id="cb7-7">        <span class="at" style="color: #657422;">axis.title.x =</span> <span class="fu" style="color: #4758AB;">element_blank</span>()) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb7-8">  <span class="fu" style="color: #4758AB;">scale_x_continuous</span>(<span class="at" style="color: #657422;">breaks =</span> <span class="dv" style="color: #AD0000;">1</span><span class="sc" style="color: #5E5E5E;">:</span><span class="dv" style="color: #AD0000;">12</span>, <span class="at" style="color: #657422;">labels =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'Jan'</span>, <span class="st" style="color: #20794D;">'Feb'</span>, <span class="st" style="color: #20794D;">'Mar'</span>, <span class="st" style="color: #20794D;">'Apr'</span>, <span class="st" style="color: #20794D;">'May'</span>, <span class="st" style="color: #20794D;">'Jun'</span>, <span class="st" style="color: #20794D;">'Jul'</span>, <span class="st" style="color: #20794D;">'Aug'</span>, <span class="st" style="color: #20794D;">'Sep'</span>, <span class="st" style="color: #20794D;">'Oct'</span>, <span class="st" style="color: #20794D;">'Nov'</span>, <span class="st" style="color: #20794D;">'Dec'</span>))</span>
+<span id="cb7-9"></span>
+<span id="cb7-10">p1 <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">coord_polar</span>()</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/climate_spiral/index_files/figure-html/first_plot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This is looking quite good, but still quite far from the polished version on NASA’s YouTube. One of the problems we have is that <strong>geom_path()</strong> will not cross over the 0-360 line when using <strong>coord_polar()</strong>. This would ruin the whole visualisation and prevent us having a smooth transition from year to year. This was a problem I was not clever enough to solve, but luckily <a href="https://stackoverflow.com/questions/55132352/geom-path-refuses-to-cross-over-the-0-360-line-in-coord-polar">StackOverflow</a> had the answer. We need to convert the polar coordinates to cartesian to allow the animation to go from December to January of the next year.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><span class="co" style="color: #5E5E5E;"># want to convert polar coordinates to cartesian to allow animation to go from December back to January</span></span>
+<span id="cb8-2"><span class="co" style="color: #5E5E5E;"># using this link https://stackoverflow.com/questions/55132352/geom-path-refuses-to-cross-over-the-0-360-line-in-coord-polar</span></span>
+<span id="cb8-3"></span>
+<span id="cb8-4"><span class="co" style="color: #5E5E5E;"># calculate angles for each month, starting with January at 15º</span></span>
+<span id="cb8-5">angles <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">tibble</span>(<span class="at" style="color: #657422;">month =</span> <span class="fu" style="color: #4758AB;">unique</span>(d<span class="sc" style="color: #5E5E5E;">$</span>month),</span>
+<span id="cb8-6">            <span class="at" style="color: #657422;">angle =</span> <span class="fu" style="color: #4758AB;">seq</span>(<span class="dv" style="color: #AD0000;">15</span>, <span class="at" style="color: #657422;">by =</span> <span class="dv" style="color: #AD0000;">30</span>, <span class="at" style="color: #657422;">length.out =</span> <span class="dv" style="color: #AD0000;">12</span>))</span>
+<span id="cb8-7"></span>
+<span id="cb8-8">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">left_join</span>(d, angles)</span>
+<span id="cb8-9"></span>
+<span id="cb8-10"><span class="fu" style="color: #4758AB;">head</span>(d)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+   year month month2 time       anomaly angle
+  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt;
+1  1880 jan        1 1880-01-01   -0.18    15
+2  1880 feb        2 1880-02-01   -0.24    45
+3  1880 mar        3 1880-03-01   -0.09    75
+4  1880 apr        4 1880-04-01   -0.16   105
+5  1880 may        5 1880-05-01   -0.1    135
+6  1880 jun        6 1880-06-01   -0.21   165</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><span class="co" style="color: #5E5E5E;"># add buffer to make everything positive - this can be anything really</span></span>
+<span id="cb10-2">buffer <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="dv" style="color: #AD0000;">3</span></span>
+<span id="cb10-3"></span>
+<span id="cb10-4"><span class="co" style="color: #5E5E5E;"># calculate the position in x/y space for each anomaly using maths!!!</span></span>
+<span id="cb10-5">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mutate</span>(d, <span class="at" style="color: #657422;">x_anomaly =</span> <span class="fu" style="color: #4758AB;">sin</span>(pi <span class="sc" style="color: #5E5E5E;">*</span> angle<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">180</span>) <span class="sc" style="color: #5E5E5E;">*</span> (anomaly <span class="sc" style="color: #5E5E5E;">+</span> buffer),</span>
+<span id="cb10-6">               <span class="at" style="color: #657422;">y_anomaly =</span> <span class="fu" style="color: #4758AB;">cos</span>(pi <span class="sc" style="color: #5E5E5E;">*</span> angle<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">180</span>) <span class="sc" style="color: #5E5E5E;">*</span> (anomaly <span class="sc" style="color: #5E5E5E;">+</span> buffer))</span>
+<span id="cb10-7"></span>
+<span id="cb10-8"><span class="fu" style="color: #4758AB;">head</span>(d)</span></code></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 8
+   year month month2 time       anomaly angle x_anomaly y_anomaly
+  &lt;dbl&gt; &lt;chr&gt;  &lt;dbl&gt; &lt;date&gt;       &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+1  1880 jan        1 1880-01-01   -0.18    15     0.730     2.72 
+2  1880 feb        2 1880-02-01   -0.24    45     1.95      1.95 
+3  1880 mar        3 1880-03-01   -0.09    75     2.81      0.753
+4  1880 apr        4 1880-04-01   -0.16   105     2.74     -0.735
+5  1880 may        5 1880-05-01   -0.1    135     2.05     -2.05 
+6  1880 jun        6 1880-06-01   -0.21   165     0.722    -2.69 </code></pre>
+</div>
+</div>
+<p>We now have the position of each anomaly for each month in x/y space. This should allow the animation to smoothly move between December of one year to January of the next.</p>
+<p>Our original plot also does not have very nice labelling to tell us anything about the extent of the anomaly (1ºC above or below average etc.)</p>
+<p>However, we can add these ourselves by using some functions from <strong>ggforce</strong> to create circles on our plot and labelling them. We also create a dataframe to place the months at a nicer place on the plot.</p>
+<p>We can control the font size of <strong>geom_text()</strong> in terms of font size used in the rest of the plot using the <strong>pts()</strong> function that I copied from <a href="https://www.andrewheiss.com/">Andrew Heiss</a>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="co" style="color: #5E5E5E;"># create limits</span></span>
+<span id="cb12-2">limits <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span>(<span class="fu" style="color: #4758AB;">max</span>(d<span class="sc" style="color: #5E5E5E;">$</span>anomaly) <span class="sc" style="color: #5E5E5E;">+</span> buffer), <span class="fu" style="color: #4758AB;">max</span>(d<span class="sc" style="color: #5E5E5E;">$</span>anomaly) <span class="sc" style="color: #5E5E5E;">+</span> buffer)</span>
+<span id="cb12-3"></span>
+<span id="cb12-4"><span class="co" style="color: #5E5E5E;"># create circles for some temperatures</span></span>
+<span id="cb12-5">circles <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">data.frame</span>(</span>
+<span id="cb12-6">  <span class="at" style="color: #657422;">r =</span> <span class="fu" style="color: #4758AB;">c</span>(buffer, buffer <span class="sc" style="color: #5E5E5E;">+</span> <span class="dv" style="color: #AD0000;">1</span>, buffer <span class="sc" style="color: #5E5E5E;">-</span> <span class="dv" style="color: #AD0000;">1</span>)) <span class="sc" style="color: #5E5E5E;">%&gt;%</span></span>
+<span id="cb12-7">  <span class="fu" style="color: #4758AB;">mutate</span>(<span class="at" style="color: #657422;">r =</span> <span class="fu" style="color: #4758AB;">round</span>(r, <span class="dv" style="color: #AD0000;">0</span>),</span>
+<span id="cb12-8">         <span class="at" style="color: #657422;">x0 =</span> <span class="dv" style="color: #AD0000;">0</span>,</span>
+<span id="cb12-9">         <span class="at" style="color: #657422;">y0 =</span> <span class="dv" style="color: #AD0000;">0</span>,</span>
+<span id="cb12-10">         <span class="at" style="color: #657422;">label =</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="st" style="color: #20794D;">'0ºC'</span>, <span class="st" style="color: #20794D;">'+1ºC'</span>, <span class="st" style="color: #20794D;">'-1ºC'</span>))</span>
+<span id="cb12-11"></span>
+<span id="cb12-12"><span class="co" style="color: #5E5E5E;"># create dataset for months to be added to the plot</span></span>
+<span id="cb12-13">months <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">mutate</span>(angles, <span class="at" style="color: #657422;">anomaly =</span> limits[<span class="dv" style="color: #AD0000;">2</span>] <span class="sc" style="color: #5E5E5E;">+</span> limits[<span class="dv" style="color: #AD0000;">2</span>] <span class="sc" style="color: #5E5E5E;">*</span> .<span class="dv" style="color: #AD0000;">1</span>,</span>
+<span id="cb12-14">                 <span class="at" style="color: #657422;">x_anomaly =</span> <span class="fu" style="color: #4758AB;">sin</span>(pi <span class="sc" style="color: #5E5E5E;">*</span> angle<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">180</span>) <span class="sc" style="color: #5E5E5E;">*</span> anomaly,</span>
+<span id="cb12-15">                 <span class="at" style="color: #657422;">y_anomaly =</span> <span class="fu" style="color: #4758AB;">cos</span>(pi <span class="sc" style="color: #5E5E5E;">*</span> angle<span class="sc" style="color: #5E5E5E;">/</span><span class="dv" style="color: #AD0000;">180</span>) <span class="sc" style="color: #5E5E5E;">*</span> anomaly)</span>
+<span id="cb12-16"></span>
+<span id="cb12-17"><span class="co" style="color: #5E5E5E;"># increase limits slightly</span></span>
+<span id="cb12-18">limits <span class="ot" style="color: #003B4F;">&lt;-</span> limits <span class="sc" style="color: #5E5E5E;">+</span> limits<span class="sc" style="color: #5E5E5E;">*</span>.<span class="dv" style="color: #AD0000;">1</span></span>
+<span id="cb12-19"></span>
+<span id="cb12-20"><span class="co" style="color: #5E5E5E;"># create base plot</span></span>
+<span id="cb12-21">p1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(d, <span class="fu" style="color: #4758AB;">aes</span>(x_anomaly, y_anomaly)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-22">  <span class="fu" style="color: #4758AB;">scale_x_continuous</span>(<span class="at" style="color: #657422;">limits =</span> limits) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-23">  <span class="fu" style="color: #4758AB;">scale_y_continuous</span>(<span class="at" style="color: #657422;">limits =</span> limits) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-24">  ggforce<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">theme_no_axes</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-25">  <span class="fu" style="color: #4758AB;">theme</span>(<span class="at" style="color: #657422;">panel.background =</span> <span class="fu" style="color: #4758AB;">element_rect</span>(<span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">'black'</span>), </span>
+<span id="cb12-26">        <span class="at" style="color: #657422;">legend.position =</span> <span class="st" style="color: #20794D;">'none'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-27">  <span class="fu" style="color: #4758AB;">geom_text</span>(<span class="fu" style="color: #4758AB;">aes</span>(x_anomaly, y_anomaly, <span class="at" style="color: #657422;">label =</span> month), <span class="at" style="color: #657422;">data =</span> months, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'white'</span>, <span class="at" style="color: #657422;">size =</span> MicrobioUoE<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pts</span>(<span class="dv" style="color: #AD0000;">18</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-28">  <span class="fu" style="color: #4758AB;">geom_path</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">col =</span> anomaly), <span class="at" style="color: #657422;">alpha =</span> <span class="fl" style="color: #AD0000;">0.9</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-29">  <span class="fu" style="color: #4758AB;">scale_color_gradientn</span>(<span class="st" style="color: #20794D;">'Temperature anomaly'</span>, <span class="at" style="color: #657422;">colors =</span> <span class="fu" style="color: #4758AB;">met.brewer</span>(<span class="at" style="color: #657422;">name=</span><span class="st" style="color: #20794D;">'Homer1'</span>, <span class="at" style="color: #657422;">direction=</span><span class="sc" style="color: #5E5E5E;">-</span><span class="dv" style="color: #AD0000;">1</span>, <span class="at" style="color: #657422;">override.order =</span> F)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-30">  ggforce<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">geom_circle</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x0 =</span> x0, <span class="at" style="color: #657422;">y0 =</span> y0, <span class="at" style="color: #657422;">r =</span> r, <span class="at" style="color: #657422;">linewidth =</span> <span class="fu" style="color: #4758AB;">I</span>(<span class="fl" style="color: #AD0000;">1.5</span>)), <span class="at" style="color: #657422;">fill =</span> <span class="cn" style="color: #8f5902;">NA</span>, <span class="at" style="color: #657422;">data =</span> circles, <span class="at" style="color: #657422;">inherit.aes =</span> <span class="cn" style="color: #8f5902;">FALSE</span>,<span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'white'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-31">  <span class="fu" style="color: #4758AB;">geom_label</span>(<span class="fu" style="color: #4758AB;">aes</span>(x0, r, <span class="at" style="color: #657422;">label =</span> label), circles, <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">'white'</span>, <span class="at" style="color: #657422;">size =</span> MicrobioUoE<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pts</span>(<span class="dv" style="color: #AD0000;">18</span>)) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-32">  <span class="fu" style="color: #4758AB;">coord_equal</span>() <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb12-33">  <span class="fu" style="color: #4758AB;">geom_text</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">x =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">y =</span> <span class="dv" style="color: #AD0000;">0</span>, <span class="at" style="color: #657422;">label =</span> year, <span class="at" style="color: #657422;">col =</span> anomaly), <span class="at" style="color: #657422;">size =</span> MicrobioUoE<span class="sc" style="color: #5E5E5E;">::</span><span class="fu" style="color: #4758AB;">pts</span>(<span class="dv" style="color: #AD0000;">30</span>))</span>
+<span id="cb12-34"></span>
+<span id="cb12-35">p1</span></code></pre></div>
+<div class="cell-output-display">
+<p><img src="https://padpadpadpad.netlify.app/posts/climate_spiral/index_files/figure-html/make_new_plot-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This looks great and more like what NASA created. We can easily animate this using <strong>gganimate::transition_reveal()</strong> and adding the column for time that we created earlier.</p>
+<p>We can add a frame for every single row of the dataframe using <code>nframes = nrow(d)</code>. We will also add a point to make it more obvious where we are at any given time.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><span class="co" style="color: #5E5E5E;"># add animation layer using gganimate</span></span>
+<span id="cb13-2">p_anim <span class="ot" style="color: #003B4F;">&lt;-</span> p1 <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-3">  <span class="fu" style="color: #4758AB;">geom_point</span>(<span class="at" style="color: #657422;">shape =</span> <span class="dv" style="color: #AD0000;">21</span>, <span class="at" style="color: #657422;">fill =</span> <span class="st" style="color: #20794D;">'green'</span>, <span class="at" style="color: #657422;">data =</span> d, <span class="at" style="color: #657422;">size =</span> <span class="dv" style="color: #AD0000;">4</span>, <span class="at" style="color: #657422;">col =</span> <span class="st" style="color: #20794D;">'white'</span>) <span class="sc" style="color: #5E5E5E;">+</span></span>
+<span id="cb13-4">  <span class="fu" style="color: #4758AB;">transition_reveal</span>(time)</span>
+<span id="cb13-5"></span>
+<span id="cb13-6"><span class="co" style="color: #5E5E5E;"># save out the animation</span></span>
+<span id="cb13-7"><span class="fu" style="color: #4758AB;">anim_save</span>(<span class="at" style="color: #657422;">filename =</span> <span class="st" style="color: #20794D;">'posts/climate_spiral/climate_spiral.gif'</span>, p_anim, <span class="at" style="color: #657422;">nframes =</span> <span class="fu" style="color: #4758AB;">nrow</span>(d), <span class="at" style="color: #657422;">duration =</span> <span class="dv" style="color: #AD0000;">45</span>, <span class="at" style="color: #657422;">width =</span> <span class="fl" style="color: #AD0000;">5.5</span>, <span class="at" style="color: #657422;">height =</span> <span class="dv" style="color: #AD0000;">6</span>, <span class="at" style="color: #657422;">units =</span> <span class="st" style="color: #20794D;">'in'</span>, <span class="at" style="color: #657422;">renderer =</span> <span class="fu" style="color: #4758AB;">gifski_renderer</span>(), <span class="at" style="color: #657422;">res =</span> <span class="dv" style="color: #AD0000;">150</span>)</span></code></pre></div>
+</div>
+<p><img src="https://padpadpadpad.netlify.app/posts/climate_spiral/climate_spiral.gif" class="img-fluid"></p>
+<p>This looks amazing! There are probably ways I could improve the animation but this suits my motivations right now. For example, I have not linked the size of the line to the extent of the change, but this should be relatively easy to implement.</p>
+<p>I generally love this type of visualisation, and the spiral could be used on other data, such as atmospheric carbon dioxide levels or Arctic sea ice extent, to show how these variables have changed through time. By presenting data in this way, the Climate Spiral helps people to understand the steady, consistent increase in global temperatures over time, and the urgency of addressing climate change.</p>
+<p>Let me know if you found this helpful and if you any questions!</p>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>ggplot2</category>
+  <category>climate change</category>
+  <category>gganimate</category>
+  <category>climate spiral</category>
+  <guid>https://padpadpadpad.netlify.app/posts/climate_spiral/index.html</guid>
+  <pubDate>Thu, 16 Feb 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://padpadpadpad.netlify.app/posts/climate_spiral/preview.jpeg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Rolling regression to estimate microbial growth rate</title>
   <dc:creator>Daniel Padfield</dc:creator>

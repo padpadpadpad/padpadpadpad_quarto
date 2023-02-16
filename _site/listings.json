@@ -30,6 +30,7 @@
   {
     "listing": "/posts.html",
     "items": [
+      "/posts/climate_spiral/index.html",
       "/posts/rolling_regression/index.html",
       "/posts/animate_rstrava/index.html",
       "/posts/bootstrap_nls/index.html",
