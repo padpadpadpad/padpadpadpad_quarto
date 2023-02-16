@@ -1,7 +1,7 @@
 ---
 title: Recreate Ed Hawkins' climate spiral in R
 description: |
-  Use ggplot2 and gganimate to visualise climate change over the last 
+  Use ggplot2 and gganimate to visualise climate change since 1880
 author: Daniel Padfield
 date: "02/16/2023"
 date-modified: last-modified
@@ -15,7 +15,7 @@ image: "/posts/climate_spiral/preview.jpeg"
 execute:
   message: false
   warning: false
-  fig-align: "center"
+  fig-align: "centre"
 ---
 
 ## Introduction
@@ -98,6 +98,7 @@ We are now ready to make our first plot. I have chosen a [MetBrewer](https://git
 ```{r first_plot}
 #| fig.height: 6
 #| fig.width: 7
+#| fig-align: 'centre'
 
 # create first plot
 p1 <- ggplot(d, aes(month2, anomaly, col = anomaly)) +
@@ -148,6 +149,8 @@ We can control the font size of **geom_text()** in terms of font size used in th
 ```{r make_new_plot}
 #| fig.height: 6
 #| fig.width: 7
+#| fig-align: 'centre'
+
 
 # create limits
 limits <- c(-(max(d$anomaly) + buffer), max(d$anomaly) + buffer)

@@ -111,7 +111,7 @@
 <span id="cb6-2">d <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">filter</span>(d, year <span class="sc" style="color: #5E5E5E;">&lt;</span> <span class="dv" style="color: #AD0000;">2023</span>)</span></code></pre></div>
 </div>
 <p>We are now ready to make our first plot. I have chosen a <a href="https://github.com/BlakeRMills/MetBrewer">MetBrewer</a> colour palette which goes from blue to red to represent the hot and cold colours. For the plot I will use a theme I defined previously in a random <a href="https://github.com/padpadpadpad/MicrobioUoE">R package</a> called <strong>theme_black()</strong> (lots of other themes are available).</p>
-<div class="cell">
+<div class="cell" data-layout-align="centre">
 <div class="sourceCode cell-code" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;"># create first plot</span></span>
 <span id="cb7-2">p1 <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">ggplot</span>(d, <span class="fu" style="color: #4758AB;">aes</span>(month2, anomaly, <span class="at" style="color: #657422;">col =</span> anomaly)) <span class="sc" style="color: #5E5E5E;">+</span></span>
 <span id="cb7-3">  <span class="fu" style="color: #4758AB;">geom_line</span>(<span class="fu" style="color: #4758AB;">aes</span>(<span class="at" style="color: #657422;">group =</span> year)) <span class="sc" style="color: #5E5E5E;">+</span></span>
@@ -123,7 +123,11 @@
 <span id="cb7-9"></span>
 <span id="cb7-10">p1 <span class="sc" style="color: #5E5E5E;">+</span> <span class="fu" style="color: #4758AB;">coord_polar</span>()</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://padpadpadpad.netlify.app/posts/climate_spiral/index_files/figure-html/first_plot-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://padpadpadpad.netlify.app/posts/climate_spiral/index_files/figure-html/first_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This is looking quite good, but still quite far from the polished version on NASA’s YouTube. One of the problems we have is that <strong>geom_path()</strong> will not cross over the 0-360 line when using <strong>coord_polar()</strong>. This would ruin the whole visualisation and prevent us having a smooth transition from year to year. This was a problem I was not clever enough to solve, but luckily <a href="https://stackoverflow.com/questions/55132352/geom-path-refuses-to-cross-over-the-0-360-line-in-coord-polar">StackOverflow</a> had the answer. We need to convert the polar coordinates to cartesian to allow the animation to go from December to January of the next year.</p>
@@ -173,7 +177,7 @@
 <p>Our original plot also does not have very nice labelling to tell us anything about the extent of the anomaly (1ºC above or below average etc.)</p>
 <p>However, we can add these ourselves by using some functions from <strong>ggforce</strong> to create circles on our plot and labelling them. We also create a dataframe to place the months at a nicer place on the plot.</p>
 <p>We can control the font size of <strong>geom_text()</strong> in terms of font size used in the rest of the plot using the <strong>pts()</strong> function that I copied from <a href="https://www.andrewheiss.com/">Andrew Heiss</a>.</p>
-<div class="cell">
+<div class="cell" data-layout-align="centre">
 <div class="sourceCode cell-code" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><span class="co" style="color: #5E5E5E;"># create limits</span></span>
 <span id="cb12-2">limits <span class="ot" style="color: #003B4F;">&lt;-</span> <span class="fu" style="color: #4758AB;">c</span>(<span class="sc" style="color: #5E5E5E;">-</span>(<span class="fu" style="color: #4758AB;">max</span>(d<span class="sc" style="color: #5E5E5E;">$</span>anomaly) <span class="sc" style="color: #5E5E5E;">+</span> buffer), <span class="fu" style="color: #4758AB;">max</span>(d<span class="sc" style="color: #5E5E5E;">$</span>anomaly) <span class="sc" style="color: #5E5E5E;">+</span> buffer)</span>
 <span id="cb12-3"></span>
@@ -210,7 +214,11 @@
 <span id="cb12-34"></span>
 <span id="cb12-35">p1</span></code></pre></div>
 <div class="cell-output-display">
-<p><img src="https://padpadpadpad.netlify.app/posts/climate_spiral/index_files/figure-html/make_new_plot-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://padpadpadpad.netlify.app/posts/climate_spiral/index_files/figure-html/make_new_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This looks great and more like what NASA created. We can easily animate this using <strong>gganimate::transition_reveal()</strong> and adding the column for time that we created earlier.</p>

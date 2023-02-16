@@ -8,7 +8,7 @@
 
 <meta name="author" content="Daniel Padfield">
 <meta name="dcterms.date" content="2023-02-16">
-<meta name="description" content="Use ggplot2 and gganimate to visualise climate change over the last">
+<meta name="description" content="Use ggplot2 and gganimate to visualise climate change since 1880">
 
 <title>DanPadLab - Recreate Ed Hawkins’ climate spiral in R</title>
 <style>
@@ -188,7 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <h1 class="title">Recreate Ed Hawkins’ climate spiral in R</h1>
                   <div>
         <div class="description">
-          <p>Use ggplot2 and gganimate to visualise climate change over the last</p>
+          <p>Use ggplot2 and gganimate to visualise climate change since 1880</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -338,7 +338,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>d <span class="ot">&lt;-</span> <span class="fu">filter</span>(d, year <span class="sc">&lt;</span> <span class="dv">2023</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We are now ready to make our first plot. I have chosen a <a href="https://github.com/BlakeRMills/MetBrewer">MetBrewer</a> colour palette which goes from blue to red to represent the hot and cold colours. For the plot I will use a theme I defined previously in a random <a href="https://github.com/padpadpadpad/MicrobioUoE">R package</a> called <strong>theme_black()</strong> (lots of other themes are available).</p>
-<div class="cell">
+<div class="cell" data-layout-align="centre">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create first plot</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>p1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(d, <span class="fu">aes</span>(month2, anomaly, <span class="at">col =</span> anomaly)) <span class="sc">+</span></span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">group =</span> year)) <span class="sc">+</span></span>
@@ -350,7 +350,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>p1 <span class="sc">+</span> <span class="fu">coord_polar</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/first_plot-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/first_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This is looking quite good, but still quite far from the polished version on NASA’s YouTube. One of the problems we have is that <strong>geom_path()</strong> will not cross over the 0-360 line when using <strong>coord_polar()</strong>. This would ruin the whole visualisation and prevent us having a smooth transition from year to year. This was a problem I was not clever enough to solve, but luckily <a href="https://stackoverflow.com/questions/55132352/geom-path-refuses-to-cross-over-the-0-360-line-in-coord-polar">StackOverflow</a> had the answer. We need to convert the polar coordinates to cartesian to allow the animation to go from December to January of the next year.</p>
@@ -400,7 +404,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Our original plot also does not have very nice labelling to tell us anything about the extent of the anomaly (1ºC above or below average etc.)</p>
 <p>However, we can add these ourselves by using some functions from <strong>ggforce</strong> to create circles on our plot and labelling them. We also create a dataframe to place the months at a nicer place on the plot.</p>
 <p>We can control the font size of <strong>geom_text()</strong> in terms of font size used in the rest of the plot using the <strong>pts()</strong> function that I copied from <a href="https://www.andrewheiss.com/">Andrew Heiss</a>.</p>
-<div class="cell">
+<div class="cell" data-layout-align="centre">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create limits</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>limits <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="sc">-</span>(<span class="fu">max</span>(d<span class="sc">$</span>anomaly) <span class="sc">+</span> buffer), <span class="fu">max</span>(d<span class="sc">$</span>anomaly) <span class="sc">+</span> buffer)</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -437,7 +441,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb12-34"><a href="#cb12-34" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb12-35"><a href="#cb12-35" aria-hidden="true" tabindex="-1"></a>p1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="index_files/figure-html/make_new_plot-1.png" class="img-fluid" width="672"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="index_files/figure-html/make_new_plot-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
 </div>
 </div>
 <p>This looks great and more like what NASA created. We can easily animate this using <strong>gganimate::transition_reveal()</strong> and adding the column for time that we created earlier.</p>
