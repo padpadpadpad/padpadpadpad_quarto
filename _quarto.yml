@@ -3,7 +3,7 @@ project:
   output-dir: _site
 
 website:
-  google-analytics: "G-D1497ES839"
+  google-analytics: G-D1497ES839
   title: "DanPadLab"
   site-url: https://padpadpadpad.netlify.app
   repo-url: https://github.com/padpadpadpad/padpadpadpad_quarto

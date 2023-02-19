@@ -30,7 +30,7 @@ knitr::opts_chunk$set(echo = FALSE)
 
 I am a microbial ecologist working at the University of Exeter in Penryn, Cornwall. I have broad interests that span climate change, evolution, and community ecology. My research has concentrated on how environmental change alters the interplay of ecological and evolutionary dynamics in microbial communities. I do this by combining theory and simulations with experimental evolution. In January 2023 I started a NERC Independent Research Fellowship at the University of Exeter to explore the links between climate warming and antibiotic resistance in microbial communities.
 
-I am an avid R programmer - authoring the R packages **nls.multstart** and **rTPC** - and specialise in the wrangling and manipulation of large datasets and statistical analysis. I also have experience in bioinformatics from 16S sequencing to _de novo_ genome assembly, the latter using bash scripting.
+One of my favourite parts of research is exploring new and exciting datasets. I have been using R for >10 years - authoring the R packages **nls.multstart** and **rTPC** - and specialise in the wrangling, manipulation, and visualisation of large datasets and statistical analysis.
 
 I am also a carer for my partner. She has full-body neuropathic pain, severe ME/CFS and has been bed-bound for around 4 years. She lives with her parents in Cheltenham and I visit for long weekends every three to four weeks.
 

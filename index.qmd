@@ -6,8 +6,8 @@ about:
   template: jolla
 ---
 
-I am Daniel Padfield and I know this is a terrible name for a research group but it will do for now. My group is based at the University of Exeter (at the Cornwall campus by the sea) and we are broadly interested in understanding how microbial communities respond to environmental change. To do this, we use a variety of sequencing, experimental, and modelling approaches.
+I am Daniel Padfield and I am based at the University of Exeter (at the Cornwall campus by the sea). My research is broadly interested in understanding how microbial communities respond to environmental change. To do this, I use a variety of sequencing, experimental, and modelling approaches.
 
-We are also committed to reproducible and open science. All of the code and data from our projects are freely available online through GitHub and archived on Zenodo.
+I am also committed to reproducible and open science. All of the code and data from my projects are freely available online through GitHub and archived on Zenodo.
 
-The aim of this website is to allow us to document our work and to provide a space to share useful code and walk-throughs. I also hope to use this as an outlet to document my academic journey as I attempt to manage being an academic alongside being a long-time carer. 
+The aim of this website is to allow me to document my work and to provide a space to share useful code and walk-throughs. I also hope to use this as an outlet to document my academic journey as I attempt to manage being an academic alongside being a long-time carer. 
