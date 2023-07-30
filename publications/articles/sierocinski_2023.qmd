@@ -1,0 +1,20 @@
+---
+title: "The ecology of scale: impact of volume on coalescence and function in methanogenic communities"
+type: "article"
+author: "Pawel Sierocinski, Peter Stilwell, Daniel Padfield, Florian Bayer and Angus Buckling"
+year: "2023"
+publication: "Royal Society Interface Focus"
+doi: "https://doi.org/10.1098/rsfs.2022.0089"
+data: "https://www.ebi.ac.uk/ena/browser/view/PRJEB61013"
+toc: false
+comments: false
+---
+
+## Citation
+
+Sierocinski, P., Stilwell, P., Padfield, D., Bayer, F., & Buckling, A. (2023). The ecology of scale: impact of volume on coalescence and function in methanogenic communities. __Interface Focus__, _13(4)_, 20220089.
+
+## Abstract
+
+Engineered ecosystems span multiple volume scales, from a nano-scale to thousands of cubic metres. Even the largest industrial systems are tested in pilot scale facilities. But does scale affect outcomes? Here we look at comparing different size laboratory anaerobic fermentors to see if and how the volume of the community affects the outcome of community coalescence (combining multiple communities) on community composition and function. Our results show that there is an effect of scale on biogas production. Furthermore, we see a link between community evenness and volume, with smaller scale communities having higher evenness. Despite those differences, the overall patterns of community coalescence are very similar at all scales, with coalescence leading to levels of biogas production comparable with that of the best-performing component community. The increase in biogas with increasing volume plateaus, suggesting there is a volume where productivity stays stable over large volumes. Our findings are reassuring for ecologists studying large ecosystems and industries operating pilot scale facilities, as they support the validity of pilot scale studies in this field.
+

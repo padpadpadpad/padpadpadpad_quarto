@@ -98,7 +98,7 @@ We are now ready to make our first plot. I have chosen a [MetBrewer](https://git
 ```{r first_plot}
 #| fig.height: 6
 #| fig.width: 7
-#| fig-align: 'centre'
+#| fig-align: 'center'
 
 # create first plot
 p1 <- ggplot(d, aes(month2, anomaly, col = anomaly)) +
@@ -149,7 +149,7 @@ We can control the font size of **geom_text()** in terms of font size used in th
 ```{r make_new_plot}
 #| fig.height: 6
 #| fig.width: 7
-#| fig-align: 'centre'
+#| fig-align: 'center'
 
 
 # create limits

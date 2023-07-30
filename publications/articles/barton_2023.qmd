@@ -1,0 +1,19 @@
+---
+title: "Comparative experimental evolution reveals species‐specific idiosyncrasies in marine phytoplankton adaptation to warming"
+type: "article"
+author: "Samuel Barton, Daniel Padfield, Abigail Masterson, Angus Buckling, Nicholas Smirnoff, Gabriel Yvon‐Durocher"
+year: "2023"
+publication: "Global Change Biology"
+doi: "https://doi.org/10.1111/gcb.16827"
+data: "http://doi.org/10.6084/m9.figshare.22100018"
+toc: false
+comments: false
+---
+
+## Citation
+
+Barton, S., Padfield, D., Masterson, A., Buckling, A., Smirnoff, N., & Yvon‐Durocher, G. (2023). Comparative experimental evolution reveals species‐specific idiosyncrasies in marine phytoplankton adaptation to warming. **Global Change Biology**.
+
+## Abstract
+
+A number of experimental studies have demonstrated that phytoplankton can display rapid thermal adaptation in response to warmed environments. While these studies provide insight into the evolutionary responses of single species, they tend to employ different experimental techniques. Consequently, our ability to compare the potential for thermal adaptation across different, ecologically relevant, species remains limited. Here, we address this limitation by conducting simultaneous long-term warming experiments with the same experimental design on clonal isolates of three phylogenetically diverse species of marine phytoplankton; the cyanobacterium _Synechococcus sp._, the prasinophyte _Ostreococcus tauri_ and the diatom _Phaeodoactylum tricornutum_. Over the same experimental time period, we observed differing levels of thermal adaptation in response to stressful supra-optimal temperatures. _Synechococcus sp._ displayed the greatest improvement in fitness (i.e., growth rate) and thermal tolerance (i.e., temperature limits of growth). _Ostreococcus tauri_ was able to improve fitness and thermal tolerance, but to a lesser extent. Finally, _Phaeodoactylum tricornutum_ showed no signs of adaptation. These findings could help us understand how the structure of phytoplankton communities may change in response to warming, and possible biogeochemical implications, as some species show relatively more rapid adaptive shifts in their thermal tolerance.

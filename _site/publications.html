@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.189">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -70,7 +70,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-title','listing-type','listing-author','listing-year','listing-publication','listing-open_access','listing-doi','listing-code','listing-data','listing-toc','listing-comments','listing-path','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-preprint','listing-image',{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-project','listing-website','listing-comments','listing-format','listing-editor','listing-language','listing-title','listing-type','listing-author','listing-year','listing-publication','listing-open_access','listing-doi','listing-code','listing-data','listing-toc','listing-path','listing-outputHref','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-preprint',{ data: ['index'] },{ data: ['categories'] }],
       
       searchColumns: ["listing-title","listing-author","listing-publication","listing-year"],
     };
@@ -99,6 +99,7 @@ gtag('js', new Date());
 gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="styles.css">
@@ -115,38 +116,45 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <span class="navbar-title">DanPadLab</span>
     </a>
   </div>
+            <div id="quarto-search" class="" title="Search"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html">Home</a>
+    <a class="nav-link" href="./index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html">About</a>
+    <a class="nav-link" href="./about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./posts.html">Posts</a>
+    <a class="nav-link" href="./posts.html" rel="" target="">
+ <span class="menu-text">Posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./software.html">Software</a>
+    <a class="nav-link" href="./software.html" rel="" target="">
+ <span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./publications.html" aria-current="page">Publications</a>
+    <a class="nav-link active" href="./publications.html" rel="" target="" aria-current="page">
+ <span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&amp;hl=en"><i class="bi bi-mortarboard-fill" role="img">
+    <a class="nav-link" href="https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&amp;hl=en" rel="" target=""><i class="bi bi-mortarboard-fill" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/padpadpadpad"><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/padpadpadpad" rel="" target=""><i class="bi bi-github" role="img">
 </i> 
- </a>
+ <span class="menu-text"></span></a>
   </li>  
 </ul>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
@@ -156,7 +164,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(23)</span></div></div></div>
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(25)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
@@ -193,7 +201,39 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </div>
 </div>
 <ul class="pub-list list">
-  <li data-index="0" data-listing-file-modified-sort="1675767821806" data-listing-reading-time-sort="0.79">
+  <li data-index="0" data-listing-file-modified-sort="1690743275542" data-listing-reading-time-sort="2">
+    <span class="listing-title lead">Comparative experimental evolution reveals species‐specific idiosyncrasies in marine phytoplankton adaptation to warming</span><br>
+    <span class="listing-author">Samuel Barton, Daniel Padfield, Abigail Masterson, Angus Buckling, Nicholas Smirnoff, Gabriel Yvon‐Durocher</span><br>
+    <span class="listing-publication fw-bolder ">Global Change Biology</span>
+    <span class="listing-year">(2023)</span><br>
+    <a href="./publications/articles/barton_2023.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1111/gcb.16827" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <a href="http://doi.org/10.6084/m9.figshare.22100018" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-zip"></i> Data
+    </a>
+    <br><br>
+  </li>
+  <li data-index="1" data-listing-file-modified-sort="1690743452935" data-listing-reading-time-sort="2">
+    <span class="listing-title lead">The ecology of scale: impact of volume on coalescence and function in methanogenic communities</span><br>
+    <span class="listing-author">Pawel Sierocinski, Peter Stilwell, Daniel Padfield, Florian Bayer and Angus Buckling</span><br>
+    <span class="listing-publication fw-bolder ">Royal Society Interface Focus</span>
+    <span class="listing-year">(2023)</span><br>
+    <a href="./publications/articles/sierocinski_2023.html" class="btn btn-primary">
+      Details
+    </a>
+    <a href="https://doi.org/10.1098/rsfs.2022.0089" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+      DOI
+    </a>
+    <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB61013" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-file-earmark-zip"></i> Data
+    </a>
+    <br><br>
+  </li>
+  <li data-index="2" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1">
     <span class="listing-title lead">A comprehensive list of bacterial pathogens infecting humans</span><br>
     <span class="listing-author">Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos</span><br>
     <span class="listing-publication fw-bolder ">Microbiology</span>
@@ -212,7 +252,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="1" data-listing-file-modified-sort="1675807851368" data-listing-reading-time-sort="1.64">
+  <li data-index="3" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="2">
     <span class="listing-title lead">Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season</span><br>
     <span class="listing-author">George JF Swan, Stuart Bearhop, Stephen M Redpath, Matthew J Silk, Daniel Padfield, Cecily ED Goodwin, Robbie A McDonald</span><br>
     <span class="listing-publication fw-bolder ">Ecology &amp; Evolution</span>
@@ -228,7 +268,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="2" data-listing-file-modified-sort="1675770903270" data-listing-reading-time-sort="1.35">
+  <li data-index="4" data-listing-file-modified-sort="1676326100586" data-listing-reading-time-sort="2">
     <span class="listing-title lead">Bacterial colonisation dynamics of household plastics in a coastal environment</span><br>
     <span class="listing-author">Luke Lear, Daniel Padfield, Tirion Dowsett, Maia Jones, Suzanne Kay, Alex Hayward, Michiel Vos</span><br>
     <span class="listing-publication fw-bolder ">Science of the Total Environment</span>
@@ -247,7 +287,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="3" data-listing-file-modified-sort="1675774698315" data-listing-reading-time-sort="1.14">
+  <li data-index="5" data-listing-file-modified-sort="1676326100586" data-listing-reading-time-sort="2">
     <span class="listing-title lead">Disturbance‐mediated invasions are dependent on community resource abundance</span><br>
     <span class="listing-author">Luke Lear, Daniel Padfield, Hidetoshi Inamine, Katriona Shea, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Ecology</span>
@@ -266,7 +306,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="4" data-listing-file-modified-sort="1675807827249" data-listing-reading-time-sort="1.26">
+  <li data-index="6" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2">
     <span class="listing-title lead">Greater phage genotypic diversity constrains arms-race coevolution</span><br>
     <span class="listing-author">Meaghan Castledine, Pawel Sierocinski, Mhairi Inglis, Suzanne Kay, Alex Hayward, Angus Buckling, Daniel Padfield</span><br>
     <span class="listing-publication fw-bolder ">Frontiers in Cellular and Infection Microbiology</span>
@@ -285,7 +325,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="5" data-listing-file-modified-sort="1675807838064" data-listing-reading-time-sort="1.255">
+  <li data-index="7" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2">
     <span class="listing-title lead">Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro</span><br>
     <span class="listing-author">Meaghan Castledine, Daniel Padfield, Pawel Sierocinski, Jesica Soria Pascual, Adam Hughes, Lotta Mäkinen, Ville-Petri Friman, Jean-Paul Pirnay, Maya Merabishvili, Daniel De Vos, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">eLife</span>
@@ -307,7 +347,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="6" data-listing-file-modified-sort="1675888232542" data-listing-reading-time-sort="0.745">
+  <li data-index="8" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="1">
     <span class="listing-title lead">CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data</span><br>
     <span class="listing-author">Matthew J Silk, Robbie A McDonald, Richard J Delahay, Daniel Padfield, David J Hodgson</span><br>
     <span class="listing-publication fw-bolder ">Methods in Ecology &amp; Evolution</span>
@@ -323,7 +363,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="7" data-listing-file-modified-sort="1675887933337" data-listing-reading-time-sort="0.825">
+  <li data-index="9" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Compost spatial heterogeneity promotes evolutionary diversification of a bacterium</span><br>
     <span class="listing-author">Stineke van Houte, Daniel Padfield, Pedro Gómez, Adela M Luján, Michael A Brockhurst, Steve Paterson, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Journal of Evolutionary Biology</span>
@@ -345,7 +385,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="8" data-listing-file-modified-sort="1675808583252" data-listing-reading-time-sort="1">
+  <li data-index="10" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1">
     <span class="listing-title lead">The impact of propagule pressure on whole community invasions in biomethane-producing communities</span><br>
     <span class="listing-author">Pawel Sierocinski, Jesica Soria Pascual, Daniel Padfield, Mike Salter, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">iScience</span>
@@ -364,7 +404,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="9" data-listing-file-modified-sort="1675884719681" data-listing-reading-time-sort="1.225">
+  <li data-index="11" data-listing-file-modified-sort="1676326100581" data-listing-reading-time-sort="2">
     <span class="listing-title lead">Warming impairs trophic transfer efficiency in a long-term field experiment</span><br>
     <span class="listing-author">Diego R Barneche, Chris J Hulatt, Matteo Dossena, Daniel Padfield, Guy Woodward, Mark Trimmer, Gabriel Yvon-Durocher</span><br>
     <span class="listing-publication fw-bolder ">Nature</span>
@@ -386,7 +426,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="10" data-listing-file-modified-sort="1675884800377" data-listing-reading-time-sort="1.295">
+  <li data-index="12" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="2">
     <span class="listing-title lead">rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R</span><br>
     <span class="listing-author">Daniel Padfield, Hannah O'Sullivan, Samraat Pawar</span><br>
     <span class="listing-publication fw-bolder ">Methods in Ecology &amp; Evolution</span>
@@ -402,7 +442,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="11" data-listing-file-modified-sort="1675888639499" data-listing-reading-time-sort="0.73">
+  <li data-index="13" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Community coalescence: an eco-evolutionary perspective</span><br>
     <span class="listing-author">Meaghan Castledine, Pawel Sierocinski, Daniel Padfield, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Philosophical Transactions of the Royal Society B</span>
@@ -415,7 +455,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="12" data-listing-file-modified-sort="1675888955705" data-listing-reading-time-sort="0.95">
+  <li data-index="14" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Evolution of diversity explains the impact of pre-adaptation of a focal species on the structure of a natural microbial community</span><br>
     <span class="listing-author">Daniel Padfield, Alex Vujakovic, Steve Paterson, Rob Griffiths, Angus Buckling, Elze Hesse</span><br>
     <span class="listing-publication fw-bolder ">ISME</span>
@@ -437,7 +477,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="13" data-listing-file-modified-sort="1675888486696" data-listing-reading-time-sort="0.865">
+  <li data-index="15" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Experimental (co)evolution in a multi‐species microbial community results in local maladaptation</span><br>
     <span class="listing-author">Meaghan Castledine, Daniel Padfield, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Ecology Letters</span>
@@ -456,7 +496,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="14" data-listing-file-modified-sort="1675889275436" data-listing-reading-time-sort="1.49">
+  <li data-index="16" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="2">
     <span class="listing-title lead">Postrelease movement and habitat selection of translocated pine martens Martes martes</span><br>
     <span class="listing-author">Catherine M McNicol, David Bavin, Stuart Bearhop, Josie Bridges, Elizabeth Croose, Robin Gill, Cecily ED Goodwin, John Lewis, Jenny MacPherson, Daniel Padfield, Henry Schofield, Matthew J Silk, Alexandra J Tomlinson, Robbie A McDonald</span><br>
     <span class="listing-publication fw-bolder ">Ecology &amp; Evolution</span>
@@ -472,7 +512,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="15" data-listing-file-modified-sort="1675889479815" data-listing-reading-time-sort="1">
+  <li data-index="17" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host</span><br>
     <span class="listing-author">Daniel Padfield, Meaghan Castledine, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">ISME</span>
@@ -494,7 +534,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="16" data-listing-file-modified-sort="1675971479153" data-listing-reading-time-sort="1.265">
+  <li data-index="18" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="2">
     <span class="listing-title lead">A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens</span><br>
     <span class="listing-author">Meaghan Castledine, Angus Buckling, Daniel Padfield</span><br>
     <span class="listing-publication fw-bolder ">Journal of Evolutionary Biology</span>
@@ -513,7 +553,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="17" data-listing-file-modified-sort="1675971328335" data-listing-reading-time-sort="0.83">
+  <li data-index="19" data-listing-file-modified-sort="1676326100584" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Anthropogenic remediation of heavy metals selects against natural microbial remediation</span><br>
     <span class="listing-author">Elze Hesse, Daniel Padfield, Florian Bayer, Eleanor M Van Veen, Christopher G Bryan, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Proceedings of the Royal Society B</span>
@@ -532,7 +572,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="18" data-listing-file-modified-sort="1675971623689" data-listing-reading-time-sort="0.875">
+  <li data-index="20" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Linking phytoplankton community metabolism to the individual size distribution</span><br>
     <span class="listing-author">Daniel Padfield, Angus Buckling, Ruth Warfield, Chris Lowe, Gabriel Yvon‐Durocher</span><br>
     <span class="listing-publication fw-bolder ">Ecology Letters</span>
@@ -548,7 +588,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="19" data-listing-file-modified-sort="1675971871249" data-listing-reading-time-sort="1.115">
+  <li data-index="21" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2">
     <span class="listing-title lead">Role of carbon allocation efficiency in the temperature dependence of autotroph growth rates</span><br>
     <span class="listing-author">Bernardo García-Carreras, Sofía Sal, Daniel Padfield, Dimitrios-Georgios Kontopoulos, Elvire Bestion, C-Elisa Schaum, Gabriel Yvon-Durocher, Samraat Pawar</span><br>
     <span class="listing-publication fw-bolder ">PNAS</span>
@@ -558,7 +598,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="20" data-listing-file-modified-sort="1675972067413" data-listing-reading-time-sort="0.21">
+  <li data-index="22" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Temperature‐driven selection on metabolic traits increases the strength of an algal–grazer interaction in naturally warmed streams</span><br>
     <span class="listing-author">C Elisa Schaum, Student Research Team, Richard ffrench‐Constant, Chris Lowe, Jón S Ólafsson, Daniel Padfield, Gabriel Yvon‐Durocher, Yasmin Ashton, Romina Botoli, Peter Coles, Joe Crisp, Emma Dwan, Stella Enoch‐Pledger, Briony Flello, Kate Freegard, Ceri Haines, Matthew Holland, Luke Lear, Emma Lokuciejewski, Heather McPhee, Toby Newport, Liisa Pahk, Sienna Somers, Caspar Swindells, Maria Wild, Ethan Wrigglesworth</span><br>
     <span class="listing-publication fw-bolder ">Global Change Biology</span>
@@ -574,7 +614,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="21" data-listing-file-modified-sort="1675972258300" data-listing-reading-time-sort="0.925">
+  <li data-index="23" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Metabolic compensation constrains the temperature dependence of gross primary production</span><br>
     <span class="listing-author">Daniel Padfield, Chris Lowe, Angus Buckling, Richard Ffrench‐Constant, Student Research Team, Simon Jennings, Felicity Shelley, Jón S Ólafsson, Gabriel Yvon‐Durocher</span><br>
     <span class="listing-publication fw-bolder ">Ecology Letters</span>
@@ -596,7 +636,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </a>
     <br><br>
   </li>
-  <li data-index="22" data-listing-file-modified-sort="1675972568333" data-listing-reading-time-sort="0.88">
+  <li data-index="24" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1">
     <span class="listing-title lead">Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton</span><br>
     <span class="listing-author">Daniel Padfield, Genevieve Yvon‐Durocher, Angus Buckling, Simon Jennings, Gabriel Yvon‐Durocher</span><br>
     <span class="listing-publication fw-bolder ">Ecology Letters</span>
@@ -641,9 +681,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -655,7 +709,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -691,24 +762,128 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
