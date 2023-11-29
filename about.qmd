@@ -7,9 +7,9 @@ image: images/profile_avatar.jpg
 about:
   template: jolla
   links:
-    - icon: twitter
-      text: Twitter
-      href: https://twitter.com/padpadpadpad
+    - icon: square
+      text: Bluesky
+      href: https://bsky.app/profile/padpadpadpad.bsky.social
     - icon: github
       text: Github
       href: https://github.com/padpadpadpad

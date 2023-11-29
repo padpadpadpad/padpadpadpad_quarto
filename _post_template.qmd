@@ -10,4 +10,5 @@ image: ""
 execute:
   message: false
   warning: false
+  fig.align: "center"
 ---

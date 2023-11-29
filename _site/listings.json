@@ -1,5 +1,15 @@
 [
   {
+    "listing": "/posts.html",
+    "items": [
+      "/posts/climate_spiral/index.html",
+      "/posts/rolling_regression/index.html",
+      "/posts/animate_rstrava/index.html",
+      "/posts/bootstrap_nls/index.html",
+      "/posts/nlsmultstart/index.html"
+    ]
+  },
+  {
     "listing": "/publications.html",
     "items": [
       "/publications/articles/barton_2023.html",
@@ -27,16 +37,6 @@
       "/publications/articles/schaum_2018.html",
       "/publications/articles/padfield_2017.html",
       "/publications/articles/padfield_2016.html"
-    ]
-  },
-  {
-    "listing": "/posts.html",
-    "items": [
-      "/posts/climate_spiral/index.html",
-      "/posts/rolling_regression/index.html",
-      "/posts/animate_rstrava/index.html",
-      "/posts/bootstrap_nls/index.html",
-      "/posts/nlsmultstart/index.html"
     ]
   }
 ]
