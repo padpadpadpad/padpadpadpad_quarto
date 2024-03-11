@@ -1,0 +1,18 @@
+---
+title: "Adaptive radiations in natural populations of prokaryotes: innovation is key."
+type: "article"
+author: "Michiel Vos, Daniel Padfield, Christopher Quince, Rutger Vos"
+year: "2023"
+publication: "Fems Microbiology Ecology"
+doi: "https://doi.org/10.1093/femsec/fiad154"
+toc: false
+comments: false
+---
+
+## Citation
+
+Vos, M., Padfield, D., Quince, C., & Vos, R. (2023). Adaptive radiations in natural populations of prokaryotes: innovation is key. FEMS Microbiology Ecology, 99(12), fiad154.
+
+## Abstract
+
+Prokaryote diversity makes up most of the tree of life and is crucial to the functioning of the biosphere and human health. However, the patterns and mechanisms of prokaryote diversification have received relatively little attention compared to animals and plants. Adaptive radiation, the rapid diversification of an ancestor species into multiple ecologically divergent species, is a fundamental process by which macrobiological diversity is generated. Here, we discuss whether ecological opportunity could lead to similar bursts of diversification in bacteria. We explore how adaptive radiations in prokaryotes can be kickstarted by horizontally acquired key innovations allowing lineages to invade new niche space that subsequently is partitioned among diversifying specialist descendants. We discuss how novel adaptive zones are colonized and exploited after the evolution of a key innovation and whether certain types of are more prone to adaptive radiation. Radiation into niche specialists does not necessarily lead to speciation in bacteria when barriers to recombination are absent. We propose that in this scenario, niche-specific genes could accumulate within a single lineage, leading to the evolution of an open pangenome.

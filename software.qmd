@@ -27,6 +27,8 @@ When developing **rTPC**, we made a conscious decision not to repeat code and me
 
 <a href="https://github.com/padpadpadpad/rTPC" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-github"></i> GitHub
+    </a> <a href="https://cran.r-project.org/web/packages/rTPC/index.html" class="btn btn-light" target="_blank" rel="noopener noreferrer">
+      <i class="bi bi-r-circle"></i> CRAN
     </a> <a href="https://padpadpadpad.github.io/rTPC/index.html" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-globe"></i> website
     </a> <a href="https://doi.org/10.1111/2041-210X.13585" class="btn btn-light" target="_blank" rel="noopener noreferrer">

@@ -1,0 +1,19 @@
+---
+title: "Contrary effects of increasing temperatures on the spread of antimicrobial resistance in river biofilms"
+type: "article"
+author: "Kenyum Bagra, David Kneis, Daniel Padfield, Edina Szekeres, Adela Teban-Man, Cristian Coman, Gargi Singh, Thomas U. Berendonk, Uli Klümper"
+year: "2024"
+publication: "Msphere"
+preprint: "https://doi.org/10.1101/2023.09.08.556853"
+doi: "https://doi.org/10.1128/msphere.00573-23"
+toc: false
+comments: false
+---
+
+## Citation
+
+Bagra, K., Kneis, D., Padfield, D., Szekeres, E., Teban-Man, A., Coman, C., ... & Klümper, U. (2024). Contrary effects of increasing temperatures on the spread of antimicrobial resistance in river biofilms. Msphere, e00573-23.
+
+## Abstract
+
+River microbial communities regularly act as the first barrier of defense against the spread of antimicrobial resistance genes (ARGs) that enter environmental microbiomes through wastewater. However, how the invasion dynamics of wastewater-borne ARGs into river biofilm communities will shift due to climate change with increasing average and peak temperatures remains unknown. Here, we aimed to elucidate the effects of increasing temperatures on the naturally occurring river biofilm resistome, as well as the invasion success of foreign ARGs entering through wastewater. Natural biofilms were grown in a low-anthropogenic impact river and transferred to artificial laboratory recirculation flume systems operated at three different temperatures (20°C, 25°C, and 30°C). After 1 week of temperature acclimatization, significant increases in the abundance of the naturally occurring ARGs in biofilms were detected at higher temperatures. After this acclimatization period, biofilms were exposed to a single pulse of wastewater, and the invasion dynamics of wastewater-borne ARGs were analyzed over 2 weeks. After 1 day, wastewater-borne ARGs were able to invade the biofilms successfully with no observable effect of temperature on their relative abundance. However, thereafter, ARGs were lost at a far increased rate at 30°C, with ARG levels dropping to the initial natural levels after 14 days. Contrary to the lower temperatures, ARGs were either lost at slower rates or even able to establish themselves in biofilms with stable relative abundances above natural levels. Hence, higher temperatures come with contrary effects on river biofilm resistomes: naturally occurring ARGs increase in abundance, while foreign, invading ARGs are lost at elevated speeds.

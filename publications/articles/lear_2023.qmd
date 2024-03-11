@@ -1,0 +1,23 @@
+---
+title: "Copper reduces the virulence of bacterial communities at environmentally relevant concentrations."
+type: "article"
+author: "Luke Lear, Daniel Padfield, Elze Hesse, Suzanne Kay, Angus Buckling, Michiel Vos"
+year: "2023"
+publication: "Environment Internatinal"
+preprint: ""
+open_access: ""
+doi: "https://doi.org/10.1016/j.envint.2023.108295"
+code: ""
+data: "https://www.ebi.ac.uk/ena/browser/view/PRJEB70725"
+toc: false
+comments: false
+---
+
+## Citation
+
+Lear, L., Padfield, D., Hesse, E., Kay, S., Buckling, A., & Vos, M. (2023). Copper reduces the virulence of bacterial communities at environmentally relevant concentrations. Environment International, 182, 108295.
+
+## Abstract
+
+Increasing environmental concentrations of metals as a result of anthropogenic pollution are significantly changing many microbial communities. While there is evidence metal pollution can result in increased antibiotic resistance, the effects of metal pollution on the virulence of bacterial communities remains largely undetermined. Here, we experimentally test whether metal stress alters the virulence of bacterial communities. We do this by incubating three wastewater influent communities under different environmentally relevant copper concentrations for three days. We then quantify the virulence of the community phenotypically using the *Galleria mellonella* infection model, and test if differences are due to changes in the rate of biomass accumulation (productivity), copper resistance, or community composition (quantified using 16S amplicon sequencing). The virulence of the communities was found to be reduced by the highest copper concentration, but not to be affected by the lower concentration. As well as reduced virulence, communities exposed to the highest copper concentration were less diverse and had lower productivity. This work highlights that metal pollution may decrease virulence in bacterial communities, but at a cost to diversity and productivity.
+
