@@ -218,7 +218,8 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#submitting-files-to-ena" id="toc-submitting-files-to-ena" class="nav-link" data-scroll-target="#submitting-files-to-ena">Submitting files to ENA</a>
   <ul class="collapse">
   <li><a href="#register-study-using-the-interactive-interface" id="toc-register-study-using-the-interactive-interface" class="nav-link" data-scroll-target="#register-study-using-the-interactive-interface">1. Register study using the interactive interface</a></li>
   <li><a href="#register-samples-using-the-interactive-interface" id="toc-register-samples-using-the-interactive-interface" class="nav-link" data-scroll-target="#register-samples-using-the-interactive-interface">2. Register samples using the interactive interface</a></li>
@@ -226,9 +227,13 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
   <li><a href="#create-manifest-files-for-each-sample" id="toc-create-manifest-files-for-each-sample" class="nav-link" data-scroll-target="#create-manifest-files-for-each-sample">4. Create manifest files for each sample</a></li>
   <li><a href="#submit-samples" id="toc-submit-samples" class="nav-link" data-scroll-target="#submit-samples">5. Submit samples</a></li>
   </ul></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  <li><a href="#extras" id="toc-extras" class="nav-link" data-scroll-target="#extras">Extras</a>
   <ul class="collapse">
-  <li><a href="#extras" id="toc-extras" class="nav-link" data-scroll-target="#extras">Extras</a></li>
+  <li><a href="#permitted-values-for-platform-of-a-manifest-file" id="toc-permitted-values-for-platform-of-a-manifest-file" class="nav-link" data-scroll-target="#permitted-values-for-platform-of-a-manifest-file">Permitted values for platform of a manifest file</a></li>
+  <li><a href="#permitted-value-for-instrument-of-a-manifest-file" id="toc-permitted-value-for-instrument-of-a-manifest-file" class="nav-link" data-scroll-target="#permitted-value-for-instrument-of-a-manifest-file">Permitted value for instrument of a manifest file</a></li>
+  <li><a href="#permitted-values-for-library-selection" id="toc-permitted-values-for-library-selection" class="nav-link" data-scroll-target="#permitted-values-for-library-selection">Permitted values for library selection</a></li>
+  <li><a href="#permitted-values-for-library-strategy" id="toc-permitted-values-for-library-strategy" class="nav-link" data-scroll-target="#permitted-values-for-library-strategy">Permitted values for library strategy</a></li>
   </ul></li>
   </ul>
 </nav>
@@ -252,6 +257,9 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <li>Rename files if needed (I use R)</li>
 <li>Submit samples (using bash and Webin-CLI)</li>
 </ul>
+</section>
+<section id="submitting-files-to-ena" class="level2">
+<h2 class="anchored" data-anchor-id="submitting-files-to-ena">Submitting files to ENA</h2>
 <p>We will go through each one to summarise the main steps and things I often get wrong.</p>
 <section id="register-study-using-the-interactive-interface" class="level3">
 <h3 class="anchored" data-anchor-id="register-study-using-the-interactive-interface">1. Register study using the interactive interface</h3>
@@ -273,11 +281,17 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="fields.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">ENA samples fields</figcaption>
+<figcaption class="figure-caption">ENA sample fields for default sample checklist</figcaption>
 </figure>
 </div>
 <p>If there are extra fields you want to add, then add them, otherwise click <strong>Next</strong> and click <strong>Download Template Spreadsheet</strong>, which will download a .tsv file that contains the minimum required fields for the ENA sample register. When opened in Excel (<strong>the horror</strong>), this will look something like this.</p>
-<p><img src="empty_samples_checklist.png" class="img-fluid" alt="ENA empty samples checklist"> You can then fill out your samples checklist. There is some key advice from the <a href="https://ena-docs.readthedocs.io/en/latest/submit/samples/interactive.html">ENA documentation</a> when filling out this spreadsheet:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="empty_samples_checklist.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Empty ENA samples checklist</figcaption>
+</figure>
+</div>
+<p>You can then fill out your samples checklist. There is some key advice from the <a href="https://ena-docs.readthedocs.io/en/latest/submit/samples/interactive.html">ENA documentation</a> when filling out this spreadsheet:</p>
 <ul>
 <li>Do not remove or modify, the first three lines of the spreadsheet, which specify the checklist in use, field names, and units row.</li>
 <li>Enter data in row 4 of the spreadsheet onwards. Use row 3 (#units) to specify units where required by the checklist.</li>
@@ -297,7 +311,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="complete_samples_checklist.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">ENA complete samples checklist</figcaption>
+<figcaption class="figure-caption">Complete ENA samples checklist</figcaption>
 </figure>
 </div>
 <p>Once completed, this file can be uploaded to the ENA interactive web portal by clicking <strong>Register Samples</strong> -&gt; <strong>Upload filled spreadsheet to register samples</strong> and then <strong>Submit Completed Spreadsheet</strong> after you have chosen your file. The portal will tell you if you are successful which means you can move on to the next stage.</p>
@@ -323,7 +337,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="sample_metadata.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Sample metadata</figcaption>
+<figcaption class="figure-caption">Example sample metadata</figcaption>
 </figure>
 </div>
 <p>I leave the fastq columns blank because I am going to rename the files before uploading to be the same as the <strong>sample_alias</strong>.</p>
@@ -492,7 +506,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><img src="check_validation.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Checking validation</figcaption>
+<figcaption class="figure-caption">Checking validation of manifest files</figcaption>
 </figure>
 </div>
 <p>We can then run the submission for realsies!</p>
@@ -518,10 +532,11 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
 <p>I hope you have enjoyed reading this word vomit of a blog post about submitting to ENA. I hope it is useful to someone. Future me at the very least will be grateful for it. If you have any questions, please feel free to get in touch.</p>
-<section id="extras" class="level3">
-<h3 class="anchored" data-anchor-id="extras">Extras</h3>
-<section id="permitted-values-for-platform-of-a-manifest-file" class="level4">
-<h4 class="anchored" data-anchor-id="permitted-values-for-platform-of-a-manifest-file">Permitted values for platform of a manifest file</h4>
+</section>
+<section id="extras" class="level2">
+<h2 class="anchored" data-anchor-id="extras">Extras</h2>
+<section id="permitted-values-for-platform-of-a-manifest-file" class="level3">
+<h3 class="anchored" data-anchor-id="permitted-values-for-platform-of-a-manifest-file">Permitted values for platform of a manifest file</h3>
 <ul>
 <li>BGISEQ: Sequencers based on DNBSEQ by MGI Tech.</li>
 <li>CAPILLARY: Sequencers based on capillary electrophoresis technology manufactured by LifeTech (formerly Applied BioSciences).</li>
@@ -536,8 +551,8 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <li>ULTIMA: Ultima Genomics platform type. Flowing one nucleotide at a time in order, iteratively.</li>
 </ul>
 </section>
-<section id="permitted-value-for-instrument-of-a-manifest-file" class="level4">
-<h4 class="anchored" data-anchor-id="permitted-value-for-instrument-of-a-manifest-file">Permitted value for instrument of a manifest file</h4>
+<section id="permitted-value-for-instrument-of-a-manifest-file" class="level3">
+<h3 class="anchored" data-anchor-id="permitted-value-for-instrument-of-a-manifest-file">Permitted value for instrument of a manifest file</h3>
 <ul>
 <li>454 GS</li>
 <li>454 GS 20</li>
@@ -606,8 +621,8 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <li>unspecified</li>
 </ul>
 </section>
-<section id="permitted-values-for-library-selection" class="level4">
-<h4 class="anchored" data-anchor-id="permitted-values-for-library-selection">Permitted values for library selection</h4>
+<section id="permitted-values-for-library-selection" class="level3">
+<h3 class="anchored" data-anchor-id="permitted-values-for-library-selection">Permitted values for library selection</h3>
 <ul>
 <li>RANDOM: No Selection or Random selection</li>
 <li>PCR: target enrichment via PCR</li>
@@ -641,7 +656,6 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <li>other: Other library enrichment, screening, or selection process.</li>
 <li>unspecified: Library enrichment, screening, or selection is not specified.</li>
 </ul>
-</section>
 <section id="permitted-values-for-library-source" class="level4">
 <h4 class="anchored" data-anchor-id="permitted-values-for-library-source">Permitted values for library source</h4>
 <ul>
@@ -656,8 +670,9 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 <li>OTHER: Other, unspecified, or unknown library source material.</li>
 </ul>
 </section>
-<section id="permitted-values-for-library-strategy" class="level4">
-<h4 class="anchored" data-anchor-id="permitted-values-for-library-strategy">Permitted values for library strategy</h4>
+</section>
+<section id="permitted-values-for-library-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="permitted-values-for-library-strategy">Permitted values for library strategy</h3>
 <ul>
 <li>WGS: Whole Genome Sequencing - random sequencing of the whole genome (see pubmed 10731132 for details)</li>
 <li>WGA: Whole Genome Amplification followed by random sequencing. (see pubmed 1631067,8962113 for details)</li>
@@ -699,7 +714,6 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 </ul>
 
 
-</section>
 </section>
 </section>
 
