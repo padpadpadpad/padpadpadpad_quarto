@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Daniel Padfield">
+<meta name="dcterms.date" content="2023-11-29">
+<meta name="description" content="A brief guide to submitting sequencing files to the European Nucleotide Archive (ENA) using the Webin-CLI interface.">
+
+<title>DanPadLab - Submitting files to ENA</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-8ZTBW36K7F"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">DanPadLab</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../about.html" rel="" target="">
+ <span class="menu-text">About</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../posts.html" rel="" target="">
+ <span class="menu-text">Posts</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../software.html" rel="" target="">
+ <span class="menu-text">Software</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../publications.html" rel="" target="">
+ <span class="menu-text">Publications</span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&amp;hl=en" rel="" target=""><i class="bi bi-mortarboard-fill" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+  <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/padpadpadpad" rel="" target=""><i class="bi bi-github" role="img">
+</i> 
+ <span class="menu-text"></span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Submitting files to ENA</h1>
+                  <div>
+        <div class="description">
+          <p>A brief guide to submitting sequencing files to the European Nucleotide Archive (ENA) using the Webin-CLI interface.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">sequencing</div>
+                <div class="quarto-category">ENA</div>
+                <div class="quarto-category">R</div>
+                <div class="quarto-category">bash</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Daniel Padfield </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 29, 2023</p>
+      </div>
+    </div>
+    
+      <div>
+      <div class="quarto-title-meta-heading">Modified</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date-modified">March 11, 2024</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a>
+  <ul class="collapse">
+  <li><a href="#register-study-using-the-interactive-interface" id="toc-register-study-using-the-interactive-interface" class="nav-link" data-scroll-target="#register-study-using-the-interactive-interface">1. Register study using the interactive interface</a></li>
+  <li><a href="#register-samples-using-the-interactive-interface" id="toc-register-samples-using-the-interactive-interface" class="nav-link" data-scroll-target="#register-samples-using-the-interactive-interface">2. Register samples using the interactive interface</a></li>
+  <li><a href="#create-sample-metadata" id="toc-create-sample-metadata" class="nav-link" data-scroll-target="#create-sample-metadata">3. Create sample metadata</a></li>
+  <li><a href="#create-manifest-files-for-each-sample" id="toc-create-manifest-files-for-each-sample" class="nav-link" data-scroll-target="#create-manifest-files-for-each-sample">4. Create manifest files for each sample</a></li>
+  <li><a href="#submit-samples" id="toc-submit-samples" class="nav-link" data-scroll-target="#submit-samples">5. Submit samples</a></li>
+  </ul></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a>
+  <ul class="collapse">
+  <li><a href="#extras" id="toc-extras" class="nav-link" data-scroll-target="#extras">Extras</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>The <a href="https://www.ebi.ac.uk/ena/browser/about">European Nucleotide Archive</a> (ENA) provides a comprehensive record of the world’s nucleotide sequencing information, covering raw sequencing data, sequence assembly information and functional annotation. I always find it so painful to submit to ENA. I do it so rarely (maybe once or twice a year) that by the time I come to do it again, I have forgotten how to do it. The ENA documentation is quite good, but it is not always clear what you need to do. I have written this post to help me remember how to submit files using the Webin-CLI software and hopefully help others who are in a similar position.</p>
+<p>So I assume that you have stumbled across this post in a similar position: you have a bunch of sequencing data you want to submit to ENA. Throughout this post, I will reference the <a href="https://ena-docs.readthedocs.io/en/latest/">online documentation</a> provided by the ENA, and you will need to signup to the <a href="https://www.ebi.ac.uk/ena/submit/sra/#home">interactive</a> Webin submission service and download the Webin command line submission interface (<a href="https://github.com/enasequence/webin-cli">Webin-CLI</a>).</p>
+<p>Overall the process for submitting sequencing files can be summarised as:</p>
+<ul>
+<li>Register a study (interactive online)</li>
+<li>Register samples (interactive online and using Excel)</li>
+<li>Create sample metadata (using Excel)</li>
+<li>Make individual manifest files for each sample (I use R)</li>
+<li>Rename files if needed (I use R)</li>
+<li>Submit samples (using bash and Webin-CLI)</li>
+</ul>
+<p>We will go through each one to summarise the main steps and things I often get wrong.</p>
+<section id="register-study-using-the-interactive-interface" class="level3">
+<h3 class="anchored" data-anchor-id="register-study-using-the-interactive-interface">1. Register study using the interactive interface</h3>
+<p>The first thing to do is to register your study. This is easiest to do interactively on the <a href="https://www.ebi.ac.uk/ena/submit/webin/">Webin Submissions Portal</a> and the ENA have a help page on this <a href="https://ena-docs.readthedocs.io/en/latest/submit/study/interactive.html">here</a>. The Register Study link is currently found towards the top left of the page.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="register_study.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">ENA submission portal</figcaption>
+</figure>
+</div>
+<p>This is the easiest bit of the process and probably the only part that doesn’t take me several attempts. If submitting sequences from a study that is nearing publication, you can enter the study title and the abstract. The release date of the study is when all the sequences will become public. I generally put this for a week after I started the process to allow me to make many mistakes, but post submission you can always bring this date forward. Citations can be added at a later date, so it is possible to submit sequencing before the work is published.</p>
+<p>Make a note of the Accession Number for your study as it will be used later (should start with <strong>PRJEB</strong>).</p>
+</section>
+<section id="register-samples-using-the-interactive-interface" class="level3">
+<h3 class="anchored" data-anchor-id="register-samples-using-the-interactive-interface">2. Register samples using the interactive interface</h3>
+<p>A sample is sequenced biomaterial, and we need to register samples to make sure each sample has metadata associated with it. Samples are associated with checklists, which define the fields used to annotate the samples. The ENA help page for this is quite <a href="https://ena-docs.readthedocs.io/en/latest/submit/samples/interactive.html">good</a>.</p>
+<p>When using the interactive submission portal, you need to click through to <strong>Register Samples</strong> and then click <strong>Download spreadsheet to register samples</strong>. There are many different standardised sheets to choose from which should help provide consistent metadata that will allow for better reporting of datasets in the future.</p>
+<p>However, as most of the sequencing I upload are from bespoke, controlled experiments in the lab, I have generally only used the <strong>ENA default sample checklist</strong> which is within <strong>Other Checklists</strong> There are some fields that are mandatory for that checklist. What they are, and their definition is displayed after you have clicked on your checklist.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="fields.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">ENA samples fields</figcaption>
+</figure>
+</div>
+<p>If there are extra fields you want to add, then add them, otherwise click <strong>Next</strong> and click <strong>Download Template Spreadsheet</strong>, which will download a .tsv file that contains the minimum required fields for the ENA sample register. When opened in Excel (<strong>the horror</strong>), this will look something like this.</p>
+<p><img src="empty_samples_checklist.png" class="img-fluid" alt="ENA empty samples checklist"> You can then fill out your samples checklist. There is some key advice from the <a href="https://ena-docs.readthedocs.io/en/latest/submit/samples/interactive.html">ENA documentation</a> when filling out this spreadsheet:</p>
+<ul>
+<li>Do not remove or modify, the first three lines of the spreadsheet, which specify the checklist in use, field names, and units row.</li>
+<li>Enter data in row 4 of the spreadsheet onwards. Use row 3 (#units) to specify units where required by the checklist.</li>
+<li>You can add custom fields by inserting new column headers</li>
+<li>Do not edit the existing column names</li>
+</ul>
+<p>From doing this a few times, I have my own advice for future me that past me learned the hard way:</p>
+<ul>
+<li>Every sample is always associated with a taxon, which is inputted into the <strong>tax_id</strong> column and then the <strong>scientific_name</strong> column. I use the NCBI <a href="https://www.ncbi.nlm.nih.gov/taxonomy">taxonomy browser</a> to find the correct taxon. For example, sediment metagenome has the taxonomy ID of 749907.</li>
+<li>When inputting numbers into Excel, when you double click them to go autofill, they often follow a numeric rule (x+1) or something. Copy and paste the same number into the cell below, and then double click them both to autofill and this does not happen.</li>
+<li>Each sample needs to have its each individual row. The <strong>sample_alias</strong> column needs to be a unique identifier to identify that sample. It is unique to <strong>ALL</strong> future submissions too so make sure you label them in relation to the study <strong>AND</strong> the sample. For example for a recent project on Myxobacteria I started all of them with <strong>myxo_16s_s1</strong> or <strong>myxo_rpoB_1</strong> etc. All the other columns are relative self explanatory. You can also add metadata columns. An example completed file - saved as a<code>.txt\</code> might look something like this.</li>
+<li>I generally have the same name for the <strong>sample_title</strong> as I do for the <strong>sample_alias</strong>.</li>
+<li>In the <strong>sample_description</strong> column, I generally put what sequencing was done.</li>
+<li>For most studies, I also add extra columns that are unique to the study and represent treatments and extra data that is interesting and needed to best understand the files. For example, I added columns about what predefined habitat the samples came from and what biome the sample was classified as. I also added metadata collected by a collaborator on where the sample was taken and the latitude and longitude.</li>
+</ul>
+<p>My most recent sample checklist looked like this:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="complete_samples_checklist.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">ENA complete samples checklist</figcaption>
+</figure>
+</div>
+<p>Once completed, this file can be uploaded to the ENA interactive web portal by clicking <strong>Register Samples</strong> -&gt; <strong>Upload filled spreadsheet to register samples</strong> and then <strong>Submit Completed Spreadsheet</strong> after you have chosen your file. The portal will tell you if you are successful which means you can move on to the next stage.</p>
+</section>
+<section id="create-sample-metadata" class="level3">
+<h3 class="anchored" data-anchor-id="create-sample-metadata">3. Create sample metadata</h3>
+<p>After doing steps 1 and 2, you should receive emails containing the Accession Numbers of your experiment and of your samples. These need to be included in a manifest file that is required for the submission of each sample to ENA. Details on the manifest file can be found <a href="https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html">here</a>.</p>
+<p>The information needed for each sample may change based on what files are being uploaded. For paired end fastq reads, they are generally:</p>
+<ul>
+<li>STUDY: Study Accession Number, from Step 1.</li>
+<li>SAMPLE: Sample Accession Number, from Step 2.</li>
+<li>NAME: Experiment name, which I generally use the same as the <strong>sample_alias</strong>.</li>
+<li>PLATFORM: Sequencing platform</li>
+<li>INSTRUMENT: Sequencing instrument</li>
+<li>INSERT_SIZE: Size of the sequence is the length of the sequence between the adapter sequences.</li>
+<li>LIBRARY_SOURCE: What type of information was sequenced? DNA, RNA, etc.</li>
+<li>LIBRARY_SELECTION: Library selection. What selection was done on the DNA? PCR, random, etc.</li>
+<li>LIBRARY_STRATEGY: Library strategy. What type of sequencing stratedy was done? WGS, RNA-Seq, etc.</li>
+<li>FASTQ: File name of forward fastq file</li>
+<li>FASTQ: File name of reverse fastq file</li>
+</ul>
+<p>I generally create another Excel file, with these values as column names, where I document all the samples from a study. I call this <strong>sample_metadata.csv</strong>, and my most recent one looks like this.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="sample_metadata.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Sample metadata</figcaption>
+</figure>
+</div>
+<p>I leave the fastq columns blank because I am going to rename the files before uploading to be the same as the <strong>sample_alias</strong>.</p>
+</section>
+<section id="create-manifest-files-for-each-sample" class="level3">
+<h3 class="anchored" data-anchor-id="create-manifest-files-for-each-sample">4. Create manifest files for each sample</h3>
+<p>Each sample needs its own manifest file, so I use R to create manifest files from the <strong>sample_metadata.csv</strong> file. We want to make a manifest file for each row of the spreadsheet.</p>
+<p>To reiterate, I try to use the <strong>sample_alias</strong> as a unique ID for each manifest file and fastq file linked to the that sample. So I will name each manifest file as the <strong>sample_alias</strong>.txt, and then rename the fastq files to be the same as the <strong>sample_alias</strong>_R1/R2.fastq.gz.</p>
+<p>Example code to do this could be:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create single manifest file for each sample from a sample metadata file</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># load in tidyverse</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># read in sample metadata column</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">'ena_submission/sample_metadata.csv'</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="co"># make numeric columns character so that pivot longer works</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.numeric), as.character))</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># create single manifest file for each row</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># run a for loop</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(files)){</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># grab the file name from the NAME row (third element)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>file_name <span class="ot">&lt;-</span> temp<span class="sc">$</span>value[<span class="dv">3</span>]</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># rename the fastq columns FASTQ</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>temp<span class="sc">$</span>name[<span class="dv">10</span><span class="sc">:</span><span class="dv">11</span>] <span class="ot">&lt;-</span> <span class="st">'FASTQ'</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> temp[<span class="dv">1</span><span class="sc">:</span><span class="dv">11</span>,]</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># name the fastq files R1 and R2 and the file name</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>temp<span class="sc">$</span>value[<span class="dv">10</span>] <span class="ot">&lt;-</span> <span class="fu">paste</span>(file_name, <span class="st">'_R1.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>temp<span class="sc">$</span>value[<span class="dv">11</span>] <span class="ot">&lt;-</span> <span class="fu">paste</span>(file_name, <span class="st">'_R2.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="co"># save it out</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># need to create a folder for your manifest files</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="fu">write.table</span>(temp, <span class="fu">paste</span>(<span class="st">'manifest_files/'</span>, file_name, <span class="st">'.txt'</span>, <span class="at">sep =</span> <span class="st">''</span>), <span class="at">row.names =</span> <span class="cn">FALSE</span>, <span class="at">col.names =</span> <span class="cn">FALSE</span>, <span class="at">quote =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This should result in you having a unique manifest file for each of your samples that you registered.</p>
+</section>
+<section id="submit-samples" class="level3">
+<h3 class="anchored" data-anchor-id="submit-samples">5. Submit samples</h3>
+<p>Once you have your manifest files, you can submit them to ENA. However, it is likely that before you do this you may need to rename your files to match the names you specified in the FASTQ values of each manifest file. This is because the manifest file will be looking for files with those names in the directory where you specify the fastq files are.</p>
+<p>So I have started creating a new folder called <strong>ena_upload</strong> where I copy and rename the samples to for ena submission. These can then be deleted after submission is successful.</p>
+<p>I do file renaming in R, and this is likely to be bespoke for each project and how you have named your sample aliases. An example of what this might look like is:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename files for ena upload</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># list manifest files names</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>manifest_files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">'manifest_files'</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="co"># list the sequencing files to rename</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">'where_the_raw_files_live'</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">pattern =</span> <span class="st">'fastq|fq'</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write for loop ro rename files</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(manifest_files)){</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># grab the ith manifest fuke</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> manifest_files[i]</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove file extension</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(temp)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># in this example, the sample identifier is the s1 part, so I will grab that</span></span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># this bit needs to allow you to find the sequencing files - given the current naming - that relate to that manifest file</span></span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  temp_num <span class="ot">&lt;-</span> <span class="fu">str_split</span>(temp, <span class="st">'_'</span>)[[<span class="dv">1</span>]][<span class="dv">3</span>]</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># find the sequencing files that link to that manifest file</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  files_temp <span class="ot">&lt;-</span> files[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files), <span class="fu">paste</span>(temp_num, <span class="st">'_'</span>, <span class="at">sep =</span> <span class="st">''</span>))]</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rename files for ena upload</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for R1 file</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(files_temp[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files_temp), <span class="st">'R1'</span>)], <span class="fu">paste</span>(<span class="st">'~/ena_upload/'</span>, temp, <span class="st">'_R1.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>))</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for R2 file</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(files_temp[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files_temp), <span class="st">'R2'</span>)], <span class="fu">paste</span>(<span class="st">'~/ena_upload/'</span>, temp, <span class="st">'_R2.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>))</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>This should result in the sequencing files being renamed to match the names specified in the manifest files. We should then be able to upload them to ENA. I use the ENA webin-cli tool to do this. You can find the documentation for this tool <a href="https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html">here</a>.</p>
+<p>We can now run Webin-cli to submit our samples. We will start by validating our submission to check no terrible errors have occurred.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># submitting files to ENA</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># check webin-CLI is working</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># download latest version from https://github.com/enasequence/webin-cli/releases</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">wget</span> https://github.com/enasequence/webin-cli/releases/download/7.0.1/webin-cli-7.0.1.jar</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># check it exists</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># check it is working</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="ex">java</span> <span class="at">-jar</span> webin-cli-7.0.1.jar <span class="at">-version</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># seems to be working</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># open a screen</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-ls</span> <span class="co"># check what screen exist</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="ex">screen</span> <span class="at">-S</span> ena <span class="co"># start a new screen called ena</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># screen -r ena # reopen the screen</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="co">#screen -X -S ena quit # you want to kill the screen</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="co"># validate each file submission</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="co"># path to raw renamed sequencing files</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="va">fastq_files</span><span class="op">=</span>~/ena_upload</span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="co"># path to manifest files</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="va">manifest_files</span><span class="op">=</span>~/manifest_files</span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="co"># create a manifest output folder</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$manifest_files</span>/output</span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="va">manifest_output</span><span class="op">=</span><span class="va">$manifest_files</span>/output</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="co"># run a test</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="va">file</span><span class="op">=</span><span class="va">$manifest_files</span>/myxo_16s_s1.txt</span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="co"># run a for loop to submit sequencing files</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="va">$manifest_files</span>/<span class="pp">*</span>.txt</span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>    <span class="cf">do</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>        <span class="co"># cat the file</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="va">$file</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>        <span class="co"># grab the file name without the extension</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>        <span class="va">stub</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="va">${file</span><span class="op">%</span>.txt<span class="va">})</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a>        <span class="va">man_file</span><span class="op">=</span><span class="va">$file</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a>        <span class="co"># make a folder for the output of the validation</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a>        <span class="fu">mkdir</span> <span class="at">-p</span> <span class="va">$manifest_output</span>/<span class="va">$stub</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a>        <span class="co"># run webin-cli - run validation to check</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a>        <span class="ex">java</span> <span class="at">-jar</span> webin-cli-7.0.1.jar <span class="at">-validate</span> <span class="at">-context</span> reads <span class="at">-manifest</span> <span class="va">$man_file</span> <span class="at">-inputDir</span> <span class="va">$fastq_files</span> <span class="at">-outputDir</span> <span class="va">$manifest_output</span>/<span class="va">$stub</span> <span class="at">-username</span> your_username <span class="at">-password</span> your_password</span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>After this has ran, you can check the output of all the validation files. If there are no errors, you can then submit the files to ENA. This can be done quite simply in R.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># check validation reports</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="co"># list validation folders</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>validation_folders <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">'~/manifest_files/output'</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="co"># setup empty dataframe to populate</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>d_check <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">sample =</span> <span class="fu">basename</span>(validation_folders),</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>                      <span class="at">check =</span> <span class="cn">NA</span>, </span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>                      <span class="at">fullname =</span> validation_folders)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="co"># run a for loop to grab the output of the validation report for each sample</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(d_check)){</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>  <span class="co"># read file in</span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> <span class="fu">readLines</span>(<span class="fu">file.path</span>(d_check<span class="sc">$</span>fullname[i], <span class="st">'webin-cli.report'</span>))</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># input it into the correct place in the dataframe</span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  d_check<span class="sc">$</span>check[i] <span class="ot">&lt;-</span> temp[<span class="fu">length</span>(temp)]</span>
+<span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="co"># drop the full name column</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>d_check <span class="ot">&lt;-</span> <span class="fu">select</span>(d_check, <span class="sc">-</span>fullname)</span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a>d_check</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>My most recent one of these looks like this:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="check_validation.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Checking validation</figcaption>
+</figure>
+</div>
+<p>We can then run the submission for realsies!</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run a for loop to submit sequencing files</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="va">$manifest_files</span>/<span class="pp">*</span>.txt</span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">do</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="co"># cat the file</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="bu">echo</span> <span class="va">$file</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># grab the file name without the extension</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="va">stub</span><span class="op">=</span><span class="va">$(</span><span class="fu">basename</span> <span class="va">${file</span><span class="op">%</span>.txt<span class="va">})</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="va">man_file</span><span class="op">=</span><span class="va">$file</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>        <span class="co"># run webin-cli</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>        <span class="ex">java</span> <span class="at">-jar</span> webin-cli-7.0.1.jar <span class="at">-submit</span> <span class="at">-context</span> reads <span class="at">-manifest</span> <span class="va">$man_file</span> <span class="at">-inputDir</span> <span class="va">$fastq_files</span> <span class="at">-outputDir</span> <span class="va">$manifest_output</span>/<span class="va">$stub</span> <span class="at">-username</span> your_username <span class="at">-password</span> your_password</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="cf">done</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>With any luck, these files should then be viewable the Samples Report section of the ENA Web Portal.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>I hope you have enjoyed reading this word vomit of a blog post about submitting to ENA. I hope it is useful to someone. Future me at the very least will be grateful for it. If you have any questions, please feel free to get in touch.</p>
+<section id="extras" class="level3">
+<h3 class="anchored" data-anchor-id="extras">Extras</h3>
+<section id="permitted-values-for-platform-of-a-manifest-file" class="level4">
+<h4 class="anchored" data-anchor-id="permitted-values-for-platform-of-a-manifest-file">Permitted values for platform of a manifest file</h4>
+<ul>
+<li>BGISEQ: Sequencers based on DNBSEQ by MGI Tech.</li>
+<li>CAPILLARY: Sequencers based on capillary electrophoresis technology manufactured by LifeTech (formerly Applied BioSciences).</li>
+<li>DNBSEQ: Uses DNA nanoballs(DNB) and regular array chips.</li>
+<li>ELEMENT: Element Biosciences uses avidity sequencing: a polymerase inserts nucleotides, detected using fluorescence.</li>
+<li>HELICOS: Helicos is similar to 454 technology - uses 1-color sequential flows.</li>
+<li>ILLUMINA: 54 technology use 1-color sequential flows: 454 technology use 1-color sequential flows.</li>
+<li>ION_TORRENT: Ion Torrent Personal Genome Machine (PGM) from Life Technologies. Directly translates chemically encoded information (A, C, G, T) into digital on semiconductor chip.</li>
+<li>LS454: 454 technology use 1-color sequential flows.</li>
+<li>OXFORD_NANOPORE: Oxford Nanopore platform type. nanopore-based electronic single molecule analysis.</li>
+<li>PACBIO_SMRT: PacificBiosciences platform type for the single molecule real time (SMRT) technology.</li>
+<li>ULTIMA: Ultima Genomics platform type. Flowing one nucleotide at a time in order, iteratively.</li>
+</ul>
+</section>
+<section id="permitted-value-for-instrument-of-a-manifest-file" class="level4">
+<h4 class="anchored" data-anchor-id="permitted-value-for-instrument-of-a-manifest-file">Permitted value for instrument of a manifest file</h4>
+<ul>
+<li>454 GS</li>
+<li>454 GS 20</li>
+<li>454 GS FLX</li>
+<li>454 GS FLX Titanium</li>
+<li>454 GS FLX+</li>
+<li>454 GS Junior</li>
+<li>AB 310 Genetic Analyzer</li>
+<li>AB 3130 Genetic Analyzer</li>
+<li>AB 3130xL Genetic Analyzer</li>
+<li>AB 3500 Genetic Analyzer</li>
+<li>AB 3500xL Genetic Analyzer</li>
+<li>AB 3730 Genetic Analyzer</li>
+<li>AB 3730xL Genetic Analyzer</li>
+<li>AB 5500 Genetic Analyzer</li>
+<li>AB 5500xl Genetic Analyzer</li>
+<li>AB 5500xl-W Genetic Analysis System</li>
+<li>BGISEQ-50</li>
+<li>BGISEQ-500</li>
+<li>DNBSEQ-G400</li>
+<li>DNBSEQ-G400 FAST</li>
+<li>DNBSEQ-G50</li>
+<li>DNBSEQ-T7</li>
+<li>Element AVITI</li>
+<li>GridION</li>
+<li>Helicos HeliScope</li>
+<li>HiSeq X Five</li>
+<li>HiSeq X Ten</li>
+<li>Illumina Genome Analyzer</li>
+<li>Illumina Genome Analyzer II</li>
+<li>Illumina Genome Analyzer IIx</li>
+<li>Illumina HiScanSQ</li>
+<li>Illumina HiSeq 1000</li>
+<li>Illumina HiSeq 1500</li>
+<li>Illumina HiSeq 2000</li>
+<li>Illumina HiSeq 2500</li>
+<li>Illumina HiSeq 3000</li>
+<li>Illumina HiSeq 4000</li>
+<li>Illumina HiSeq X</li>
+<li>Illumina MiSeq</li>
+<li>Illumina MiniSeq</li>
+<li>Illumina NovaSeq 6000</li>
+<li>Illumina NovaSeq X</li>
+<li>Illumina iSeq 100</li>
+<li>Ion GeneStudio S5</li>
+<li>Ion GeneStudio S5 Plus</li>
+<li>Ion GeneStudio S5 Prime</li>
+<li>Ion Torrent Genexus</li>
+<li>Ion Torrent PGM</li>
+<li>Ion Torrent Proton</li>
+<li>Ion Torrent S5</li>
+<li>Ion Torrent S5 XL</li>
+<li>MGISEQ-2000RS</li>
+<li>MinION</li>
+<li>NextSeq 1000</li>
+<li>NextSeq 2000</li>
+<li>NextSeq 500</li>
+<li>NextSeq 550</li>
+<li>PacBio RS</li>
+<li>PacBio RS II</li>
+<li>PromethION</li>
+<li>Sequel</li>
+<li>Sequel II</li>
+<li>Sequel IIe</li>
+<li>UG 100</li>
+<li>unspecified</li>
+</ul>
+</section>
+<section id="permitted-values-for-library-selection" class="level4">
+<h4 class="anchored" data-anchor-id="permitted-values-for-library-selection">Permitted values for library selection</h4>
+<ul>
+<li>RANDOM: No Selection or Random selection</li>
+<li>PCR: target enrichment via PCR</li>
+<li>RANDOM PCR: Source material was selected by randomly generated primers.</li>
+<li>RT-PCR: target enrichment via</li>
+<li>HMPR: Hypo-methylated partial restriction digest</li>
+<li>MF: Methyl Filtrated</li>
+<li>repeat fractionation: Selection for less repetitive (and more gene rich) sequence through Cot filtration (CF) or other fractionation techniques based on DNA kinetics.</li>
+<li>size fractionation: Physical selection of size appropriate targets.</li>
+<li>MSLL: Methylation Spanning Linking Library</li>
+<li>cDNA: PolyA selection or enrichment for messenger RNA (mRNA); synonymize with PolyA</li>
+<li>cDNA_randomPriming:</li>
+<li>cDNA_oligo_dT:</li>
+<li>PolyA: PolyA selection or enrichment for messenger RNA (mRNA); should replace cDNA enumeration.</li>
+<li>Oligo-dT: enrichment of messenger RNA (mRNA) by hybridization to Oligo-dT.</li>
+<li>Inverse rRNA: depletion of ribosomal RNA by oligo hybridization.</li>
+<li>Inverse rRNA selection: depletion of ribosomal RNA by inverse oligo hybridization.</li>
+<li>ChIP: Chromatin immunoprecipitation</li>
+<li>ChIP-Seq: Chromatin immunoPrecipitation, reveals binding sites of specific proteins, typically transcription factors (TFs) using antibodies to extract DNA fragments bound to the target protein.</li>
+<li>MNase: Identifies well-positioned nucleosomes. uses Micrococcal Nuclease (MNase) is an endo-exonuclease that processively digests DNA until an obstruction, such as a nucleosome, is reached.</li>
+<li>DNase: DNase I endonuclease digestion and size selection reveals regions of chromatin where the DNA is highly sensitive to DNase I.</li>
+<li>Hybrid Selection: Selection by hybridization in array or solution.</li>
+<li>Reduced Representation: Reproducible genomic subsets, often generated by restriction fragment size selection, containing a manageable number of loci to facilitate re-sampling.</li>
+<li>Restriction Digest: DNA fractionation using restriction enzymes.</li>
+<li>5-methylcytidine antibody: Selection of methylated DNA fragments using an antibody raised against 5-methylcytosine or 5-methylcytidine (m5C).</li>
+<li>MBD2 protein methyl-CpG binding domain: Enrichment by methyl-CpG binding domain.</li>
+<li>CAGE: Cap-analysis gene expression.</li>
+<li>RACE: Rapid Amplification of cDNA Ends.</li>
+<li>MDA: Multiple Displacement Amplification, a non-PCR based DNA amplification technique that amplifies a minute quantifies of DNA to levels suitable for genomic analysis.</li>
+<li>padlock probes capture method: Targeted sequence capture protocol covering an arbitrary set of nonrepetitive genomics targets. An example is capture bisulfite sequencing using padlock probes (BSPP).</li>
+<li>other: Other library enrichment, screening, or selection process.</li>
+<li>unspecified: Library enrichment, screening, or selection is not specified.</li>
+</ul>
+</section>
+<section id="permitted-values-for-library-source" class="level4">
+<h4 class="anchored" data-anchor-id="permitted-values-for-library-source">Permitted values for library source</h4>
+<ul>
+<li>GENOMIC: Genomic DNA (includes PCR products from genomic DNA).</li>
+<li>GENOMIC SINGLE CELL</li>
+<li>TRANSCRIPTOMIC: Transcription products or non genomic DNA (EST, cDNA, RT-PCR, screened libraries).</li>
+<li>TRANSCRIPTOMIC SINGLE CELL:</li>
+<li>METAGENOMIC: Mixed material from metagenome.</li>
+<li>METATRANSCRIPTOMIC: Transcription products from community targets</li>
+<li>SYNTHETIC: Synthetic DNA.</li>
+<li>VIRAL RNA: Viral RNA.</li>
+<li>OTHER: Other, unspecified, or unknown library source material.</li>
+</ul>
+</section>
+<section id="permitted-values-for-library-strategy" class="level4">
+<h4 class="anchored" data-anchor-id="permitted-values-for-library-strategy">Permitted values for library strategy</h4>
+<ul>
+<li>WGS: Whole Genome Sequencing - random sequencing of the whole genome (see pubmed 10731132 for details)</li>
+<li>WGA: Whole Genome Amplification followed by random sequencing. (see pubmed 1631067,8962113 for details)</li>
+<li>WXS: Random sequencing of exonic regions selected from the genome. (see pubmed 20111037 for details)</li>
+<li>RNA-Seq: Random sequencing of whole transcriptome, also known as Whole Transcriptome Shotgun Sequencing, or WTSS). (see pubmed 18611170 for details)</li>
+<li>ssRNA-seq: Strand-specific RNA sequencing.</li>
+<li>miRNA-Seq: Micro RNA sequencing strategy designed to capture post-transcriptional RNA elements and include non-coding functional elements. (see pubmed 21787409 for details)</li>
+<li>ncRNA-Seq: Capture of other non-coding RNA types, including post-translation modification types such as snRNA (small nuclear RNA) or snoRNA (small nucleolar RNA), or expression regulation types such as siRNA (small interfering RNA) or piRNA/piwi/RNA (piwi-interacting RNA).</li>
+<li>FL-cDNA: Full-length sequencing of cDNA templates</li>
+<li>EST: Single pass sequencing of cDNA templates</li>
+<li>Hi-C: Chromosome Conformation Capture technique where a biotin-labeled nucleotide is incorporated at the ligation junction, enabling selective purification of chimeric DNA ligation junctions followed by deep sequencing.</li>
+<li>ATAC-seq: Assay for Transposase-Accessible Chromatin (ATAC) strategy is used to study genome-wide chromatin accessibility. alternative method to DNase-seq that uses an engineered Tn5 transposase to cleave DNA and to integrate primer DNA sequences into the cleaved genomic DNA.</li>
+<li>WCS: Random sequencing of a whole chromosome or other replicon isolated from a genome.</li>
+<li>RAD-Seq:</li>
+<li>CLONE: Genomic clone based (hierarchical) sequencing.</li>
+<li>POOLCLONE: Shotgun of pooled clones (usually BACs and Fosmids).</li>
+<li>AMPLICON: Sequencing of overlapping or distinct PCR or RT-PCR products. For example, metagenomic community profiling using SSU rRNA.</li>
+<li>CLONEEND: Clone end (5’, 3’, or both) sequencing.</li>
+<li>FINISHING: Sequencing intended to finish (close) gaps in existing coverage.</li>
+<li>ChIP-Seq: ChIP-seq, Chromatin ImmunoPrecipitation, reveals binding sites of specific proteins, typically transcription factors (TFs) using antibodies to extract DNA fragments bound to the target protein.</li>
+<li>MNase-Seq: Identifies well-positioned nucleosomes. uses Micrococcal Nuclease (MNase) is an endo-exonuclease that processively digests DNA until an obstruction, such as a nucleosome, is reached.</li>
+<li>Ribo-Seq: Ribosome profiling (also named ribosome footprinting) uses specialized messenger RNA (mRNA) sequencing to determine which mRNAs are being actively translated and produces a “global snapshot” of all the ribosomes active in a cell at a particular moment, known as a translatome.</li>
+<li>DNase-Hypersensitivity: Sequencing of hypersensitive sites, or segments of open chromatin that are more readily cleaved by DNaseI.</li>
+<li>Bisulfite-Seq: MethylC-seq. Sequencing following treatment of DNA with bisulfite to convert cytosine residues to uracil depending on methylation status.</li>
+<li>CTS: Concatenated Tag Sequencing</li>
+<li>MRE-Seq: Methylation-Sensitive Restriction Enzyme Sequencing.</li>
+<li>MeDIP-Seq: Methylated DNA Immunoprecipitation Sequencing.</li>
+<li>MBD-Seq: Methyl CpG Binding Domain Sequencing.</li>
+<li>Tn-Seq: Quantitatively determine fitness of bacterial genes based on how many times a purposely seeded transposon gets inserted into each gene of a colony after some time.</li>
+<li>VALIDATION: CGHub special request: Independent experiment to re-evaluate putative variants.</li>
+<li>FAIRE-seq: Formaldehyde Assisted Isolation of Regulatory Elements. Reveals regions of open chromatin.</li>
+<li>SELEX: Systematic Evolution of Ligands by Exponential enrichment</li>
+<li>RIP-Seq: Direct sequencing of RNA immunoprecipitates (includes CLIP-Seq, HITS-CLIP and PAR-CLIP).</li>
+<li>ChIA-PET: Direct sequencing of proximity-ligated chromatin immunoprecipitates.</li>
+<li>Synthetic-Long-Read: binning and barcoding of large DNA fragments to facilitate assembly of the fragment</li>
+<li>Targeted-Capture: Enrichment of a targeted subset of loci.</li>
+<li>Tethered Chromatin Conformation Capture:</li>
+<li>OTHER: Library strategy not listed.</li>
+</ul>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="padpadpadpad/padpadpadpad_quarto" data-repo-id="R_kgDOI61nUg" data-category="General" data-category-id="DIC_kwDOI61nUs4CUFKs" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>

@@ -2,6 +2,7 @@
   {
     "listing": "/posts.html",
     "items": [
+      "/posts/ena_file_submission/index.html",
       "/posts/climate_spiral/index.html",
       "/posts/rolling_regression/index.html",
       "/posts/animate_rstrava/index.html",
