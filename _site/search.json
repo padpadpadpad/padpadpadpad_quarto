@@ -84,193 +84,228 @@
     "text": "Abstract"
   },
   {
-    "objectID": "publications/articles/vanhoute_2021.html",
-    "href": "publications/articles/vanhoute_2021.html",
-    "title": "Compost spatial heterogeneity promotes evolutionary diversification of a bacterium",
+    "objectID": "publications/articles/padfield_2024.html",
+    "href": "publications/articles/padfield_2024.html",
+    "title": "Macroevolutionary dynamics in micro-organisms: generalists give rise to specialists across biomes in the ubiquitous bacterial phylum Myxococcota",
     "section": "",
-    "text": "van Houte, S., Padfield, D., Gómez, P., Luján, A. M., Brockhurst, M. A., Paterson, S., & Buckling, A. (2021). Compost spatial heterogeneity promotes evolutionary diversification of a bacterium. Journal of Evolutionary Biology, 34(2), 246-255."
+    "text": "Padfield, D., Kay, S., Vos, R., Quince, C., & Vos, M. (2023). Macroevolutionary dynamics in micro-organisms: generalists give rise to specialists across biomes in the ubiquitous bacterial phylum Myxococcota. bioRxiv, 2023-09."
   },
   {
-    "objectID": "publications/articles/vanhoute_2021.html#citation",
-    "href": "publications/articles/vanhoute_2021.html#citation",
-    "title": "Compost spatial heterogeneity promotes evolutionary diversification of a bacterium",
+    "objectID": "publications/articles/padfield_2024.html#citation",
+    "href": "publications/articles/padfield_2024.html#citation",
+    "title": "Macroevolutionary dynamics in micro-organisms: generalists give rise to specialists across biomes in the ubiquitous bacterial phylum Myxococcota",
     "section": "",
-    "text": "van Houte, S., Padfield, D., Gómez, P., Luján, A. M., Brockhurst, M. A., Paterson, S., & Buckling, A. (2021). Compost spatial heterogeneity promotes evolutionary diversification of a bacterium. Journal of Evolutionary Biology, 34(2), 246-255."
+    "text": "Padfield, D., Kay, S., Vos, R., Quince, C., & Vos, M. (2023). Macroevolutionary dynamics in micro-organisms: generalists give rise to specialists across biomes in the ubiquitous bacterial phylum Myxococcota. bioRxiv, 2023-09."
   },
   {
-    "objectID": "publications/articles/vanhoute_2021.html#abstract",
-    "href": "publications/articles/vanhoute_2021.html#abstract",
-    "title": "Compost spatial heterogeneity promotes evolutionary diversification of a bacterium",
+    "objectID": "publications/articles/padfield_2024.html#abstract",
+    "href": "publications/articles/padfield_2024.html#abstract",
+    "title": "Macroevolutionary dynamics in micro-organisms: generalists give rise to specialists across biomes in the ubiquitous bacterial phylum Myxococcota",
     "section": "Abstract",
-    "text": "Abstract\nSpatial resource heterogeneity is expected to be a key driver for the evolution of diversity. However, direct empirical support for this prediction is limited to studies carried out in simplified laboratory environments. Here, we investigate how altering spatial heterogeneity of potting compost—by the addition of water and mixing—affects the evolutionary diversification of a bacterial species, Pseudomonas fluorescens, that is naturally found in the environment. There was a greater propensity of resource specialists to evolve in the unmanipulated compost, while more generalist phenotypes dominated the compost–water mix. Genomic data were consistent with these phenotypic findings. Competition experiments strongly suggest these results are due to diversifying selection as a result of resource heterogeneity, as opposed to other covariables. Overall, our findings corroborate theoretical and in vitro findings, but in semi-natural, more realistic conditions."
+    "text": "Abstract\nProkaryotes dominate the Tree of Life, but our understanding of the macroevolutionary processes generating this diversity is still limited. Habitat transitions are thought to be a key driver of prokaryote diversity. However, relatively little is known about how prokaryotes successfully transition and persist across environments, and how these processes might vary between biomes and lineages. Here, we investigate biome transitions and specialisation in natural populations of a focal bacterial phylum, the Myxococcota, sampled across a range of replicated soils and freshwater and marine sediments in Cornwall (UK). By targeted deep sequencing of the protein-coding gene rpoB, we found &gt;2000 unique Myxococcota lineages, with the majority (77%) being biome specialists and with only &lt;5% of lineages distributed across the salt barrier. Discrete character evolution models revealed that specialists in one biome rarely transitioned into specialists in another biome. Instead, evolved generalism mediated transitions between biome specialists. State-dependent diversification models found variation in speciation rates across the tree, but this variation was independent of biome association or specialisation. These results were robust to phylogenetic uncertainty, assumed amounts of missing phylogenetic information, and different levels of species delineation. Overall, our results are consistent with a “jack-of-all-trades” trade-off where generalists suffer a cost in any individual environment, resulting in rapid evolution of niche specialists and shed light on how bacteria could transition between biomes."
   },
   {
-    "objectID": "publications/articles/lear_2023.html",
-    "href": "publications/articles/lear_2023.html",
-    "title": "Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.",
+    "objectID": "publications/articles/lear_2022.html",
+    "href": "publications/articles/lear_2022.html",
+    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
     "section": "",
-    "text": "Lear, L., Padfield, D., Hesse, E., Kay, S., Buckling, A., & Vos, M. (2023). Copper reduces the virulence of bacterial communities at environmentally relevant concentrations. Environment International, 182, 108295."
+    "text": "Lear, L., Padfield, D., Dowsett, T., Jones, M., Kay, S., Hayward, A., & Vos, M. (2022). Bacterial colonisation dynamics of household plastics in a coastal environment. Science of the Total Environment, 838, 156199."
   },
   {
-    "objectID": "publications/articles/lear_2023.html#citation",
-    "href": "publications/articles/lear_2023.html#citation",
-    "title": "Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.",
+    "objectID": "publications/articles/lear_2022.html#citation",
+    "href": "publications/articles/lear_2022.html#citation",
+    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
     "section": "",
-    "text": "Lear, L., Padfield, D., Hesse, E., Kay, S., Buckling, A., & Vos, M. (2023). Copper reduces the virulence of bacterial communities at environmentally relevant concentrations. Environment International, 182, 108295."
+    "text": "Lear, L., Padfield, D., Dowsett, T., Jones, M., Kay, S., Hayward, A., & Vos, M. (2022). Bacterial colonisation dynamics of household plastics in a coastal environment. Science of the Total Environment, 838, 156199."
   },
   {
-    "objectID": "publications/articles/lear_2023.html#abstract",
-    "href": "publications/articles/lear_2023.html#abstract",
-    "title": "Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.",
+    "objectID": "publications/articles/lear_2022.html#abstract",
+    "href": "publications/articles/lear_2022.html#abstract",
+    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
     "section": "Abstract",
-    "text": "Abstract\nIncreasing environmental concentrations of metals as a result of anthropogenic pollution are significantly changing many microbial communities. While there is evidence metal pollution can result in increased antibiotic resistance, the effects of metal pollution on the virulence of bacterial communities remains largely undetermined. Here, we experimentally test whether metal stress alters the virulence of bacterial communities. We do this by incubating three wastewater influent communities under different environmentally relevant copper concentrations for three days. We then quantify the virulence of the community phenotypically using the Galleria mellonella infection model, and test if differences are due to changes in the rate of biomass accumulation (productivity), copper resistance, or community composition (quantified using 16S amplicon sequencing). The virulence of the communities was found to be reduced by the highest copper concentration, but not to be affected by the lower concentration. As well as reduced virulence, communities exposed to the highest copper concentration were less diverse and had lower productivity. This work highlights that metal pollution may decrease virulence in bacterial communities, but at a cost to diversity and productivity."
+    "text": "Abstract\nAccumulation of plastics in the marine environment has widespread detrimental consequences for ecosystems and wildlife. Marine plastics are rapidly colonised by a wide diversity of bacteria, including human pathogens, posing potential risks to health. Here, we investigate the effect of polymer type, residence time and estuarine location on bacterial colonisation of common household plastics, including pathogenic bacteria. We submerged five main household plastic types: low-density PE (LDPE), high-density PE (HDPE), polypropylene (PP), polyvinyl chloride (PVC) and polyethylene terephthalate (PET) at an estuarine site in Cornwall (U.K.) and tracked bacterial colonisation dynamics. Using both culture-dependent and culture-independent approaches, we found that bacteria rapidly colonised plastics irrespective of polymer type, reaching culturable densities of up to 1000 cells cm3 after 7 weeks. Community composition of the biofilms changed over time, but not among polymer types. The presence of pathogenic bacteria, quantified using the insect model Galleria mellonella, increased dramatically over a five-week period, with Galleria mortality increasing from 4% in week one to 65% in week five. No consistent differences in virulence were observed between polymer types. Pathogens isolated from plastic biofilms using Galleria enrichment included Serratia and Enterococcus species and they harboured a wide range of antimicrobial resistance genes. Our findings show that plastics in coastal waters are rapidly colonised by a wide diversity of bacteria independent of polymer type. Further, our results show that marine plastic biofilms become increasingly associated with virulent bacteria over time."
   },
   {
-    "objectID": "publications/articles/sierocinski_2023.html",
-    "href": "publications/articles/sierocinski_2023.html",
-    "title": "The ecology of scale: impact of volume on coalescence and function in methanogenic communities",
+    "objectID": "publications/articles/lear_2022.html#graphical-abstract",
+    "href": "publications/articles/lear_2022.html#graphical-abstract",
+    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
+    "section": "Graphical Abstract",
+    "text": "Graphical Abstract"
+  },
+  {
+    "objectID": "publications/articles/swan_2022.html",
+    "href": "publications/articles/swan_2022.html",
+    "title": "Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season",
     "section": "",
-    "text": "Sierocinski, P., Stilwell, P., Padfield, D., Bayer, F., & Buckling, A. (2023). The ecology of scale: impact of volume on coalescence and function in methanogenic communities. Interface Focus, 13(4), 20220089."
+    "text": "Swan, G. J., Bearhop, S., Redpath, S. M., Silk, M. J., Padfield, D., Goodwin, C. E., & McDonald, R. A. (2022). Associations between abundances of free‐roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season. Ecology and Evolution, 12(5), e8877."
   },
   {
-    "objectID": "publications/articles/sierocinski_2023.html#citation",
-    "href": "publications/articles/sierocinski_2023.html#citation",
-    "title": "The ecology of scale: impact of volume on coalescence and function in methanogenic communities",
+    "objectID": "publications/articles/swan_2022.html#citation",
+    "href": "publications/articles/swan_2022.html#citation",
+    "title": "Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season",
     "section": "",
-    "text": "Sierocinski, P., Stilwell, P., Padfield, D., Bayer, F., & Buckling, A. (2023). The ecology of scale: impact of volume on coalescence and function in methanogenic communities. Interface Focus, 13(4), 20220089."
+    "text": "Swan, G. J., Bearhop, S., Redpath, S. M., Silk, M. J., Padfield, D., Goodwin, C. E., & McDonald, R. A. (2022). Associations between abundances of free‐roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season. Ecology and Evolution, 12(5), e8877."
   },
   {
-    "objectID": "publications/articles/sierocinski_2023.html#abstract",
-    "href": "publications/articles/sierocinski_2023.html#abstract",
-    "title": "The ecology of scale: impact of volume on coalescence and function in methanogenic communities",
+    "objectID": "publications/articles/swan_2022.html#abstract",
+    "href": "publications/articles/swan_2022.html#abstract",
+    "title": "Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season",
     "section": "Abstract",
-    "text": "Abstract\nEngineered ecosystems span multiple volume scales, from a nano-scale to thousands of cubic metres. Even the largest industrial systems are tested in pilot scale facilities. But does scale affect outcomes? Here we look at comparing different size laboratory anaerobic fermentors to see if and how the volume of the community affects the outcome of community coalescence (combining multiple communities) on community composition and function. Our results show that there is an effect of scale on biogas production. Furthermore, we see a link between community evenness and volume, with smaller scale communities having higher evenness. Despite those differences, the overall patterns of community coalescence are very similar at all scales, with coalescence leading to levels of biogas production comparable with that of the best-performing component community. The increase in biogas with increasing volume plateaus, suggesting there is a volume where productivity stays stable over large volumes. Our findings are reassuring for ecologists studying large ecosystems and industries operating pilot scale facilities, as they support the validity of pilot scale studies in this field."
+    "text": "Abstract\nReleasing gamebirds in large numbers for sport shooting may directly or indirectly influence the abundance, distribution and population dynamics of native wildlife. The abundances of generalist predators have been positively associated with the abundance of gamebirds. These relationships have implications for prey populations, with the potential for indirect impacts of gamebird releases on wider biodiversity. To understand the basis of these associations, we investigated variation in territory size, prey provisioning to chicks, and breeding success of common buzzards Buteo buteo, and associations with variation in the abundances of free-roaming gamebirds, primarily pheasants Phasianus colchicus, and of rabbits Oryctolagus cuniculus and field voles Microtus agrestis, as important prey for buzzards. The relative abundance of gamebirds, but not those of rabbits or voles, was weakly but positively correlated with our index of buzzard territory size. Gamebirds were rarely brought to the nest. Rabbits and voles, and not gamebirds, were provisioned to chicks in proportion to their relative abundance. The number of buzzard chicks increased with provisioning rates of rabbits, in terms of both provisioning frequency and biomass, but not with provisioning rates for gamebirds or voles. Associations between the abundances of buzzards and gamebirds may not be a consequence of the greater availability of gamebirds as prey during the buzzard breeding season. Instead, the association may arise either from habitat or predator management leading to higher densities of alternative prey (in this instance, rabbits), or from greater availability of gamebirds as prey or carrion during the autumn and winter shooting season. The interactions between gamebird releases and associated practices of predator control and shooting itself require better understanding to more effectively intervene in any one aspect of this complex social-ecological system."
   },
   {
-    "objectID": "publications/articles/padfield_2021.html",
-    "href": "publications/articles/padfield_2021.html",
-    "title": "rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R",
+    "objectID": "publications/articles/sierocinski_2021.html",
+    "href": "publications/articles/sierocinski_2021.html",
+    "title": "The impact of propagule pressure on whole community invasions in biomethane-producing communities",
     "section": "",
-    "text": "Padfield, D., O’Sullivan, H., & Pawar, S. (2021). rTPC and nls. multstart: a new pipeline to fit thermal performance curves in R. Methods in Ecology and Evolution, 12(6), 1138-1143."
+    "text": "Sierocinski, P., Pascual, J. S., Padfield, D., Salter, M., & Buckling, A. (2021). The impact of propagule pressure on whole community invasions in biomethane-producing communities. Iscience, 24(6), 102659."
   },
   {
-    "objectID": "publications/articles/padfield_2021.html#citation",
-    "href": "publications/articles/padfield_2021.html#citation",
-    "title": "rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R",
+    "objectID": "publications/articles/sierocinski_2021.html#citation",
+    "href": "publications/articles/sierocinski_2021.html#citation",
+    "title": "The impact of propagule pressure on whole community invasions in biomethane-producing communities",
     "section": "",
-    "text": "Padfield, D., O’Sullivan, H., & Pawar, S. (2021). rTPC and nls. multstart: a new pipeline to fit thermal performance curves in R. Methods in Ecology and Evolution, 12(6), 1138-1143."
+    "text": "Sierocinski, P., Pascual, J. S., Padfield, D., Salter, M., & Buckling, A. (2021). The impact of propagule pressure on whole community invasions in biomethane-producing communities. Iscience, 24(6), 102659."
   },
   {
-    "objectID": "publications/articles/padfield_2021.html#abstract",
-    "href": "publications/articles/padfield_2021.html#abstract",
-    "title": "rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R",
+    "objectID": "publications/articles/sierocinski_2021.html#abstract",
+    "href": "publications/articles/sierocinski_2021.html#abstract",
+    "title": "The impact of propagule pressure on whole community invasions in biomethane-producing communities",
     "section": "Abstract",
-    "text": "Abstract\n\nQuantifying thermal performance curves (TPCs) for biological rates has many applications to important problems such as predicting responses of biological systems—from individuals to communities—to directional climate change or climatic fluctuations.\nCurrent software tools for fitting TPC models to data are not adequate for dealing with the immense size of new datasets that are increasingly becoming available. We require tools capable of tackling this issue in a simple, reproducible and accessible way.\nWe present a new, reproducible pipeline in r that allows for relatively simple fitting of 24 different TPC models using nonlinear least squares (NLLS) regression. The pipeline consists of two packages—rTPC and nls.multstart—that provide functions which conveniently address common problems with NLLS fitting such as the NLLS parameter starting values problem. rTPC also includes functions to set starting values, estimate key TPC parameters and calculate uncertainty around parameter estimates as well as the fitted model as a whole.\nWe demonstrate how this pipeline can be combined with other packages in r to robustly and reproducibly fit multiple mathematical models to multiple TPC datasets at once. In addition, we show how model selection or averaging, weighted model fitting and bootstrapping can be easily implemented within the pipeline.\nThis new pipeline provides a flexible and reproducible approach that makes the challenging task of fitting multiple TPC models to data accessible to a wide range of users across ecology and evolution."
+    "text": "Abstract\nMicrobes can invade as whole communities, but the ecology of whole community invasions is poorly understood. Here, we investigate how invader propagule pressure (the number of invading organisms) affects the composition and function of invaded laboratory methanogenic communities. An invading community was equally successful at establishing itself in a resident community regardless of propagule pressure, which varied between 0.01 and 10% of the size resident community. Invasion resulted in enhanced biogas production (to the level of the pure invading community) but only when propagule pressure was 1% or greater. This inconsistency between invasion success and changes in function can be explained by a lower richness of invading taxa at lower propagule pressures, and an important functional role of the taxa that were absent. Our results highlight that whole community invasion ecology cannot simply be extrapolated from our understanding of single species invasions. Moreover, we show that methane production can be enhanced by invading poorly performing reactors with a better performing community at levels that may be practical in industrial settings."
   },
   {
-    "objectID": "publications/articles/barneche_2021.html",
-    "href": "publications/articles/barneche_2021.html",
-    "title": "Warming impairs trophic transfer efficiency in a long-term field experiment",
+    "objectID": "publications/articles/sierocinski_2021.html#graphical-abstract",
+    "href": "publications/articles/sierocinski_2021.html#graphical-abstract",
+    "title": "The impact of propagule pressure on whole community invasions in biomethane-producing communities",
+    "section": "Graphical Abstract",
+    "text": "Graphical Abstract"
+  },
+  {
+    "objectID": "publications/articles/lear_2022a.html",
+    "href": "publications/articles/lear_2022a.html",
+    "title": "Disturbance‐mediated invasions are dependent on community resource abundance",
     "section": "",
-    "text": "Barneche, D. R., Hulatt, C. J., Dossena, M., Padfield, D., Woodward, G., Trimmer, M., & Yvon-Durocher, G. (2021). Warming impairs trophic transfer efficiency in a long-term field experiment. Nature, 592(7852), 76-79."
+    "text": "Lear, L., Padfield, D., Inamine, H., Shea, K., & Buckling, A. (2022). Disturbance‐mediated invasions are dependent on community resource abundance. Ecology, 103(8), e3728."
   },
   {
-    "objectID": "publications/articles/barneche_2021.html#citation",
-    "href": "publications/articles/barneche_2021.html#citation",
-    "title": "Warming impairs trophic transfer efficiency in a long-term field experiment",
+    "objectID": "publications/articles/lear_2022a.html#citation",
+    "href": "publications/articles/lear_2022a.html#citation",
+    "title": "Disturbance‐mediated invasions are dependent on community resource abundance",
     "section": "",
-    "text": "Barneche, D. R., Hulatt, C. J., Dossena, M., Padfield, D., Woodward, G., Trimmer, M., & Yvon-Durocher, G. (2021). Warming impairs trophic transfer efficiency in a long-term field experiment. Nature, 592(7852), 76-79."
+    "text": "Lear, L., Padfield, D., Inamine, H., Shea, K., & Buckling, A. (2022). Disturbance‐mediated invasions are dependent on community resource abundance. Ecology, 103(8), e3728."
   },
   {
-    "objectID": "publications/articles/barneche_2021.html#abstract",
-    "href": "publications/articles/barneche_2021.html#abstract",
-    "title": "Warming impairs trophic transfer efficiency in a long-term field experiment",
+    "objectID": "publications/articles/lear_2022a.html#abstract",
+    "href": "publications/articles/lear_2022a.html#abstract",
+    "title": "Disturbance‐mediated invasions are dependent on community resource abundance",
     "section": "Abstract",
-    "text": "Abstract\nIn ecosystems, the efficiency of energy transfer from resources to consumers determines the biomass structure of food webs. As a general rule, about 10% of the energy produced in one trophic level makes it up to the next1,2,3. Recent theory suggests that this energy transfer could be further constrained if rising temperatures increase metabolic growth costs4, although experimental confirmation in whole ecosystems is lacking. Here we quantify nitrogen transfer efficiency—a proxy for overall energy transfer—in freshwater plankton in artificial ponds that have been exposed to seven years of experimental warming. We provide direct experimental evidence that, relative to ambient conditions, 4 °C of warming can decrease trophic transfer efficiency by up to 56%. In addition, the biomass of both phytoplankton and zooplankton was lower in the warmed ponds, which indicates major shifts in energy uptake, transformation and transfer5,6. These findings reconcile observed warming-driven changes in individual-level growth costs and in carbon-use efficiency across diverse taxa4,7,8,9,10 with increases in the ratio of total respiration to gross primary production at the ecosystem level11,12,13. Our results imply that an increasing proportion of the carbon fixed by photosynthesis will be lost to the atmosphere as the planet warms, impairing energy flux through food chains, which will have negative implications for larger consumers and for the functioning of entire ecosystems."
+    "text": "Abstract\nDisturbances can facilitate biological invasions, with the associated increase in resource availability being a proposed cause. Here, we experimentally tested the interactive effects of disturbance regime (different frequencies of biomass removal at equal intensities) and resource abundance on invasion success using a factorial design containing five disturbance frequencies and three resource levels. We invaded populations of the bacterium Pseudomonas fluorescens with two ecologically different invader morphotypes: a fast-growing “colonizer” type and a slower growing “competitor” type. As resident populations were altered by the treatments, we additionally tested their effect on invader success. Disturbance frequency and resource abundance interacted to affect the success of both invaders, but this interaction differed between the invader types. The success of the colonizer type was positively affected by disturbance under high resources but negatively under low. However, disturbance negatively affected the success of the competitor type under high resource abundance but not under low or medium. Resident population changes did not alter invader success beyond direct treatment effects. We therefore demonstrate that the same disturbance regime can either be beneficial or detrimental for an invader depending on both community resource abundance and its life history. These results may help to explain some of the inconsistencies found in the disturbance-invasion literature."
   },
   {
-    "objectID": "publications/articles/padfield_2017.html",
-    "href": "publications/articles/padfield_2017.html",
-    "title": "Metabolic compensation constrains the temperature dependence of gross primary production",
+    "objectID": "publications/articles/padfield_2016.html",
+    "href": "publications/articles/padfield_2016.html",
+    "title": "Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton",
     "section": "",
-    "text": "Padfield, D., Lowe, C., Buckling, A., Ffrench‐Constant, R., Student Research Team, Jennings, S., … & Yvon‐Durocher, G. (2017). Metabolic compensation constrains the temperature dependence of gross primary production. Ecology Letters, 20(10), 1250-1260."
+    "text": "Padfield, D., Yvon‐Durocher, G., Buckling, A., Jennings, S., & Yvon‐Durocher, G. (2016). Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton. Ecology letters, 19(2), 133-142."
   },
   {
-    "objectID": "publications/articles/padfield_2017.html#citation",
-    "href": "publications/articles/padfield_2017.html#citation",
-    "title": "Metabolic compensation constrains the temperature dependence of gross primary production",
+    "objectID": "publications/articles/padfield_2016.html#citation",
+    "href": "publications/articles/padfield_2016.html#citation",
+    "title": "Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton",
     "section": "",
-    "text": "Padfield, D., Lowe, C., Buckling, A., Ffrench‐Constant, R., Student Research Team, Jennings, S., … & Yvon‐Durocher, G. (2017). Metabolic compensation constrains the temperature dependence of gross primary production. Ecology Letters, 20(10), 1250-1260."
+    "text": "Padfield, D., Yvon‐Durocher, G., Buckling, A., Jennings, S., & Yvon‐Durocher, G. (2016). Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton. Ecology letters, 19(2), 133-142."
   },
   {
-    "objectID": "publications/articles/padfield_2017.html#abstract",
-    "href": "publications/articles/padfield_2017.html#abstract",
-    "title": "Metabolic compensation constrains the temperature dependence of gross primary production",
+    "objectID": "publications/articles/padfield_2016.html#abstract",
+    "href": "publications/articles/padfield_2016.html#abstract",
+    "title": "Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton",
     "section": "Abstract",
-    "text": "Abstract\nGross primary production (GPP) is the largest flux in the carbon cycle, yet its response to global warming is highly uncertain. The temperature dependence of GPP is directly linked to photosynthetic physiology, but the response of GPP to warming over longer timescales could also be shaped by ecological and evolutionary processes that drive variation in community structure and functional trait distributions. Here, we show that selection on photosynthetic traits within and across taxa dampens the effects of temperature on GPP across a catchment of geothermally heated streams. Autotrophs from cold streams had higher photosynthetic rates and after accounting for differences in biomass among sites, biomass-specific GPP was independent of temperature in spite of a 20 °C thermal gradient. Our results suggest that temperature compensation of photosynthetic rates constrains the long-term temperature dependence of GPP, and highlights the importance of considering physiological, ecological and evolutionary mechanisms when predicting how ecosystem-level processes respond to warming."
+    "text": "Abstract\nUnderstanding the mechanisms that determine how phytoplankton adapt to warming will substantially improve the realism of models describing ecological and biogeochemical effects of climate change. Here, we quantify the evolution of elevated thermal tolerance in the phytoplankton, Chlorella vulgaris. Initially, population growth was limited at higher temperatures because respiration was more sensitive to temperature than photosynthesis meaning less carbon was available for growth. Tolerance to high temperature evolved after ≈ 100 generations via greater down-regulation of respiration relative to photosynthesis. By down-regulating respiration, phytoplankton overcame the metabolic constraint imposed by the greater temperature sensitivity of respiration and more efficiently allocated fixed carbon to growth. Rapid evolution of carbon-use efficiency provides a potentially general mechanism for thermal adaptation in phytoplankton and implies that evolutionary responses in phytoplankton will modify biogeochemical cycles and hence food web structure and function under warming. Models of climate futures that ignore adaptation would usefully be revisited."
   },
   {
-    "objectID": "publications/articles/silk_2021.html",
-    "href": "publications/articles/silk_2021.html",
-    "title": "CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data",
+    "objectID": "publications/articles/mcnicol_2020.html",
+    "href": "publications/articles/mcnicol_2020.html",
+    "title": "Postrelease movement and habitat selection of translocated pine martens Martes martes",
     "section": "",
-    "text": "Silk, M. J., McDonald, R. A., Delahay, R. J., Padfield, D., & Hodgson, D. J. (2021). CMRnet: An r package to derive networks of social interactions and movement from mark–recapture data. Methods in Ecology and Evolution, 12(1), 70-75."
+    "text": "McNicol, C. M., Bavin, D., Bearhop, S., Bridges, J., Croose, E., Gill, R., … & McDonald, R. A. (2020). Postrelease movement and habitat selection of translocated pine martens Martes martes. Ecology and evolution, 10(11), 5106-5118."
   },
   {
-    "objectID": "publications/articles/silk_2021.html#citation",
-    "href": "publications/articles/silk_2021.html#citation",
-    "title": "CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data",
+    "objectID": "publications/articles/mcnicol_2020.html#citation",
+    "href": "publications/articles/mcnicol_2020.html#citation",
+    "title": "Postrelease movement and habitat selection of translocated pine martens Martes martes",
     "section": "",
-    "text": "Silk, M. J., McDonald, R. A., Delahay, R. J., Padfield, D., & Hodgson, D. J. (2021). CMRnet: An r package to derive networks of social interactions and movement from mark–recapture data. Methods in Ecology and Evolution, 12(1), 70-75."
+    "text": "McNicol, C. M., Bavin, D., Bearhop, S., Bridges, J., Croose, E., Gill, R., … & McDonald, R. A. (2020). Postrelease movement and habitat selection of translocated pine martens Martes martes. Ecology and evolution, 10(11), 5106-5118."
   },
   {
-    "objectID": "publications/articles/silk_2021.html#abstract",
-    "href": "publications/articles/silk_2021.html#abstract",
-    "title": "CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data",
+    "objectID": "publications/articles/mcnicol_2020.html#abstract",
+    "href": "publications/articles/mcnicol_2020.html#abstract",
+    "title": "Postrelease movement and habitat selection of translocated pine martens Martes martes",
     "section": "Abstract",
-    "text": "Abstract\n\nLong-term capture–mark–recapture data provide valuable information on the movements of individuals between locations, and the contemporary and/or co-located captures of individuals can be used to approximate the social structure of populations.\nWe introduce an r package (CMRnet) that generates social and movement networks from spatially explicit capture–mark–recapture data. It also provides functions for network and datastream permutations for these networks. Here we describe the package and key considerations for its application, providing two example case studies.\nThe conversion of spatially explicit mark–recapture data into social and movement networks will provide insights into the interplay between demography and behaviour in wild animal populations, with important applications in their management and conservation."
+    "text": "Abstract\nMonitoring postrelease establishment and movement of animals is important in evaluating conservation translocations. We translocated 39 wild pine martens Martes martes (19 females, 20 males) from Scotland to Wales. We released them into forested areas with no conspecifics in 2015, followed by a second release in 2016, alongside the previously released animals. We used radio-tracking to describe postrelease movement and habitat selection. Six martens (15%) were not re-encountered during the tracking period, of which four undertook long-distance dispersal. For the remaining individuals, we characterized two phases of movement, “exploration” followed by “settlement,” that differed between releases. In the first release, martens remained in exploration phase for a mean of 14.5 days (SE = 3.9 days) and settled at a mean distance of 8.7 km (SE = 1.8 km) from release sites, whereas martens released in year two, alongside resident conspecifics, traveled away from release sites at a faster rate, settling sooner, at a mean of 6.6 days (SE = 1.8 days), but further, at a mean distance of 14.0 km (SE = 1.7 km) from release sites. Animals released in year one did not exhibit habitat preferences overall but within forests they favored recently felled areas, whereas animals released in year two showed strong selection for forested habitat but did not discriminate between forest types. The presence of conspecifics appeared influential for settlement and site fidelity of translocated martens and was associated with more rapid but more distant dispersal of the later cohort. Releases of animals in close proximity appeared to promote site fidelity and rapid establishment of ranges in the recipient environment."
   },
   {
-    "objectID": "publications/articles/bartlett_2022.html",
-    "href": "publications/articles/bartlett_2022.html",
-    "title": "A comprehensive list of bacterial pathogens infecting humans",
+    "objectID": "publications/articles/castledine_2022b.html",
+    "href": "publications/articles/castledine_2022b.html",
+    "title": "Greater phage genotypic diversity constrains arms-race coevolution",
     "section": "",
-    "text": "Bartlett, A., Padfield, D., Lear, L., Bendall, R., & Vos, M. (2022). A comprehensive list of bacterial pathogens infecting humans. Microbiology, 168(12), 001269."
+    "text": "Castledine, M., Sierocinski, P., Inglis, M., Kay, S., Hayward, A., Buckling, A., & Padfield, D. (2022). Greater phage genotypic diversity constrains arms-race coevolution. Frontiers in Cellular and Infection Microbiology, 168."
   },
   {
-    "objectID": "publications/articles/bartlett_2022.html#citation",
-    "href": "publications/articles/bartlett_2022.html#citation",
-    "title": "A comprehensive list of bacterial pathogens infecting humans",
+    "objectID": "publications/articles/castledine_2022b.html#citation",
+    "href": "publications/articles/castledine_2022b.html#citation",
+    "title": "Greater phage genotypic diversity constrains arms-race coevolution",
     "section": "",
-    "text": "Bartlett, A., Padfield, D., Lear, L., Bendall, R., & Vos, M. (2022). A comprehensive list of bacterial pathogens infecting humans. Microbiology, 168(12), 001269."
+    "text": "Castledine, M., Sierocinski, P., Inglis, M., Kay, S., Hayward, A., Buckling, A., & Padfield, D. (2022). Greater phage genotypic diversity constrains arms-race coevolution. Frontiers in Cellular and Infection Microbiology, 168."
   },
   {
-    "objectID": "publications/articles/bartlett_2022.html#abstract",
-    "href": "publications/articles/bartlett_2022.html#abstract",
-    "title": "A comprehensive list of bacterial pathogens infecting humans",
+    "objectID": "publications/articles/castledine_2022b.html#abstract",
+    "href": "publications/articles/castledine_2022b.html#abstract",
+    "title": "Greater phage genotypic diversity constrains arms-race coevolution",
     "section": "Abstract",
-    "text": "Abstract\nThere exists an enormous diversity of bacteria capable of human infection, but no up-to-date, publicly accessible list is available. Combining a pragmatic definition of pathogenicity with an extensive search strategy, we report 1513 bacterial pathogens known to infect humans described pre-2021. Of these, 73 % were regarded as established (have infected at least three persons in three or more references) and 27 % as putative (fewer than three known cases). Pathogen species belong to 10 phyla and 24 classes scattered throughout the bacterial phylogeny. We show that new human pathogens are discovered at a rapid rate. Finally, we discuss how our results could be expanded to a database, which could provide a useful resource for microbiologists. Our list is freely available and archived on GitHub and Zenodo and we have provided walkthroughs to facilitate access and use."
+    "text": "Abstract\nAntagonistic coevolution between hosts and parasites, the reciprocal evolution of host resistance and parasite infectivity, has important implications in ecology and evolution. The dynamics of coevolution – notably whether host or parasite has an evolutionary advantage – is greatly affected by the relative amount of genetic variation in host resistance and parasite infectivity traits. While studies have manipulated genetic diversity during coevolution, such as by increasing mutation rates, it is unclear how starting genetic diversity affects host-parasite coevolution. Here, we (co)evolved the bacterium Pseudomonas fluorescens SBW25 and two bacteriophage genotypes of its lytic phage SBW25ɸ2 in isolation (one phage genotype) and together (two phage genotypes). Bacterial populations rapidly evolved phage resistance and phage reciprocally increased their infectivity in response. When phage populations were evolved with bacteria in isolation, bacterial resistance and phage infectivity increased through time, indicative of arms-race coevolution. In contrast, when both phage genotypes were together, bacteria did not increase their resistance in response to increasing phage infectivity. This was likely due to bacteria being unable to evolve resistance to both phage via the same mutations. These results suggest that increasing initial parasite genotypic diversity can give parasites an evolutionary advantage that arrests long-term coevolution. This study has important implications for the applied use of phage in phage therapy and in understanding host-parasite dynamics in broader ecological and evolutionary theory."
   },
   {
-    "objectID": "publications/articles/padfield_2020b.html",
-    "href": "publications/articles/padfield_2020b.html",
-    "title": "Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host",
+    "objectID": "publications/articles/castledine_2022a.html",
+    "href": "publications/articles/castledine_2022a.html",
+    "title": "Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro",
     "section": "",
-    "text": "Padfield, D., Castledine, M., & Buckling, A. (2020). Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host. The ISME Journal, 14(2), 389-398."
+    "text": "Castledine, M., Padfield, D., Sierocinski, P., Pascual, J. S., Hughes, A., Mäkinen, L., Friman, V.P., Pirnay, J.P., Merabishvili, M., De Vos, D., & Buckling, A. (2022). Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro. Elife, 11, e73679."
   },
   {
-    "objectID": "publications/articles/padfield_2020b.html#citation",
-    "href": "publications/articles/padfield_2020b.html#citation",
-    "title": "Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host",
+    "objectID": "publications/articles/castledine_2022a.html#citation",
+    "href": "publications/articles/castledine_2022a.html#citation",
+    "title": "Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro",
     "section": "",
-    "text": "Padfield, D., Castledine, M., & Buckling, A. (2020). Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host. The ISME Journal, 14(2), 389-398."
+    "text": "Castledine, M., Padfield, D., Sierocinski, P., Pascual, J. S., Hughes, A., Mäkinen, L., Friman, V.P., Pirnay, J.P., Merabishvili, M., De Vos, D., & Buckling, A. (2022). Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro. Elife, 11, e73679."
   },
   {
-    "objectID": "publications/articles/padfield_2020b.html#abstract",
-    "href": "publications/articles/padfield_2020b.html#abstract",
-    "title": "Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host",
+    "objectID": "publications/articles/castledine_2022a.html#abstract",
+    "href": "publications/articles/castledine_2022a.html#abstract",
+    "title": "Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro",
     "section": "Abstract",
-    "text": "Abstract\nThermal performance curves (TPCs) are used to predict changes in species interactions, and hence, range shifts, disease dynamics and community composition, under forecasted climate change. Species interactions might in turn affect TPCs. Here, we investigate how temperature-dependent changes in a microbial host–parasite interaction (the bacterium Pseudomonas fluorescens, and its lytic bacteriophage, SBWΦ2) changes the host TPC and the ecological and evolutionary mechanisms underlying these changes. The bacteriophage had a narrower thermal tolerance for infection, with their critical thermal maximum ~6 ºC lower than those at which the bacteria still had high growth. Consequently, in the presence of phage, the host TPC changed, resulting in a lower maximum growth rate. These changes were not just driven by differences in thermal tolerance, with temperature-dependent costs of evolved resistance also playing a major role: the largest cost of resistance occurred at the temperature at which bacteria grew best in the absence of phage. Our work highlights how ecological and evolutionary mechanisms can alter the effect of a parasite on host thermal performance, even over very short timescales."
+    "text": "Abstract\nWith rising antibiotic resistance, there has been increasing interest in treating pathogenic bacteria with bacteriophages (phage therapy). One limitation of phage therapy is the ease at which bacteria can evolve resistance. Negative effects of resistance may be mitigated when resistance results in reduced bacterial growth and virulence, or when phage coevolves to overcome resistance. Resistance evolution and its consequences are contingent on the bacteria-phage combination and their environmental context, making therapeutic outcomes hard to predict. One solution might be to conduct ‘in vitro evolutionary simulations’ using bacteria-phage combinations from the therapeutic context. Overall, our aim was to investigate parallels between in vitro experiments and in vivo dynamics in a human participant. Evolutionary dynamics were similar, with high levels of resistance evolving quickly with limited evidence of phage evolution. Resistant bacteria—evolved in vitro and in vivo—had lower virulence. In vivo, this was linked to lower growth rates of resistant isolates, whereas in vitro phage resistant isolates evolved greater biofilm production. Population sequencing suggests resistance resulted from selection on de novo mutations rather than sorting of existing variants. These results highlight the speed at which phage resistance can evolve in vivo, and how in vitro experiments may give useful insights for clinical evolutionary outcomes."
+  },
+  {
+    "objectID": "publications/articles/castledine_2019.html",
+    "href": "publications/articles/castledine_2019.html",
+    "title": "A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens",
+    "section": "",
+    "text": "Castledine, M., Buckling, A., & Padfield, D. (2019). A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens. Journal of evolutionary biology, 32(1), 58-65."
+  },
+  {
+    "objectID": "publications/articles/castledine_2019.html#citation",
+    "href": "publications/articles/castledine_2019.html#citation",
+    "title": "A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens",
+    "section": "",
+    "text": "Castledine, M., Buckling, A., & Padfield, D. (2019). A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens. Journal of evolutionary biology, 32(1), 58-65."
+  },
+  {
+    "objectID": "publications/articles/castledine_2019.html#abstract",
+    "href": "publications/articles/castledine_2019.html#abstract",
+    "title": "A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens",
+    "section": "Abstract",
+    "text": "Abstract\nCommunity coalescence, the mixing of multiple communities, is ubiquitous in natural microbial communities. During coalescence, theory suggests the success of a population will be enhanced by the presence of species it has coevolved with (relative to foreign species), because coevolution will result in greater resource specialization to minimize competition. Thus, more coevolved communities should dominate over less coevolved communities during coalescence events. We test these hypotheses using the bacterium Pseudomonas fluorescens which diversifies into coexisting niche-specialist morphotypes. We first evolved replicate populations for ~40 generations and then isolated evolved genotypes. In a series of competition trials, we determined if using coevolved versus random genotypes affected the relative performance of “communities” of single and multiple genotypes. We found no effect of coevolutionary history on either genotype fitness or community performance, which suggests parallel (co)evolution between communities. However, fitness was enhanced by the presence of other genotypes of the same strain type (wild-type or an isogenic strain with a LacZ marker; the inclusion of the latter necessary to distinguish genotypes during competition), indicative of local adaptation with respect to genetic background. Our results are the first to investigate the effect of (co)evolution on the outcome of coalescence and suggest that when input populations are functionally similar and added at equal mixing ratios, the outcome community may not be asymmetrically dominated by either input population."
   },
   {
     "objectID": "publications/articles/hesse_2019.html",
@@ -532,207 +567,214 @@
     "text": "Abstract\nRapid within-species evolution can alter community structure, yet the mechanisms underpinning this effect remain unknown. Populations that rapidly evolve large amounts of phenotypic diversity are likely to interact with more species and have the largest impact on community structure. However, the evolution of phenotypic diversity is, in turn, influenced by the presence of other species. Here, we investigate how microbial community structure changes as a consequence of rapidly evolved within-species diversity using Pseudomonas fluorescens as a focal species. Evolved P. fluorescens populations showed substantial phenotypic diversification in resource-use (and correlated genomic change) irrespective of whether they were pre-adapted in isolation or in a community context. Manipulating diversity revealed that more diverse P. fluorescens populations had the greatest impact on community structure, by suppressing some bacterial taxa, but facilitating others. These findings suggest that conditions that promote the evolution of high within-population diversity should result in a larger impact on community structure."
   },
   {
-    "objectID": "publications/articles/castledine_2019.html",
-    "href": "publications/articles/castledine_2019.html",
-    "title": "A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens",
+    "objectID": "publications/articles/castledine_2024.html",
+    "href": "publications/articles/castledine_2024.html",
+    "title": "Bacteriophage resistance increases bacterial productivity by shifting population growth dynamics in the soil bacterium Variovorax sp",
     "section": "",
-    "text": "Castledine, M., Buckling, A., & Padfield, D. (2019). A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens. Journal of evolutionary biology, 32(1), 58-65."
+    "text": "Castledine, M., Padfield, D., Lewis, R., & Buckling, A. (2024). Bacteriophage resistance increases bacterial productivity by shifting population growth dynamics in the soil bacterium Variovorax sp. bioRxiv, 2024-03."
   },
   {
-    "objectID": "publications/articles/castledine_2019.html#citation",
-    "href": "publications/articles/castledine_2019.html#citation",
-    "title": "A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens",
+    "objectID": "publications/articles/castledine_2024.html#citation",
+    "href": "publications/articles/castledine_2024.html#citation",
+    "title": "Bacteriophage resistance increases bacterial productivity by shifting population growth dynamics in the soil bacterium Variovorax sp",
     "section": "",
-    "text": "Castledine, M., Buckling, A., & Padfield, D. (2019). A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens. Journal of evolutionary biology, 32(1), 58-65."
+    "text": "Castledine, M., Padfield, D., Lewis, R., & Buckling, A. (2024). Bacteriophage resistance increases bacterial productivity by shifting population growth dynamics in the soil bacterium Variovorax sp. bioRxiv, 2024-03."
   },
   {
-    "objectID": "publications/articles/castledine_2019.html#abstract",
-    "href": "publications/articles/castledine_2019.html#abstract",
-    "title": "A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens",
+    "objectID": "publications/articles/castledine_2024.html#abstract",
+    "href": "publications/articles/castledine_2024.html#abstract",
+    "title": "Bacteriophage resistance increases bacterial productivity by shifting population growth dynamics in the soil bacterium Variovorax sp",
     "section": "Abstract",
-    "text": "Abstract\nCommunity coalescence, the mixing of multiple communities, is ubiquitous in natural microbial communities. During coalescence, theory suggests the success of a population will be enhanced by the presence of species it has coevolved with (relative to foreign species), because coevolution will result in greater resource specialization to minimize competition. Thus, more coevolved communities should dominate over less coevolved communities during coalescence events. We test these hypotheses using the bacterium Pseudomonas fluorescens which diversifies into coexisting niche-specialist morphotypes. We first evolved replicate populations for ~40 generations and then isolated evolved genotypes. In a series of competition trials, we determined if using coevolved versus random genotypes affected the relative performance of “communities” of single and multiple genotypes. We found no effect of coevolutionary history on either genotype fitness or community performance, which suggests parallel (co)evolution between communities. However, fitness was enhanced by the presence of other genotypes of the same strain type (wild-type or an isogenic strain with a LacZ marker; the inclusion of the latter necessary to distinguish genotypes during competition), indicative of local adaptation with respect to genetic background. Our results are the first to investigate the effect of (co)evolution on the outcome of coalescence and suggest that when input populations are functionally similar and added at equal mixing ratios, the outcome community may not be asymmetrically dominated by either input population."
+    "text": "Abstract\nBacteriophages can be important drivers of bacterial densities, and therefore microbial community composition and function. In response to phage infection, bacteria can evolve resistance while phage can reciprocally evolve to increase infectivity. Coevolutionary arms-races between bacteria and phage have been studied in many model systems and in pairs isolated from natural samples. However, how multiple bacteria-phage pairs coevolve simultaneously within a community is poorly understood. Here, we examine how three pairs of coexisting soil bacteria (Ochrobactrum sp., Pseudomonas sp., and Variovorax sp.) evolve with three species-specific bacteriophages over eight weeks of experimental evolution, both as host-parasite pairs in isolation and as a mixed community. Coevolution was very limited, with two phages going extinct after two weeks and Ochrobactrum phage increasing in infectivity without comparable reciprocal increases in bacterial resistance. One surprising finding was that Variovorax sp. increased in density following phage extinction, above that of no-phage controls. We examined the mechanisms behind this density increase through common garden experiments, growth curves, supernatant assays, and sequencing. Our results showed that this density increase resulted from genetic changes and was associated with phage resistance. Growth curves demonstrated that phage resistance shifted population growth curves such that density was higher in the death-phase. That resistance to lytic phage can improve host densities has implications for wider ecology and phage therapy where lytic phages are presumed to have negative effects on their hosts."
   },
   {
-    "objectID": "publications/articles/castledine_2022a.html",
-    "href": "publications/articles/castledine_2022a.html",
-    "title": "Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro",
+    "objectID": "publications/articles/padfield_2020b.html",
+    "href": "publications/articles/padfield_2020b.html",
+    "title": "Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host",
     "section": "",
-    "text": "Castledine, M., Padfield, D., Sierocinski, P., Pascual, J. S., Hughes, A., Mäkinen, L., Friman, V.P., Pirnay, J.P., Merabishvili, M., De Vos, D., & Buckling, A. (2022). Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro. Elife, 11, e73679."
+    "text": "Padfield, D., Castledine, M., & Buckling, A. (2020). Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host. The ISME Journal, 14(2), 389-398."
   },
   {
-    "objectID": "publications/articles/castledine_2022a.html#citation",
-    "href": "publications/articles/castledine_2022a.html#citation",
-    "title": "Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro",
+    "objectID": "publications/articles/padfield_2020b.html#citation",
+    "href": "publications/articles/padfield_2020b.html#citation",
+    "title": "Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host",
     "section": "",
-    "text": "Castledine, M., Padfield, D., Sierocinski, P., Pascual, J. S., Hughes, A., Mäkinen, L., Friman, V.P., Pirnay, J.P., Merabishvili, M., De Vos, D., & Buckling, A. (2022). Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro. Elife, 11, e73679."
+    "text": "Padfield, D., Castledine, M., & Buckling, A. (2020). Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host. The ISME Journal, 14(2), 389-398."
   },
   {
-    "objectID": "publications/articles/castledine_2022a.html#abstract",
-    "href": "publications/articles/castledine_2022a.html#abstract",
-    "title": "Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro",
+    "objectID": "publications/articles/padfield_2020b.html#abstract",
+    "href": "publications/articles/padfield_2020b.html#abstract",
+    "title": "Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host",
     "section": "Abstract",
-    "text": "Abstract\nWith rising antibiotic resistance, there has been increasing interest in treating pathogenic bacteria with bacteriophages (phage therapy). One limitation of phage therapy is the ease at which bacteria can evolve resistance. Negative effects of resistance may be mitigated when resistance results in reduced bacterial growth and virulence, or when phage coevolves to overcome resistance. Resistance evolution and its consequences are contingent on the bacteria-phage combination and their environmental context, making therapeutic outcomes hard to predict. One solution might be to conduct ‘in vitro evolutionary simulations’ using bacteria-phage combinations from the therapeutic context. Overall, our aim was to investigate parallels between in vitro experiments and in vivo dynamics in a human participant. Evolutionary dynamics were similar, with high levels of resistance evolving quickly with limited evidence of phage evolution. Resistant bacteria—evolved in vitro and in vivo—had lower virulence. In vivo, this was linked to lower growth rates of resistant isolates, whereas in vitro phage resistant isolates evolved greater biofilm production. Population sequencing suggests resistance resulted from selection on de novo mutations rather than sorting of existing variants. These results highlight the speed at which phage resistance can evolve in vivo, and how in vitro experiments may give useful insights for clinical evolutionary outcomes."
+    "text": "Abstract\nThermal performance curves (TPCs) are used to predict changes in species interactions, and hence, range shifts, disease dynamics and community composition, under forecasted climate change. Species interactions might in turn affect TPCs. Here, we investigate how temperature-dependent changes in a microbial host–parasite interaction (the bacterium Pseudomonas fluorescens, and its lytic bacteriophage, SBWΦ2) changes the host TPC and the ecological and evolutionary mechanisms underlying these changes. The bacteriophage had a narrower thermal tolerance for infection, with their critical thermal maximum ~6 ºC lower than those at which the bacteria still had high growth. Consequently, in the presence of phage, the host TPC changed, resulting in a lower maximum growth rate. These changes were not just driven by differences in thermal tolerance, with temperature-dependent costs of evolved resistance also playing a major role: the largest cost of resistance occurred at the temperature at which bacteria grew best in the absence of phage. Our work highlights how ecological and evolutionary mechanisms can alter the effect of a parasite on host thermal performance, even over very short timescales."
   },
   {
-    "objectID": "publications/articles/castledine_2022b.html",
-    "href": "publications/articles/castledine_2022b.html",
-    "title": "Greater phage genotypic diversity constrains arms-race coevolution",
+    "objectID": "publications/articles/bartlett_2022.html",
+    "href": "publications/articles/bartlett_2022.html",
+    "title": "A comprehensive list of bacterial pathogens infecting humans",
     "section": "",
-    "text": "Castledine, M., Sierocinski, P., Inglis, M., Kay, S., Hayward, A., Buckling, A., & Padfield, D. (2022). Greater phage genotypic diversity constrains arms-race coevolution. Frontiers in Cellular and Infection Microbiology, 168."
+    "text": "Bartlett, A., Padfield, D., Lear, L., Bendall, R., & Vos, M. (2022). A comprehensive list of bacterial pathogens infecting humans. Microbiology, 168(12), 001269."
   },
   {
-    "objectID": "publications/articles/castledine_2022b.html#citation",
-    "href": "publications/articles/castledine_2022b.html#citation",
-    "title": "Greater phage genotypic diversity constrains arms-race coevolution",
+    "objectID": "publications/articles/bartlett_2022.html#citation",
+    "href": "publications/articles/bartlett_2022.html#citation",
+    "title": "A comprehensive list of bacterial pathogens infecting humans",
     "section": "",
-    "text": "Castledine, M., Sierocinski, P., Inglis, M., Kay, S., Hayward, A., Buckling, A., & Padfield, D. (2022). Greater phage genotypic diversity constrains arms-race coevolution. Frontiers in Cellular and Infection Microbiology, 168."
+    "text": "Bartlett, A., Padfield, D., Lear, L., Bendall, R., & Vos, M. (2022). A comprehensive list of bacterial pathogens infecting humans. Microbiology, 168(12), 001269."
   },
   {
-    "objectID": "publications/articles/castledine_2022b.html#abstract",
-    "href": "publications/articles/castledine_2022b.html#abstract",
-    "title": "Greater phage genotypic diversity constrains arms-race coevolution",
+    "objectID": "publications/articles/bartlett_2022.html#abstract",
+    "href": "publications/articles/bartlett_2022.html#abstract",
+    "title": "A comprehensive list of bacterial pathogens infecting humans",
     "section": "Abstract",
-    "text": "Abstract\nAntagonistic coevolution between hosts and parasites, the reciprocal evolution of host resistance and parasite infectivity, has important implications in ecology and evolution. The dynamics of coevolution – notably whether host or parasite has an evolutionary advantage – is greatly affected by the relative amount of genetic variation in host resistance and parasite infectivity traits. While studies have manipulated genetic diversity during coevolution, such as by increasing mutation rates, it is unclear how starting genetic diversity affects host-parasite coevolution. Here, we (co)evolved the bacterium Pseudomonas fluorescens SBW25 and two bacteriophage genotypes of its lytic phage SBW25ɸ2 in isolation (one phage genotype) and together (two phage genotypes). Bacterial populations rapidly evolved phage resistance and phage reciprocally increased their infectivity in response. When phage populations were evolved with bacteria in isolation, bacterial resistance and phage infectivity increased through time, indicative of arms-race coevolution. In contrast, when both phage genotypes were together, bacteria did not increase their resistance in response to increasing phage infectivity. This was likely due to bacteria being unable to evolve resistance to both phage via the same mutations. These results suggest that increasing initial parasite genotypic diversity can give parasites an evolutionary advantage that arrests long-term coevolution. This study has important implications for the applied use of phage in phage therapy and in understanding host-parasite dynamics in broader ecological and evolutionary theory."
+    "text": "Abstract\nThere exists an enormous diversity of bacteria capable of human infection, but no up-to-date, publicly accessible list is available. Combining a pragmatic definition of pathogenicity with an extensive search strategy, we report 1513 bacterial pathogens known to infect humans described pre-2021. Of these, 73 % were regarded as established (have infected at least three persons in three or more references) and 27 % as putative (fewer than three known cases). Pathogen species belong to 10 phyla and 24 classes scattered throughout the bacterial phylogeny. We show that new human pathogens are discovered at a rapid rate. Finally, we discuss how our results could be expanded to a database, which could provide a useful resource for microbiologists. Our list is freely available and archived on GitHub and Zenodo and we have provided walkthroughs to facilitate access and use."
   },
   {
-    "objectID": "publications/articles/mcnicol_2020.html",
-    "href": "publications/articles/mcnicol_2020.html",
-    "title": "Postrelease movement and habitat selection of translocated pine martens Martes martes",
+    "objectID": "publications/articles/silk_2021.html",
+    "href": "publications/articles/silk_2021.html",
+    "title": "CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data",
     "section": "",
-    "text": "McNicol, C. M., Bavin, D., Bearhop, S., Bridges, J., Croose, E., Gill, R., … & McDonald, R. A. (2020). Postrelease movement and habitat selection of translocated pine martens Martes martes. Ecology and evolution, 10(11), 5106-5118."
+    "text": "Silk, M. J., McDonald, R. A., Delahay, R. J., Padfield, D., & Hodgson, D. J. (2021). CMRnet: An r package to derive networks of social interactions and movement from mark–recapture data. Methods in Ecology and Evolution, 12(1), 70-75."
   },
   {
-    "objectID": "publications/articles/mcnicol_2020.html#citation",
-    "href": "publications/articles/mcnicol_2020.html#citation",
-    "title": "Postrelease movement and habitat selection of translocated pine martens Martes martes",
+    "objectID": "publications/articles/silk_2021.html#citation",
+    "href": "publications/articles/silk_2021.html#citation",
+    "title": "CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data",
     "section": "",
-    "text": "McNicol, C. M., Bavin, D., Bearhop, S., Bridges, J., Croose, E., Gill, R., … & McDonald, R. A. (2020). Postrelease movement and habitat selection of translocated pine martens Martes martes. Ecology and evolution, 10(11), 5106-5118."
+    "text": "Silk, M. J., McDonald, R. A., Delahay, R. J., Padfield, D., & Hodgson, D. J. (2021). CMRnet: An r package to derive networks of social interactions and movement from mark–recapture data. Methods in Ecology and Evolution, 12(1), 70-75."
   },
   {
-    "objectID": "publications/articles/mcnicol_2020.html#abstract",
-    "href": "publications/articles/mcnicol_2020.html#abstract",
-    "title": "Postrelease movement and habitat selection of translocated pine martens Martes martes",
+    "objectID": "publications/articles/silk_2021.html#abstract",
+    "href": "publications/articles/silk_2021.html#abstract",
+    "title": "CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data",
     "section": "Abstract",
-    "text": "Abstract\nMonitoring postrelease establishment and movement of animals is important in evaluating conservation translocations. We translocated 39 wild pine martens Martes martes (19 females, 20 males) from Scotland to Wales. We released them into forested areas with no conspecifics in 2015, followed by a second release in 2016, alongside the previously released animals. We used radio-tracking to describe postrelease movement and habitat selection. Six martens (15%) were not re-encountered during the tracking period, of which four undertook long-distance dispersal. For the remaining individuals, we characterized two phases of movement, “exploration” followed by “settlement,” that differed between releases. In the first release, martens remained in exploration phase for a mean of 14.5 days (SE = 3.9 days) and settled at a mean distance of 8.7 km (SE = 1.8 km) from release sites, whereas martens released in year two, alongside resident conspecifics, traveled away from release sites at a faster rate, settling sooner, at a mean of 6.6 days (SE = 1.8 days), but further, at a mean distance of 14.0 km (SE = 1.7 km) from release sites. Animals released in year one did not exhibit habitat preferences overall but within forests they favored recently felled areas, whereas animals released in year two showed strong selection for forested habitat but did not discriminate between forest types. The presence of conspecifics appeared influential for settlement and site fidelity of translocated martens and was associated with more rapid but more distant dispersal of the later cohort. Releases of animals in close proximity appeared to promote site fidelity and rapid establishment of ranges in the recipient environment."
+    "text": "Abstract\n\nLong-term capture–mark–recapture data provide valuable information on the movements of individuals between locations, and the contemporary and/or co-located captures of individuals can be used to approximate the social structure of populations.\nWe introduce an r package (CMRnet) that generates social and movement networks from spatially explicit capture–mark–recapture data. It also provides functions for network and datastream permutations for these networks. Here we describe the package and key considerations for its application, providing two example case studies.\nThe conversion of spatially explicit mark–recapture data into social and movement networks will provide insights into the interplay between demography and behaviour in wild animal populations, with important applications in their management and conservation."
   },
   {
-    "objectID": "publications/articles/padfield_2016.html",
-    "href": "publications/articles/padfield_2016.html",
-    "title": "Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton",
+    "objectID": "publications/articles/padfield_2017.html",
+    "href": "publications/articles/padfield_2017.html",
+    "title": "Metabolic compensation constrains the temperature dependence of gross primary production",
     "section": "",
-    "text": "Padfield, D., Yvon‐Durocher, G., Buckling, A., Jennings, S., & Yvon‐Durocher, G. (2016). Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton. Ecology letters, 19(2), 133-142."
+    "text": "Padfield, D., Lowe, C., Buckling, A., Ffrench‐Constant, R., Student Research Team, Jennings, S., … & Yvon‐Durocher, G. (2017). Metabolic compensation constrains the temperature dependence of gross primary production. Ecology Letters, 20(10), 1250-1260."
   },
   {
-    "objectID": "publications/articles/padfield_2016.html#citation",
-    "href": "publications/articles/padfield_2016.html#citation",
-    "title": "Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton",
+    "objectID": "publications/articles/padfield_2017.html#citation",
+    "href": "publications/articles/padfield_2017.html#citation",
+    "title": "Metabolic compensation constrains the temperature dependence of gross primary production",
     "section": "",
-    "text": "Padfield, D., Yvon‐Durocher, G., Buckling, A., Jennings, S., & Yvon‐Durocher, G. (2016). Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton. Ecology letters, 19(2), 133-142."
+    "text": "Padfield, D., Lowe, C., Buckling, A., Ffrench‐Constant, R., Student Research Team, Jennings, S., … & Yvon‐Durocher, G. (2017). Metabolic compensation constrains the temperature dependence of gross primary production. Ecology Letters, 20(10), 1250-1260."
   },
   {
-    "objectID": "publications/articles/padfield_2016.html#abstract",
-    "href": "publications/articles/padfield_2016.html#abstract",
-    "title": "Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton",
+    "objectID": "publications/articles/padfield_2017.html#abstract",
+    "href": "publications/articles/padfield_2017.html#abstract",
+    "title": "Metabolic compensation constrains the temperature dependence of gross primary production",
     "section": "Abstract",
-    "text": "Abstract\nUnderstanding the mechanisms that determine how phytoplankton adapt to warming will substantially improve the realism of models describing ecological and biogeochemical effects of climate change. Here, we quantify the evolution of elevated thermal tolerance in the phytoplankton, Chlorella vulgaris. Initially, population growth was limited at higher temperatures because respiration was more sensitive to temperature than photosynthesis meaning less carbon was available for growth. Tolerance to high temperature evolved after ≈ 100 generations via greater down-regulation of respiration relative to photosynthesis. By down-regulating respiration, phytoplankton overcame the metabolic constraint imposed by the greater temperature sensitivity of respiration and more efficiently allocated fixed carbon to growth. Rapid evolution of carbon-use efficiency provides a potentially general mechanism for thermal adaptation in phytoplankton and implies that evolutionary responses in phytoplankton will modify biogeochemical cycles and hence food web structure and function under warming. Models of climate futures that ignore adaptation would usefully be revisited."
+    "text": "Abstract\nGross primary production (GPP) is the largest flux in the carbon cycle, yet its response to global warming is highly uncertain. The temperature dependence of GPP is directly linked to photosynthetic physiology, but the response of GPP to warming over longer timescales could also be shaped by ecological and evolutionary processes that drive variation in community structure and functional trait distributions. Here, we show that selection on photosynthetic traits within and across taxa dampens the effects of temperature on GPP across a catchment of geothermally heated streams. Autotrophs from cold streams had higher photosynthetic rates and after accounting for differences in biomass among sites, biomass-specific GPP was independent of temperature in spite of a 20 °C thermal gradient. Our results suggest that temperature compensation of photosynthetic rates constrains the long-term temperature dependence of GPP, and highlights the importance of considering physiological, ecological and evolutionary mechanisms when predicting how ecosystem-level processes respond to warming."
   },
   {
-    "objectID": "publications/articles/lear_2022a.html",
-    "href": "publications/articles/lear_2022a.html",
-    "title": "Disturbance‐mediated invasions are dependent on community resource abundance",
+    "objectID": "publications/articles/barneche_2021.html",
+    "href": "publications/articles/barneche_2021.html",
+    "title": "Warming impairs trophic transfer efficiency in a long-term field experiment",
     "section": "",
-    "text": "Lear, L., Padfield, D., Inamine, H., Shea, K., & Buckling, A. (2022). Disturbance‐mediated invasions are dependent on community resource abundance. Ecology, 103(8), e3728."
+    "text": "Barneche, D. R., Hulatt, C. J., Dossena, M., Padfield, D., Woodward, G., Trimmer, M., & Yvon-Durocher, G. (2021). Warming impairs trophic transfer efficiency in a long-term field experiment. Nature, 592(7852), 76-79."
   },
   {
-    "objectID": "publications/articles/lear_2022a.html#citation",
-    "href": "publications/articles/lear_2022a.html#citation",
-    "title": "Disturbance‐mediated invasions are dependent on community resource abundance",
+    "objectID": "publications/articles/barneche_2021.html#citation",
+    "href": "publications/articles/barneche_2021.html#citation",
+    "title": "Warming impairs trophic transfer efficiency in a long-term field experiment",
     "section": "",
-    "text": "Lear, L., Padfield, D., Inamine, H., Shea, K., & Buckling, A. (2022). Disturbance‐mediated invasions are dependent on community resource abundance. Ecology, 103(8), e3728."
+    "text": "Barneche, D. R., Hulatt, C. J., Dossena, M., Padfield, D., Woodward, G., Trimmer, M., & Yvon-Durocher, G. (2021). Warming impairs trophic transfer efficiency in a long-term field experiment. Nature, 592(7852), 76-79."
   },
   {
-    "objectID": "publications/articles/lear_2022a.html#abstract",
-    "href": "publications/articles/lear_2022a.html#abstract",
-    "title": "Disturbance‐mediated invasions are dependent on community resource abundance",
+    "objectID": "publications/articles/barneche_2021.html#abstract",
+    "href": "publications/articles/barneche_2021.html#abstract",
+    "title": "Warming impairs trophic transfer efficiency in a long-term field experiment",
     "section": "Abstract",
-    "text": "Abstract\nDisturbances can facilitate biological invasions, with the associated increase in resource availability being a proposed cause. Here, we experimentally tested the interactive effects of disturbance regime (different frequencies of biomass removal at equal intensities) and resource abundance on invasion success using a factorial design containing five disturbance frequencies and three resource levels. We invaded populations of the bacterium Pseudomonas fluorescens with two ecologically different invader morphotypes: a fast-growing “colonizer” type and a slower growing “competitor” type. As resident populations were altered by the treatments, we additionally tested their effect on invader success. Disturbance frequency and resource abundance interacted to affect the success of both invaders, but this interaction differed between the invader types. The success of the colonizer type was positively affected by disturbance under high resources but negatively under low. However, disturbance negatively affected the success of the competitor type under high resource abundance but not under low or medium. Resident population changes did not alter invader success beyond direct treatment effects. We therefore demonstrate that the same disturbance regime can either be beneficial or detrimental for an invader depending on both community resource abundance and its life history. These results may help to explain some of the inconsistencies found in the disturbance-invasion literature."
+    "text": "Abstract\nIn ecosystems, the efficiency of energy transfer from resources to consumers determines the biomass structure of food webs. As a general rule, about 10% of the energy produced in one trophic level makes it up to the next1,2,3. Recent theory suggests that this energy transfer could be further constrained if rising temperatures increase metabolic growth costs4, although experimental confirmation in whole ecosystems is lacking. Here we quantify nitrogen transfer efficiency—a proxy for overall energy transfer—in freshwater plankton in artificial ponds that have been exposed to seven years of experimental warming. We provide direct experimental evidence that, relative to ambient conditions, 4 °C of warming can decrease trophic transfer efficiency by up to 56%. In addition, the biomass of both phytoplankton and zooplankton was lower in the warmed ponds, which indicates major shifts in energy uptake, transformation and transfer5,6. These findings reconcile observed warming-driven changes in individual-level growth costs and in carbon-use efficiency across diverse taxa4,7,8,9,10 with increases in the ratio of total respiration to gross primary production at the ecosystem level11,12,13. Our results imply that an increasing proportion of the carbon fixed by photosynthesis will be lost to the atmosphere as the planet warms, impairing energy flux through food chains, which will have negative implications for larger consumers and for the functioning of entire ecosystems."
   },
   {
-    "objectID": "publications/articles/sierocinski_2021.html",
-    "href": "publications/articles/sierocinski_2021.html",
-    "title": "The impact of propagule pressure on whole community invasions in biomethane-producing communities",
+    "objectID": "publications/articles/padfield_2021.html",
+    "href": "publications/articles/padfield_2021.html",
+    "title": "rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R",
     "section": "",
-    "text": "Sierocinski, P., Pascual, J. S., Padfield, D., Salter, M., & Buckling, A. (2021). The impact of propagule pressure on whole community invasions in biomethane-producing communities. Iscience, 24(6), 102659."
+    "text": "Padfield, D., O’Sullivan, H., & Pawar, S. (2021). rTPC and nls. multstart: a new pipeline to fit thermal performance curves in R. Methods in Ecology and Evolution, 12(6), 1138-1143."
   },
   {
-    "objectID": "publications/articles/sierocinski_2021.html#citation",
-    "href": "publications/articles/sierocinski_2021.html#citation",
-    "title": "The impact of propagule pressure on whole community invasions in biomethane-producing communities",
+    "objectID": "publications/articles/padfield_2021.html#citation",
+    "href": "publications/articles/padfield_2021.html#citation",
+    "title": "rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R",
     "section": "",
-    "text": "Sierocinski, P., Pascual, J. S., Padfield, D., Salter, M., & Buckling, A. (2021). The impact of propagule pressure on whole community invasions in biomethane-producing communities. Iscience, 24(6), 102659."
+    "text": "Padfield, D., O’Sullivan, H., & Pawar, S. (2021). rTPC and nls. multstart: a new pipeline to fit thermal performance curves in R. Methods in Ecology and Evolution, 12(6), 1138-1143."
   },
   {
-    "objectID": "publications/articles/sierocinski_2021.html#abstract",
-    "href": "publications/articles/sierocinski_2021.html#abstract",
-    "title": "The impact of propagule pressure on whole community invasions in biomethane-producing communities",
+    "objectID": "publications/articles/padfield_2021.html#abstract",
+    "href": "publications/articles/padfield_2021.html#abstract",
+    "title": "rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R",
     "section": "Abstract",
-    "text": "Abstract\nMicrobes can invade as whole communities, but the ecology of whole community invasions is poorly understood. Here, we investigate how invader propagule pressure (the number of invading organisms) affects the composition and function of invaded laboratory methanogenic communities. An invading community was equally successful at establishing itself in a resident community regardless of propagule pressure, which varied between 0.01 and 10% of the size resident community. Invasion resulted in enhanced biogas production (to the level of the pure invading community) but only when propagule pressure was 1% or greater. This inconsistency between invasion success and changes in function can be explained by a lower richness of invading taxa at lower propagule pressures, and an important functional role of the taxa that were absent. Our results highlight that whole community invasion ecology cannot simply be extrapolated from our understanding of single species invasions. Moreover, we show that methane production can be enhanced by invading poorly performing reactors with a better performing community at levels that may be practical in industrial settings."
+    "text": "Abstract\n\nQuantifying thermal performance curves (TPCs) for biological rates has many applications to important problems such as predicting responses of biological systems—from individuals to communities—to directional climate change or climatic fluctuations.\nCurrent software tools for fitting TPC models to data are not adequate for dealing with the immense size of new datasets that are increasingly becoming available. We require tools capable of tackling this issue in a simple, reproducible and accessible way.\nWe present a new, reproducible pipeline in r that allows for relatively simple fitting of 24 different TPC models using nonlinear least squares (NLLS) regression. The pipeline consists of two packages—rTPC and nls.multstart—that provide functions which conveniently address common problems with NLLS fitting such as the NLLS parameter starting values problem. rTPC also includes functions to set starting values, estimate key TPC parameters and calculate uncertainty around parameter estimates as well as the fitted model as a whole.\nWe demonstrate how this pipeline can be combined with other packages in r to robustly and reproducibly fit multiple mathematical models to multiple TPC datasets at once. In addition, we show how model selection or averaging, weighted model fitting and bootstrapping can be easily implemented within the pipeline.\nThis new pipeline provides a flexible and reproducible approach that makes the challenging task of fitting multiple TPC models to data accessible to a wide range of users across ecology and evolution."
   },
   {
-    "objectID": "publications/articles/sierocinski_2021.html#graphical-abstract",
-    "href": "publications/articles/sierocinski_2021.html#graphical-abstract",
-    "title": "The impact of propagule pressure on whole community invasions in biomethane-producing communities",
-    "section": "Graphical Abstract",
-    "text": "Graphical Abstract"
-  },
-  {
-    "objectID": "publications/articles/swan_2022.html",
-    "href": "publications/articles/swan_2022.html",
-    "title": "Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season",
+    "objectID": "publications/articles/sierocinski_2023.html",
+    "href": "publications/articles/sierocinski_2023.html",
+    "title": "The ecology of scale: impact of volume on coalescence and function in methanogenic communities",
     "section": "",
-    "text": "Swan, G. J., Bearhop, S., Redpath, S. M., Silk, M. J., Padfield, D., Goodwin, C. E., & McDonald, R. A. (2022). Associations between abundances of free‐roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season. Ecology and Evolution, 12(5), e8877."
+    "text": "Sierocinski, P., Stilwell, P., Padfield, D., Bayer, F., & Buckling, A. (2023). The ecology of scale: impact of volume on coalescence and function in methanogenic communities. Interface Focus, 13(4), 20220089."
   },
   {
-    "objectID": "publications/articles/swan_2022.html#citation",
-    "href": "publications/articles/swan_2022.html#citation",
-    "title": "Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season",
+    "objectID": "publications/articles/sierocinski_2023.html#citation",
+    "href": "publications/articles/sierocinski_2023.html#citation",
+    "title": "The ecology of scale: impact of volume on coalescence and function in methanogenic communities",
     "section": "",
-    "text": "Swan, G. J., Bearhop, S., Redpath, S. M., Silk, M. J., Padfield, D., Goodwin, C. E., & McDonald, R. A. (2022). Associations between abundances of free‐roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season. Ecology and Evolution, 12(5), e8877."
+    "text": "Sierocinski, P., Stilwell, P., Padfield, D., Bayer, F., & Buckling, A. (2023). The ecology of scale: impact of volume on coalescence and function in methanogenic communities. Interface Focus, 13(4), 20220089."
   },
   {
-    "objectID": "publications/articles/swan_2022.html#abstract",
-    "href": "publications/articles/swan_2022.html#abstract",
-    "title": "Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season",
+    "objectID": "publications/articles/sierocinski_2023.html#abstract",
+    "href": "publications/articles/sierocinski_2023.html#abstract",
+    "title": "The ecology of scale: impact of volume on coalescence and function in methanogenic communities",
     "section": "Abstract",
-    "text": "Abstract\nReleasing gamebirds in large numbers for sport shooting may directly or indirectly influence the abundance, distribution and population dynamics of native wildlife. The abundances of generalist predators have been positively associated with the abundance of gamebirds. These relationships have implications for prey populations, with the potential for indirect impacts of gamebird releases on wider biodiversity. To understand the basis of these associations, we investigated variation in territory size, prey provisioning to chicks, and breeding success of common buzzards Buteo buteo, and associations with variation in the abundances of free-roaming gamebirds, primarily pheasants Phasianus colchicus, and of rabbits Oryctolagus cuniculus and field voles Microtus agrestis, as important prey for buzzards. The relative abundance of gamebirds, but not those of rabbits or voles, was weakly but positively correlated with our index of buzzard territory size. Gamebirds were rarely brought to the nest. Rabbits and voles, and not gamebirds, were provisioned to chicks in proportion to their relative abundance. The number of buzzard chicks increased with provisioning rates of rabbits, in terms of both provisioning frequency and biomass, but not with provisioning rates for gamebirds or voles. Associations between the abundances of buzzards and gamebirds may not be a consequence of the greater availability of gamebirds as prey during the buzzard breeding season. Instead, the association may arise either from habitat or predator management leading to higher densities of alternative prey (in this instance, rabbits), or from greater availability of gamebirds as prey or carrion during the autumn and winter shooting season. The interactions between gamebird releases and associated practices of predator control and shooting itself require better understanding to more effectively intervene in any one aspect of this complex social-ecological system."
+    "text": "Abstract\nEngineered ecosystems span multiple volume scales, from a nano-scale to thousands of cubic metres. Even the largest industrial systems are tested in pilot scale facilities. But does scale affect outcomes? Here we look at comparing different size laboratory anaerobic fermentors to see if and how the volume of the community affects the outcome of community coalescence (combining multiple communities) on community composition and function. Our results show that there is an effect of scale on biogas production. Furthermore, we see a link between community evenness and volume, with smaller scale communities having higher evenness. Despite those differences, the overall patterns of community coalescence are very similar at all scales, with coalescence leading to levels of biogas production comparable with that of the best-performing component community. The increase in biogas with increasing volume plateaus, suggesting there is a volume where productivity stays stable over large volumes. Our findings are reassuring for ecologists studying large ecosystems and industries operating pilot scale facilities, as they support the validity of pilot scale studies in this field."
   },
   {
-    "objectID": "publications/articles/lear_2022.html",
-    "href": "publications/articles/lear_2022.html",
-    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
+    "objectID": "publications/articles/lear_2023.html",
+    "href": "publications/articles/lear_2023.html",
+    "title": "Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.",
     "section": "",
-    "text": "Lear, L., Padfield, D., Dowsett, T., Jones, M., Kay, S., Hayward, A., & Vos, M. (2022). Bacterial colonisation dynamics of household plastics in a coastal environment. Science of the Total Environment, 838, 156199."
+    "text": "Lear, L., Padfield, D., Hesse, E., Kay, S., Buckling, A., & Vos, M. (2023). Copper reduces the virulence of bacterial communities at environmentally relevant concentrations. Environment International, 182, 108295."
   },
   {
-    "objectID": "publications/articles/lear_2022.html#citation",
-    "href": "publications/articles/lear_2022.html#citation",
-    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
+    "objectID": "publications/articles/lear_2023.html#citation",
+    "href": "publications/articles/lear_2023.html#citation",
+    "title": "Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.",
     "section": "",
-    "text": "Lear, L., Padfield, D., Dowsett, T., Jones, M., Kay, S., Hayward, A., & Vos, M. (2022). Bacterial colonisation dynamics of household plastics in a coastal environment. Science of the Total Environment, 838, 156199."
+    "text": "Lear, L., Padfield, D., Hesse, E., Kay, S., Buckling, A., & Vos, M. (2023). Copper reduces the virulence of bacterial communities at environmentally relevant concentrations. Environment International, 182, 108295."
   },
   {
-    "objectID": "publications/articles/lear_2022.html#abstract",
-    "href": "publications/articles/lear_2022.html#abstract",
-    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
+    "objectID": "publications/articles/lear_2023.html#abstract",
+    "href": "publications/articles/lear_2023.html#abstract",
+    "title": "Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.",
     "section": "Abstract",
-    "text": "Abstract\nAccumulation of plastics in the marine environment has widespread detrimental consequences for ecosystems and wildlife. Marine plastics are rapidly colonised by a wide diversity of bacteria, including human pathogens, posing potential risks to health. Here, we investigate the effect of polymer type, residence time and estuarine location on bacterial colonisation of common household plastics, including pathogenic bacteria. We submerged five main household plastic types: low-density PE (LDPE), high-density PE (HDPE), polypropylene (PP), polyvinyl chloride (PVC) and polyethylene terephthalate (PET) at an estuarine site in Cornwall (U.K.) and tracked bacterial colonisation dynamics. Using both culture-dependent and culture-independent approaches, we found that bacteria rapidly colonised plastics irrespective of polymer type, reaching culturable densities of up to 1000 cells cm3 after 7 weeks. Community composition of the biofilms changed over time, but not among polymer types. The presence of pathogenic bacteria, quantified using the insect model Galleria mellonella, increased dramatically over a five-week period, with Galleria mortality increasing from 4% in week one to 65% in week five. No consistent differences in virulence were observed between polymer types. Pathogens isolated from plastic biofilms using Galleria enrichment included Serratia and Enterococcus species and they harboured a wide range of antimicrobial resistance genes. Our findings show that plastics in coastal waters are rapidly colonised by a wide diversity of bacteria independent of polymer type. Further, our results show that marine plastic biofilms become increasingly associated with virulent bacteria over time."
+    "text": "Abstract\nIncreasing environmental concentrations of metals as a result of anthropogenic pollution are significantly changing many microbial communities. While there is evidence metal pollution can result in increased antibiotic resistance, the effects of metal pollution on the virulence of bacterial communities remains largely undetermined. Here, we experimentally test whether metal stress alters the virulence of bacterial communities. We do this by incubating three wastewater influent communities under different environmentally relevant copper concentrations for three days. We then quantify the virulence of the community phenotypically using the Galleria mellonella infection model, and test if differences are due to changes in the rate of biomass accumulation (productivity), copper resistance, or community composition (quantified using 16S amplicon sequencing). The virulence of the communities was found to be reduced by the highest copper concentration, but not to be affected by the lower concentration. As well as reduced virulence, communities exposed to the highest copper concentration were less diverse and had lower productivity. This work highlights that metal pollution may decrease virulence in bacterial communities, but at a cost to diversity and productivity."
   },
   {
-    "objectID": "publications/articles/lear_2022.html#graphical-abstract",
-    "href": "publications/articles/lear_2022.html#graphical-abstract",
-    "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
-    "section": "Graphical Abstract",
-    "text": "Graphical Abstract"
+    "objectID": "publications/articles/vanhoute_2021.html",
+    "href": "publications/articles/vanhoute_2021.html",
+    "title": "Compost spatial heterogeneity promotes evolutionary diversification of a bacterium",
+    "section": "",
+    "text": "van Houte, S., Padfield, D., Gómez, P., Luján, A. M., Brockhurst, M. A., Paterson, S., & Buckling, A. (2021). Compost spatial heterogeneity promotes evolutionary diversification of a bacterium. Journal of Evolutionary Biology, 34(2), 246-255."
+  },
+  {
+    "objectID": "publications/articles/vanhoute_2021.html#citation",
+    "href": "publications/articles/vanhoute_2021.html#citation",
+    "title": "Compost spatial heterogeneity promotes evolutionary diversification of a bacterium",
+    "section": "",
+    "text": "van Houte, S., Padfield, D., Gómez, P., Luján, A. M., Brockhurst, M. A., Paterson, S., & Buckling, A. (2021). Compost spatial heterogeneity promotes evolutionary diversification of a bacterium. Journal of Evolutionary Biology, 34(2), 246-255."
+  },
+  {
+    "objectID": "publications/articles/vanhoute_2021.html#abstract",
+    "href": "publications/articles/vanhoute_2021.html#abstract",
+    "title": "Compost spatial heterogeneity promotes evolutionary diversification of a bacterium",
+    "section": "Abstract",
+    "text": "Abstract\nSpatial resource heterogeneity is expected to be a key driver for the evolution of diversity. However, direct empirical support for this prediction is limited to studies carried out in simplified laboratory environments. Here, we investigate how altering spatial heterogeneity of potting compost—by the addition of water and mixing—affects the evolutionary diversification of a bacterial species, Pseudomonas fluorescens, that is naturally found in the environment. There was a greater propensity of resource specialists to evolve in the unmanipulated compost, while more generalist phenotypes dominated the compost–water mix. Genomic data were consistent with these phenotypic findings. Competition experiments strongly suggest these results are due to diversifying selection as a result of resource heterogeneity, as opposed to other covariables. Overall, our findings corroborate theoretical and in vitro findings, but in semi-natural, more realistic conditions."
   },
   {
     "objectID": "publications/articles/padfield_2018.html",
@@ -823,7 +865,7 @@
     "href": "publications.html",
     "title": "DanPadLab",
     "section": "",
-    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Author\n        \n         \n          Publication\n        \n         \n          Year\n        \n     \n  \n    \n      \n      \n    \n\n\n  \n    Contrary effects of increasing temperatures on the spread of antimicrobial resistance in river biofilms\n    Kenyum Bagra, David Kneis, Daniel Padfield, Edina Szekeres, Adela Teban-Man, Cristian Coman, Gargi Singh, Thomas U. Berendonk, Uli Klümper\n    Msphere\n    (2024)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n  \n  \n    Adaptive radiations in natural populations of prokaryotes: innovation is key.\n    Michiel Vos, Daniel Padfield, Christopher Quince, Rutger Vos\n    Fems Microbiology Ecology\n    (2023)\n    \n      Details\n    \n    \n      DOI\n    \n    \n  \n  \n    Comparative experimental evolution reveals species‐specific idiosyncrasies in marine phytoplankton adaptation to warming\n    Samuel Barton, Daniel Padfield, Abigail Masterson, Angus Buckling, Nicholas Smirnoff, Gabriel Yvon‐Durocher\n    Global Change Biology\n    (2023)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Data\n    \n    \n  \n  \n    Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.\n    Luke Lear, Daniel Padfield, Elze Hesse, Suzanne Kay, Angus Buckling, Michiel Vos\n    Environment Internatinal\n    (2023)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Data\n    \n    \n  \n  \n    The ecology of scale: impact of volume on coalescence and function in methanogenic communities\n    Pawel Sierocinski, Peter Stilwell, Daniel Padfield, Florian Bayer and Angus Buckling\n    Royal Society Interface Focus\n    (2023)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Data\n    \n    \n  \n  \n    A comprehensive list of bacterial pathogens infecting humans\n    Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos\n    Microbiology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season\n    George JF Swan, Stuart Bearhop, Stephen M Redpath, Matthew J Silk, Daniel Padfield, Cecily ED Goodwin, Robbie A McDonald\n    Ecology & Evolution\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n  \n  \n    Bacterial colonisation dynamics of household plastics in a coastal environment\n    Luke Lear, Daniel Padfield, Tirion Dowsett, Maia Jones, Suzanne Kay, Alex Hayward, Michiel Vos\n    Science of the Total Environment\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Disturbance‐mediated invasions are dependent on community resource abundance\n    Luke Lear, Daniel Padfield, Hidetoshi Inamine, Katriona Shea, Angus Buckling\n    Ecology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Greater phage genotypic diversity constrains arms-race coevolution\n    Meaghan Castledine, Pawel Sierocinski, Mhairi Inglis, Suzanne Kay, Alex Hayward, Angus Buckling, Daniel Padfield\n    Frontiers in Cellular and Infection Microbiology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro\n    Meaghan Castledine, Daniel Padfield, Pawel Sierocinski, Jesica Soria Pascual, Adam Hughes, Lotta Mäkinen, Ville-Petri Friman, Jean-Paul Pirnay, Maya Merabishvili, Daniel De Vos, Angus Buckling\n    eLife\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data\n    Matthew J Silk, Robbie A McDonald, Richard J Delahay, Daniel Padfield, David J Hodgson\n    Methods in Ecology & Evolution\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n  \n  \n    Compost spatial heterogeneity promotes evolutionary diversification of a bacterium\n    Stineke van Houte, Daniel Padfield, Pedro Gómez, Adela M Luján, Michael A Brockhurst, Steve Paterson, Angus Buckling\n    Journal of Evolutionary Biology\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    The impact of propagule pressure on whole community invasions in biomethane-producing communities\n    Pawel Sierocinski, Jesica Soria Pascual, Daniel Padfield, Mike Salter, Angus Buckling\n    iScience\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Data\n    \n    \n  \n  \n    Warming impairs trophic transfer efficiency in a long-term field experiment\n    Diego R Barneche, Chris J Hulatt, Matteo Dossena, Daniel Padfield, Guy Woodward, Mark Trimmer, Gabriel Yvon-Durocher\n    Nature\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Open Access\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R\n    Daniel Padfield, Hannah O'Sullivan, Samraat Pawar\n    Methods in Ecology & Evolution\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n  \n  \n    Community coalescence: an eco-evolutionary perspective\n    Meaghan Castledine, Pawel Sierocinski, Daniel Padfield, Angus Buckling\n    Philosophical Transactions of the Royal Society B\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n  \n  \n    Evolution of diversity explains the impact of pre-adaptation of a focal species on the structure of a natural microbial community\n    Daniel Padfield, Alex Vujakovic, Steve Paterson, Rob Griffiths, Angus Buckling, Elze Hesse\n    ISME\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Open Access\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Experimental (co)evolution in a multi‐species microbial community results in local maladaptation\n    Meaghan Castledine, Daniel Padfield, Angus Buckling\n    Ecology Letters\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n  \n  \n    Postrelease movement and habitat selection of translocated pine martens Martes martes\n    Catherine M McNicol, David Bavin, Stuart Bearhop, Josie Bridges, Elizabeth Croose, Robin Gill, Cecily ED Goodwin, John Lewis, Jenny MacPherson, Daniel Padfield, Henry Schofield, Matthew J Silk, Alexandra J Tomlinson, Robbie A McDonald\n    Ecology & Evolution\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Data\n    \n    \n  \n  \n    Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host\n    Daniel Padfield, Meaghan Castledine, Angus Buckling\n    ISME\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Open Access\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens\n    Meaghan Castledine, Angus Buckling, Daniel Padfield\n    Journal of Evolutionary Biology\n    (2019)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Anthropogenic remediation of heavy metals selects against natural microbial remediation\n    Elze Hesse, Daniel Padfield, Florian Bayer, Eleanor M Van Veen, Christopher G Bryan, Angus Buckling\n    Proceedings of the Royal Society B\n    (2019)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Data\n    \n    \n  \n  \n    Linking phytoplankton community metabolism to the individual size distribution\n    Daniel Padfield, Angus Buckling, Ruth Warfield, Chris Lowe, Gabriel Yvon‐Durocher\n    Ecology Letters\n    (2018)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n  \n  \n    Role of carbon allocation efficiency in the temperature dependence of autotroph growth rates\n    Bernardo García-Carreras, Sofía Sal, Daniel Padfield, Dimitrios-Georgios Kontopoulos, Elvire Bestion, C-Elisa Schaum, Gabriel Yvon-Durocher, Samraat Pawar\n    PNAS\n    (2018)\n    \n      Details\n    \n    \n  \n  \n    Temperature‐driven selection on metabolic traits increases the strength of an algal–grazer interaction in naturally warmed streams\n    C Elisa Schaum, Student Research Team, Richard ffrench‐Constant, Chris Lowe, Jón S Ólafsson, Daniel Padfield, Gabriel Yvon‐Durocher, Yasmin Ashton, Romina Botoli, Peter Coles, Joe Crisp, Emma Dwan, Stella Enoch‐Pledger, Briony Flello, Kate Freegard, Ceri Haines, Matthew Holland, Luke Lear, Emma Lokuciejewski, Heather McPhee, Toby Newport, Liisa Pahk, Sienna Somers, Caspar Swindells, Maria Wild, Ethan Wrigglesworth\n    Global Change Biology\n    (2018)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n  \n  \n    Metabolic compensation constrains the temperature dependence of gross primary production\n    Daniel Padfield, Chris Lowe, Angus Buckling, Richard Ffrench‐Constant, Student Research Team, Simon Jennings, Felicity Shelley, Jón S Ólafsson, Gabriel Yvon‐Durocher\n    Ecology Letters\n    (2017)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton\n    Daniel Padfield, Genevieve Yvon‐Durocher, Angus Buckling, Simon Jennings, Gabriel Yvon‐Durocher\n    Ecology Letters\n    (2016)\n    \n      Details\n    \n    \n      DOI\n    \n    \n  \n\n\nNo matching items"
+    "text": "Order By\n       Default\n         \n          Title\n        \n         \n          Author\n        \n         \n          Publication\n        \n         \n          Year\n        \n     \n  \n    \n      \n      \n    \n\n\n  \n    Bacteriophage resistance increases bacterial productivity by shifting population growth dynamics in the soil bacterium Variovorax sp\n    Meaghan Castledine, Daniel Padfield, Rai Lewis, Angus Buckling\n    bioRxiv\n    (2024)\n    \n      Details\n    \n    \n       Preprint\n    \n    \n  \n  \n    Contrary effects of increasing temperatures on the spread of antimicrobial resistance in river biofilms\n    Kenyum Bagra, David Kneis, Daniel Padfield, Edina Szekeres, Adela Teban-Man, Cristian Coman, Gargi Singh, Thomas U. Berendonk, Uli Klümper\n    Msphere\n    (2024)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n  \n  \n    Macroevolutionary dynamics in micro-organisms: generalists give rise to specialists across biomes in the ubiquitous bacterial phylum Myxococcota\n    Daniel Padfield, Suzanne Kay, Rutger Vos, Christopher Quince, Michiel Vos\n    bioRxiv\n    (2024)\n    \n      Details\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n  \n  \n    Adaptive radiations in natural populations of prokaryotes: innovation is key.\n    Michiel Vos, Daniel Padfield, Christopher Quince, Rutger Vos\n    Fems Microbiology Ecology\n    (2023)\n    \n      Details\n    \n    \n      DOI\n    \n    \n  \n  \n    Comparative experimental evolution reveals species‐specific idiosyncrasies in marine phytoplankton adaptation to warming\n    Samuel Barton, Daniel Padfield, Abigail Masterson, Angus Buckling, Nicholas Smirnoff, Gabriel Yvon‐Durocher\n    Global Change Biology\n    (2023)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Data\n    \n    \n  \n  \n    Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.\n    Luke Lear, Daniel Padfield, Elze Hesse, Suzanne Kay, Angus Buckling, Michiel Vos\n    Environment Internatinal\n    (2023)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Data\n    \n    \n  \n  \n    The ecology of scale: impact of volume on coalescence and function in methanogenic communities\n    Pawel Sierocinski, Peter Stilwell, Daniel Padfield, Florian Bayer and Angus Buckling\n    Royal Society Interface Focus\n    (2023)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Data\n    \n    \n  \n  \n    A comprehensive list of bacterial pathogens infecting humans\n    Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos\n    Microbiology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season\n    George JF Swan, Stuart Bearhop, Stephen M Redpath, Matthew J Silk, Daniel Padfield, Cecily ED Goodwin, Robbie A McDonald\n    Ecology & Evolution\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n  \n  \n    Bacterial colonisation dynamics of household plastics in a coastal environment\n    Luke Lear, Daniel Padfield, Tirion Dowsett, Maia Jones, Suzanne Kay, Alex Hayward, Michiel Vos\n    Science of the Total Environment\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Disturbance‐mediated invasions are dependent on community resource abundance\n    Luke Lear, Daniel Padfield, Hidetoshi Inamine, Katriona Shea, Angus Buckling\n    Ecology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Greater phage genotypic diversity constrains arms-race coevolution\n    Meaghan Castledine, Pawel Sierocinski, Mhairi Inglis, Suzanne Kay, Alex Hayward, Angus Buckling, Daniel Padfield\n    Frontiers in Cellular and Infection Microbiology\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro\n    Meaghan Castledine, Daniel Padfield, Pawel Sierocinski, Jesica Soria Pascual, Adam Hughes, Lotta Mäkinen, Ville-Petri Friman, Jean-Paul Pirnay, Maya Merabishvili, Daniel De Vos, Angus Buckling\n    eLife\n    (2022)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data\n    Matthew J Silk, Robbie A McDonald, Richard J Delahay, Daniel Padfield, David J Hodgson\n    Methods in Ecology & Evolution\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n  \n  \n    Compost spatial heterogeneity promotes evolutionary diversification of a bacterium\n    Stineke van Houte, Daniel Padfield, Pedro Gómez, Adela M Luján, Michael A Brockhurst, Steve Paterson, Angus Buckling\n    Journal of Evolutionary Biology\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    The impact of propagule pressure on whole community invasions in biomethane-producing communities\n    Pawel Sierocinski, Jesica Soria Pascual, Daniel Padfield, Mike Salter, Angus Buckling\n    iScience\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Data\n    \n    \n  \n  \n    Warming impairs trophic transfer efficiency in a long-term field experiment\n    Diego R Barneche, Chris J Hulatt, Matteo Dossena, Daniel Padfield, Guy Woodward, Mark Trimmer, Gabriel Yvon-Durocher\n    Nature\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Open Access\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R\n    Daniel Padfield, Hannah O'Sullivan, Samraat Pawar\n    Methods in Ecology & Evolution\n    (2021)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n  \n  \n    Community coalescence: an eco-evolutionary perspective\n    Meaghan Castledine, Pawel Sierocinski, Daniel Padfield, Angus Buckling\n    Philosophical Transactions of the Royal Society B\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n  \n  \n    Evolution of diversity explains the impact of pre-adaptation of a focal species on the structure of a natural microbial community\n    Daniel Padfield, Alex Vujakovic, Steve Paterson, Rob Griffiths, Angus Buckling, Elze Hesse\n    ISME\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Open Access\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Experimental (co)evolution in a multi‐species microbial community results in local maladaptation\n    Meaghan Castledine, Daniel Padfield, Angus Buckling\n    Ecology Letters\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n  \n  \n    Postrelease movement and habitat selection of translocated pine martens Martes martes\n    Catherine M McNicol, David Bavin, Stuart Bearhop, Josie Bridges, Elizabeth Croose, Robin Gill, Cecily ED Goodwin, John Lewis, Jenny MacPherson, Daniel Padfield, Henry Schofield, Matthew J Silk, Alexandra J Tomlinson, Robbie A McDonald\n    Ecology & Evolution\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Data\n    \n    \n  \n  \n    Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host\n    Daniel Padfield, Meaghan Castledine, Angus Buckling\n    ISME\n    (2020)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Open Access\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens\n    Meaghan Castledine, Angus Buckling, Daniel Padfield\n    Journal of Evolutionary Biology\n    (2019)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Anthropogenic remediation of heavy metals selects against natural microbial remediation\n    Elze Hesse, Daniel Padfield, Florian Bayer, Eleanor M Van Veen, Christopher G Bryan, Angus Buckling\n    Proceedings of the Royal Society B\n    (2019)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Data\n    \n    \n  \n  \n    Linking phytoplankton community metabolism to the individual size distribution\n    Daniel Padfield, Angus Buckling, Ruth Warfield, Chris Lowe, Gabriel Yvon‐Durocher\n    Ecology Letters\n    (2018)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Code\n    \n    \n  \n  \n    Role of carbon allocation efficiency in the temperature dependence of autotroph growth rates\n    Bernardo García-Carreras, Sofía Sal, Daniel Padfield, Dimitrios-Georgios Kontopoulos, Elvire Bestion, C-Elisa Schaum, Gabriel Yvon-Durocher, Samraat Pawar\n    PNAS\n    (2018)\n    \n      Details\n    \n    \n  \n  \n    Temperature‐driven selection on metabolic traits increases the strength of an algal–grazer interaction in naturally warmed streams\n    C Elisa Schaum, Student Research Team, Richard ffrench‐Constant, Chris Lowe, Jón S Ólafsson, Daniel Padfield, Gabriel Yvon‐Durocher, Yasmin Ashton, Romina Botoli, Peter Coles, Joe Crisp, Emma Dwan, Stella Enoch‐Pledger, Briony Flello, Kate Freegard, Ceri Haines, Matthew Holland, Luke Lear, Emma Lokuciejewski, Heather McPhee, Toby Newport, Liisa Pahk, Sienna Somers, Caspar Swindells, Maria Wild, Ethan Wrigglesworth\n    Global Change Biology\n    (2018)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n  \n  \n    Metabolic compensation constrains the temperature dependence of gross primary production\n    Daniel Padfield, Chris Lowe, Angus Buckling, Richard Ffrench‐Constant, Student Research Team, Simon Jennings, Felicity Shelley, Jón S Ólafsson, Gabriel Yvon‐Durocher\n    Ecology Letters\n    (2017)\n    \n      Details\n    \n    \n      DOI\n    \n    \n       Preprint\n    \n    \n       Code\n    \n    \n       Data\n    \n    \n  \n  \n    Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton\n    Daniel Padfield, Genevieve Yvon‐Durocher, Angus Buckling, Simon Jennings, Gabriel Yvon‐Durocher\n    Ecology Letters\n    (2016)\n    \n      Details\n    \n    \n      DOI\n    \n    \n  \n\n\nNo matching items"
   },
   {
     "objectID": "software.html",
