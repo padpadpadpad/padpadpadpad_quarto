@@ -3,6 +3,7 @@ project:
   output-dir: _site
 
 website:
+  favicon: images/favicon-32x32.png
   google-analytics: G-8ZTBW36K7F
   title: "DanPadLab"
   site-url: https://padpadpadpad.netlify.app
