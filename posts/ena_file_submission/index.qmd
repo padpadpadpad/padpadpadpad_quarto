@@ -132,24 +132,46 @@ files <- read.csv('ena_submission/sample_metadata.csv') %>%
 # run a for loop
 for(i in 1:nrow(files)){
   
-# grab the file name from the NAME row (third element)
-file_name <- temp$value[3]
+  # grab the first row
+  temp <- files[i,]
   
-# rename the fastq columns FASTQ
-temp$name[10:11] <- 'FASTQ'
-temp <- temp[1:11,]
-
-# name the fastq files R1 and R2 and the file name
-temp$value[10] <- paste(file_name, '_R1.fastq.gz', sep = '')
-temp$value[11] <- paste(file_name, '_R2.fastq.gz', sep = '')
+  # go from wide to long format
+  temp <- pivot_longer(temp, cols = everything())    
   
-# save it out
-# need to create a folder for your manifest files
-write.table(temp, paste('manifest_files/', file_name, '.txt', sep = ''), row.names = FALSE, col.names = FALSE, quote = FALSE)
+  # grab the file name from the NAME row (third element)
+  file_name <- temp$value[3]
+  
+  # rename the fastq columns FASTQ
+  temp$name[10:11] <- 'FASTQ'
+  temp <- temp[1:11,]
+  
+  # name the fastq files R1 and R2 and the file name
+  temp$value[10] <- paste(file_name, '_R1.fastq.gz', sep = '')
+  temp$value[11] <- paste(file_name, '_R2.fastq.gz', sep = '')
+  
+  # save it out
+  # need to create a folder for your manifest files
+  write.table(temp, paste('manifest_files/', file_name, '.txt', sep = ''), row.names = FALSE, col.names = FALSE, quote = FALSE)
 }
 ```
 
 This should result in you having a unique manifest file for each of your samples that you registered.
+
+An example of the top row from my most recent submission is:
+
+```
+STUDY PRJEB73761
+SAMPLE ERS18415308
+NAME myxo_16s_s1
+PLATFORM ILLUMINA
+INSTRUMENT Illumina MiSeq
+INSERT_SIZE 300
+LIBRARY_SOURCE GENOMIC
+LIBRARY_SELECTION PCR
+LIBRARY_STRATEGY AMPLICON
+FASTQ myxo_16s_s1_R1.fastq.gz
+FASTQ myxo_16s_s1_R2.fastq.gz
+```
 
 ### 5. Submit samples
 
@@ -171,6 +193,9 @@ files <- list.files('where_the_raw_files_live', full.names = TRUE, pattern = 'fa
 
 # write for loop ro rename files
 for(i in 1:length(manifest_files)){
+  
+  # grab the first row
+  temp <- d[i,]
   
   # grab the ith manifest fuke
   temp <- manifest_files[i]
