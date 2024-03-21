@@ -301,7 +301,7 @@ font-style: inherit;">FALSE</span>)</span>
 <span id="cb1-35">}</span></code></pre></div>
 </div>
 <p>This should result in you having a unique manifest file for each of your samples that you registered.</p>
-<p>An example of the top row from my most recent submission is:</p>
+<p>An example of the top row from my most recent submission is a file created called <strong>myxo_16s_s1.txt</strong>. Its contents are:</p>
 <pre><code>STUDY PRJEB73761
 SAMPLE ERS18415308
 NAME myxo_16s_s1

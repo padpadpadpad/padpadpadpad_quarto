@@ -157,7 +157,7 @@ for(i in 1:nrow(files)){
 
 This should result in you having a unique manifest file for each of your samples that you registered.
 
-An example of the top row from my most recent submission is:
+An example of the top row from my most recent submission is a file created called **myxo_16s_s1.txt**. Its contents are:
 
 ```
 STUDY PRJEB73761
