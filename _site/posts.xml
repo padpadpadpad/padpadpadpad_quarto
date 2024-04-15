@@ -574,7 +574,7 @@ font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">paste</span>(temp, <span class="st" style="color: #20794D;
 background-color: null;
-font-style: inherit;">'_R2.fastq.gz'</span>, <span class="at" style="color: #657422;
+font-style: inherit;">'_R1.fastq.gz'</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">sep =</span> <span class="st" style="color: #20794D;
 background-color: null;

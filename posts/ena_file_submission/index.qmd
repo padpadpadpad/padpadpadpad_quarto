@@ -226,7 +226,7 @@ for(i in 1:length(manifest_files)){
   # populate d_files
   d_files$original_file[(2*i)] <- basename(files_temp[str_detect(basename(files_temp), 'R1')])
   d_files$original_file[(2*i)+1] <- basename(files_temp[str_detect(basename(files_temp), 'R2')])
-  d_files$new_file[(2*i)] <- paste(temp, '_R2.fastq.gz', sep = '')
+  d_files$new_file[(2*i)] <- paste(temp, '_R1.fastq.gz', sep = '')
   d_files$new_file[(2*i)+1] <- paste(temp, '_R2.fastq.gz', sep = '')
 }
 
