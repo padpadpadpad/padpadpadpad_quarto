@@ -204,7 +204,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Modified</div>
       <div class="quarto-title-meta-contents">
-        <p class="date-modified">March 21, 2024</p>
+        <p class="date-modified">April 15, 2024</p>
       </div>
     </div>
       
@@ -403,7 +403,8 @@ FASTQ myxo_16s_s1_R2.fastq.gz</code></pre>
 <h3 class="anchored" data-anchor-id="submit-samples">5. Submit samples</h3>
 <p>Once you have your manifest files, you can submit them to ENA. However, it is likely that before you do this you may need to rename your files to match the names you specified in the FASTQ values of each manifest file. This is because the manifest file will be looking for files with those names in the directory where you specify the fastq files are.</p>
 <p>So I have started creating a new folder called <strong>ena_upload</strong> where I copy and rename the samples to for ena submission. These can then be deleted after submission is successful.</p>
-<p>I do file renaming in R, and this is likely to be bespoke for each project and how you have named your sample aliases. An example of what this might look like is:</p>
+<p>I do file renaming in R, and this is likely to be bespoke for each project and how you have named your sample aliases. In case there are mistakes down the line in your file renaming or submission - or you find that some files do not have the metadata you thought they had - it might be useful to save out a csv with all the original names and the new names.</p>
+<p>An example of what this might look like is:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># rename files for ena upload</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -413,35 +414,48 @@ FASTQ myxo_16s_s1_R2.fastq.gz</code></pre>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co"># list the sequencing files to rename</span></span>
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>files <span class="ot">&lt;-</span> <span class="fu">list.files</span>(<span class="st">'where_the_raw_files_live'</span>, <span class="at">full.names =</span> <span class="cn">TRUE</span>, <span class="at">pattern =</span> <span class="st">'fastq|fq'</span>, <span class="at">recursive =</span> <span class="cn">TRUE</span>)</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># write for loop ro rename files</span></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(manifest_files)){</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  <span class="co"># grab the first row</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> d[i,]</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="co"># grab the ith manifest fuke</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> manifest_files[i]</span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove file extension</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(temp)</span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  <span class="co"># in this example, the sample identifier is the s1 part, so I will grab that</span></span>
-<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># this bit needs to allow you to find the sequencing files - given the current naming - that relate to that manifest file</span></span>
-<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  temp_num <span class="ot">&lt;-</span> <span class="fu">str_split</span>(temp, <span class="st">'_'</span>)[[<span class="dv">1</span>]][<span class="dv">3</span>]</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co"># empty dataframe to populate original file names and new file names</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>d_files <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">manifest_file =</span> <span class="fu">rep</span>(<span class="fu">basename</span>(manifest_files), <span class="at">each =</span> <span class="dv">2</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">original_file =</span> <span class="cn">NA</span>, <span class="at">new_file =</span> <span class="cn">NA</span>)</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># write for loop ro rename files</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span>(i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">length</span>(manifest_files)){</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>  <span class="co"># grab the first row</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> d[i,]</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="co"># grab the ith manifest fuke</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> manifest_files[i]</span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a>  <span class="co"># remove file extension</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a>  temp <span class="ot">&lt;-</span> tools<span class="sc">::</span><span class="fu">file_path_sans_ext</span>(temp)</span>
 <span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># find the sequencing files that link to that manifest file</span></span>
-<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  files_temp <span class="ot">&lt;-</span> files[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files), <span class="fu">paste</span>(temp_num, <span class="st">'_'</span>, <span class="at">sep =</span> <span class="st">''</span>))]</span>
-<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rename files for ena upload</span></span>
-<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for R1 file</span></span>
-<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(files_temp[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files_temp), <span class="st">'R1'</span>)], <span class="fu">paste</span>(<span class="st">'~/ena_upload/'</span>, temp, <span class="st">'_R1.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>))</span>
-<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for R2 file</span></span>
-<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(files_temp[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files_temp), <span class="st">'R2'</span>)], <span class="fu">paste</span>(<span class="st">'~/ena_upload/'</span>, temp, <span class="st">'_R2.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>))</span>
-<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a>}</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a>  <span class="co"># in this example, the sample identifier is the s1 part, so I will grab that</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a>  <span class="co"># this bit needs to allow you to find the sequencing files - given the current naming - that relate to that manifest file</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a>  temp_num <span class="ot">&lt;-</span> <span class="fu">str_split</span>(temp, <span class="st">'_'</span>)[[<span class="dv">1</span>]][<span class="dv">3</span>]</span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a>  <span class="co"># find the sequencing files that link to that manifest file</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a>  files_temp <span class="ot">&lt;-</span> files[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files), <span class="fu">paste</span>(temp_num, <span class="st">'_'</span>, <span class="at">sep =</span> <span class="st">''</span>))]</span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a>  <span class="co"># rename files for ena upload</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for R1 file</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(files_temp[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files_temp), <span class="st">'R1'</span>)], <span class="fu">paste</span>(<span class="st">'~/ena_upload/'</span>, temp, <span class="st">'_R1.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>))</span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a>  <span class="co"># for R2 file</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a>  <span class="fu">file.copy</span>(files_temp[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files_temp), <span class="st">'R2'</span>)], <span class="fu">paste</span>(<span class="st">'~/ena_upload/'</span>, temp, <span class="st">'_R2.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>))</span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a>  <span class="co"># populate d_files</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a>  d_files<span class="sc">$</span>original_file[(<span class="dv">2</span><span class="sc">*</span>i)] <span class="ot">&lt;-</span> <span class="fu">basename</span>(files_temp[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files_temp), <span class="st">'R1'</span>)])</span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a>  d_files<span class="sc">$</span>original_file[(<span class="dv">2</span><span class="sc">*</span>i)<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">basename</span>(files_temp[<span class="fu">str_detect</span>(<span class="fu">basename</span>(files_temp), <span class="st">'R2'</span>)])</span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a>  d_files<span class="sc">$</span>new_file[(<span class="dv">2</span><span class="sc">*</span>i)] <span class="ot">&lt;-</span> <span class="fu">paste</span>(temp, <span class="st">'_R2.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>)</span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a>  d_files<span class="sc">$</span>new_file[(<span class="dv">2</span><span class="sc">*</span>i)<span class="sc">+</span><span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">paste</span>(temp, <span class="st">'_R2.fastq.gz'</span>, <span class="at">sep =</span> <span class="st">''</span>)</span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="co"># save out csv containing old and new names</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="fu">write.csv</span>(d_files, <span class="st">'file_renaming.csv'</span>, <span class="at">row.names =</span> <span class="cn">FALSE</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>This should result in the sequencing files being renamed to match the names specified in the manifest files. We should then be able to upload them to ENA. I use the ENA webin-cli tool to do this. You can find the documentation for this tool <a href="https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html">here</a>.</p>
-<p>We can now run Webin-cli to submit our samples. We will start by validating our submission to check no terrible errors have occurred.</p>
+<p>We can now run Webin-cli to submit our samples. We will start by validating our submission to check no terrible errors have occurred. This bit is now done in the <strong>Terminal</strong> using <strong>bash</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># submitting files to ENA</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
@@ -531,7 +545,7 @@ FASTQ myxo_16s_s1_R2.fastq.gz</code></pre>
 <figcaption class="figure-caption">Checking validation of manifest files</figcaption>
 </figure>
 </div>
-<p>We can then run the submission for realsies!</p>
+<p>We can then run the submission for realsies! This bit is now done in the <strong>Terminal</strong> using <strong>bash</strong>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># run a for loop to submit sequencing files</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> file <span class="kw">in</span> <span class="va">$manifest_files</span>/<span class="pp">*</span>.txt</span>

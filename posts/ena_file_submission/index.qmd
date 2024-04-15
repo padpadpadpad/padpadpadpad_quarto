@@ -179,7 +179,9 @@ Once you have your manifest files, you can submit them to ENA. However, it is li
 
 So I have started creating a new folder called **ena_upload** where I copy and rename the samples to for ena submission. These can then be deleted after submission is successful.
 
-I do file renaming in R, and this is likely to be bespoke for each project and how you have named your sample aliases. An example of what this might look like is:
+I do file renaming in R, and this is likely to be bespoke for each project and how you have named your sample aliases. In case there are mistakes down the line in your file renaming or submission - or you find that some files do not have the metadata you thought they had - it might be useful to save out a csv with all the original names and the new names. 
+
+An example of what this might look like is:
 
 ```{r file_renaming}
 #| eval: false
@@ -190,6 +192,10 @@ manifest_files <- list.files('manifest_files', full.names = TRUE)
 
 # list the sequencing files to rename
 files <- list.files('where_the_raw_files_live', full.names = TRUE, pattern = 'fastq|fq', recursive = TRUE)
+
+# empty dataframe to populate original file names and new file names
+d_files <- data.frame(manifest_file = rep(basename(manifest_files), each = 2)) %>%
+  mutate(original_file = NA, new_file = NA)
 
 # write for loop ro rename files
 for(i in 1:length(manifest_files)){
@@ -216,12 +222,22 @@ for(i in 1:length(manifest_files)){
   file.copy(files_temp[str_detect(basename(files_temp), 'R1')], paste('~/ena_upload/', temp, '_R1.fastq.gz', sep = ''))
   # for R2 file
   file.copy(files_temp[str_detect(basename(files_temp), 'R2')], paste('~/ena_upload/', temp, '_R2.fastq.gz', sep = ''))
+  
+  # populate d_files
+  d_files$original_file[(2*i)] <- basename(files_temp[str_detect(basename(files_temp), 'R1')])
+  d_files$original_file[(2*i)+1] <- basename(files_temp[str_detect(basename(files_temp), 'R2')])
+  d_files$new_file[(2*i)] <- paste(temp, '_R2.fastq.gz', sep = '')
+  d_files$new_file[(2*i)+1] <- paste(temp, '_R2.fastq.gz', sep = '')
 }
+
+# save out csv containing old and new names
+write.csv(d_files, 'file_renaming.csv', row.names = FALSE)
 ```
+
 
 This should result in the sequencing files being renamed to match the names specified in the manifest files. We should then be able to upload them to ENA. I use the ENA webin-cli tool to do this. You can find the documentation for this tool [here](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html).
 
-We can now run Webin-cli to submit our samples. We will start by validating our submission to check no terrible errors have occurred.
+We can now run Webin-cli to submit our samples. We will start by validating our submission to check no terrible errors have occurred. This bit is now done in the **Terminal** using **bash**.
 
 ```{bash}
 #| eval: false
@@ -318,7 +334,7 @@ My most recent one of these looks like this:
 
 ![Checking validation of manifest files](check_validation.png)
 
-We can then run the submission for realsies!
+We can then run the submission for realsies! This bit is now done in the **Terminal** using **bash**.
 
 ```{bash submit}
 #| eval: false
