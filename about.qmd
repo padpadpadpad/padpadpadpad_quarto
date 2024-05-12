@@ -3,7 +3,7 @@ title: "Daniel Padfield"
 comments: false
 description: |
   "Why toast when you can roast" - Mark Corrigan
-image: images/profile_avatar.jpg
+image: images/profile_avatar.jpeg
 about:
   template: jolla
   links:

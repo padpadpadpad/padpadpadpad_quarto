@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.553">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -48,7 +48,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -57,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -72,7 +79,7 @@ ul.task-list li input[type="checkbox"] {
     }
 
     const options = {
-      valueNames: ['listing-project','listing-website','listing-comments','listing-format','listing-editor','listing-language','listing-title','listing-type','listing-author','listing-year','listing-publication','listing-preprint','listing-doi','listing-toc','listing-path','listing-outputHref','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-open_access','listing-code','listing-data',{ data: ['index'] },{ data: ['categories'] }],
+      valueNames: ['listing-project','listing-website','listing-comments','listing-format','listing-editor','listing-language','listing-title','listing-type','listing-author','listing-year','listing-publication','listing-preprint','listing-doi','listing-toc','listing-path','listing-outputHref','listing-description','listing-filename','listing-file-modified','listing-reading-time','listing-word-count','listing-open_access','listing-code','listing-data',{ data: ['index'] },{ data: ['categories'] }],
       page: 25,
     pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author","listing-publication","listing-year"],
@@ -105,6 +112,33 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -112,9 +146,9 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
     <span class="navbar-title">DanPadLab</span>
     </a>
@@ -126,39 +160,39 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="./index.html" rel="" target="">
- <span class="menu-text">Home</span></a>
+    <a class="nav-link" href="./index.html"> 
+<span class="menu-text">Home</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./about.html" rel="" target="">
- <span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">About</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./posts.html" rel="" target="">
- <span class="menu-text">Posts</span></a>
+    <a class="nav-link" href="./posts.html"> 
+<span class="menu-text">Posts</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="./software.html" rel="" target="">
- <span class="menu-text">Software</span></a>
+    <a class="nav-link" href="./software.html"> 
+<span class="menu-text">Software</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="./publications.html" rel="" target="" aria-current="page">
- <span class="menu-text">Publications</span></a>
+    <a class="nav-link active" href="./publications.html" aria-current="page"> 
+<span class="menu-text">Publications</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&amp;hl=en" rel="" target=""><i class="bi bi-mortarboard-fill" role="img">
+    <a class="nav-link" href="https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&amp;hl=en"> <i class="bi bi-mortarboard-fill" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/padpadpadpad" rel="" target=""><i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/padpadpadpad"> <i class="bi bi-github" role="img">
 </i> 
- <span class="menu-text"></span></a>
+<span class="menu-text"></span></a>
   </li>  
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -170,6 +204,7 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(30)</span></div></div></div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
+
 
 
 
@@ -204,7 +239,8 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     </div>
 </div>
 <ul class="pub-list list">
-  <li data-index="0" data-listing-file-modified-sort="1710682584269" data-listing-reading-time-sort="2">
+
+  <li data-index="0" data-listing-file-modified-sort="1710682584269" data-listing-reading-time-sort="2" data-listing-word-count-sort="257">
     <span class="listing-title lead">Bacteriophage resistance increases bacterial productivity by shifting population growth dynamics in the soil bacterium Variovorax sp</span><br>
     <span class="listing-author">Meaghan Castledine, Daniel Padfield, Rai Lewis, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">bioRxiv</span>
@@ -212,12 +248,19 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/castledine_2024.html" class="btn btn-primary">
       Details
     </a>
+    
+    
     <a href="https://www.biorxiv.org/content/10.1101/2024.03.07.583923v1.abstract" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
+    
     <br><br>
   </li>
-  <li data-index="1" data-listing-file-modified-sort="1710192350987" data-listing-reading-time-sort="2">
+
+  <li data-index="1" data-listing-file-modified-sort="1710192350987" data-listing-reading-time-sort="2" data-listing-word-count-sort="286">
     <span class="listing-title lead">Contrary effects of increasing temperatures on the spread of antimicrobial resistance in river biofilms</span><br>
     <span class="listing-author">Kenyum Bagra, David Kneis, Daniel Padfield, Edina Szekeres, Adela Teban-Man, Cristian Coman, Gargi Singh, Thomas U. Berendonk, Uli Klümper</span><br>
     <span class="listing-publication fw-bolder ">Msphere</span>
@@ -225,15 +268,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/bagra_2024.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1128/msphere.00573-23" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
     <a href="https://doi.org/10.1101/2023.09.08.556853" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
+    
     <br><br>
   </li>
-  <li data-index="2" data-listing-file-modified-sort="1710682894428" data-listing-reading-time-sort="2">
+
+  <li data-index="2" data-listing-file-modified-sort="1710682894428" data-listing-reading-time-sort="2" data-listing-word-count-sort="252">
     <span class="listing-title lead">Macroevolutionary dynamics in micro-organisms: generalists give rise to specialists across biomes in the ubiquitous bacterial phylum Myxococcota</span><br>
     <span class="listing-author">Daniel Padfield, Suzanne Kay, Rutger Vos, Christopher Quince, Michiel Vos</span><br>
     <span class="listing-publication fw-bolder ">bioRxiv</span>
@@ -241,15 +292,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/padfield_2024.html" class="btn btn-primary">
       Details
     </a>
+    
+    
     <a href="https://www.biorxiv.org/content/10.1101/2023.09.26.559479v1.abstract" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
     <a href="https://github.com/padpadpadpad/myxo_diversification" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <br><br>
   </li>
-  <li data-index="3" data-listing-file-modified-sort="1710191785691" data-listing-reading-time-sort="2">
+
+  <li data-index="3" data-listing-file-modified-sort="1710191785691" data-listing-reading-time-sort="2" data-listing-word-count-sort="202">
     <span class="listing-title lead">Adaptive radiations in natural populations of prokaryotes: innovation is key.</span><br>
     <span class="listing-author">Michiel Vos, Daniel Padfield, Christopher Quince, Rutger Vos</span><br>
     <span class="listing-publication fw-bolder ">Fems Microbiology Ecology</span>
@@ -257,12 +316,19 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/vos_2023.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1093/femsec/fiad154" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
+    
     <br><br>
   </li>
-  <li data-index="4" data-listing-file-modified-sort="1690743275542" data-listing-reading-time-sort="2">
+
+  <li data-index="4" data-listing-file-modified-sort="1690743275542" data-listing-reading-time-sort="2" data-listing-word-count-sort="220">
     <span class="listing-title lead">Comparative experimental evolution reveals species‐specific idiosyncrasies in marine phytoplankton adaptation to warming</span><br>
     <span class="listing-author">Samuel Barton, Daniel Padfield, Abigail Masterson, Angus Buckling, Nicholas Smirnoff, Gabriel Yvon‐Durocher</span><br>
     <span class="listing-publication fw-bolder ">Global Change Biology</span>
@@ -270,15 +336,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/barton_2023.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/gcb.16827" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
+    
     <a href="http://doi.org/10.6084/m9.figshare.22100018" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="5" data-listing-file-modified-sort="1710192160130" data-listing-reading-time-sort="2">
+
+  <li data-index="5" data-listing-file-modified-sort="1710192160130" data-listing-reading-time-sort="2" data-listing-word-count-sort="206">
     <span class="listing-title lead">Copper reduces the virulence of bacterial communities at environmentally relevant concentrations.</span><br>
     <span class="listing-author">Luke Lear, Daniel Padfield, Elze Hesse, Suzanne Kay, Angus Buckling, Michiel Vos</span><br>
     <span class="listing-publication fw-bolder ">Environment Internatinal</span>
@@ -286,15 +360,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/lear_2023.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1016/j.envint.2023.108295" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
+    
     <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB70725" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="6" data-listing-file-modified-sort="1690743452935" data-listing-reading-time-sort="2">
+
+  <li data-index="6" data-listing-file-modified-sort="1690743452935" data-listing-reading-time-sort="2" data-listing-word-count-sort="202">
     <span class="listing-title lead">The ecology of scale: impact of volume on coalescence and function in methanogenic communities</span><br>
     <span class="listing-author">Pawel Sierocinski, Peter Stilwell, Daniel Padfield, Florian Bayer and Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Royal Society Interface Focus</span>
@@ -302,15 +384,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/sierocinski_2023.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1098/rsfs.2022.0089" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
+    
     <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB61013" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="7" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1">
+
+  <li data-index="7" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1" data-listing-word-count-sort="158">
     <span class="listing-title lead">A comprehensive list of bacterial pathogens infecting humans</span><br>
     <span class="listing-author">Abigail Bartlett, Daniel Padfield, Luke Lear, Richard Bendall and Michiel Vos</span><br>
     <span class="listing-publication fw-bolder ">Microbiology</span>
@@ -318,18 +408,27 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/bartlett_2022.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1099/mic.0.001269" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://github.com/padpadpadpad/bartlett_et_al_2022_human_pathogens" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://doi.org/10.5281/zenodo.7337534" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="8" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="2">
+
+  <li data-index="8" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="2" data-listing-word-count-sort="328">
     <span class="listing-title lead">Associations between abundances of free-roaming gamebirds and common buzzards Buteo buteo are not driven by consumption of gamebirds in the buzzard breeding season</span><br>
     <span class="listing-author">George JF Swan, Stuart Bearhop, Stephen M Redpath, Matthew J Silk, Daniel Padfield, Cecily ED Goodwin, Robbie A McDonald</span><br>
     <span class="listing-publication fw-bolder ">Ecology &amp; Evolution</span>
@@ -337,15 +436,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/swan_2022.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://onlinelibrary.wiley.com/doi/full/10.1002/ece3.8877" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://doi.org/10.5061/dryad.kkwh70s6w" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <br><br>
   </li>
-  <li data-index="9" data-listing-file-modified-sort="1676326100586" data-listing-reading-time-sort="2">
+
+  <li data-index="9" data-listing-file-modified-sort="1676326100586" data-listing-reading-time-sort="2" data-listing-word-count-sort="270">
     <span class="listing-title lead">Bacterial colonisation dynamics of household plastics in a coastal environment</span><br>
     <span class="listing-author">Luke Lear, Daniel Padfield, Tirion Dowsett, Maia Jones, Suzanne Kay, Alex Hayward, Michiel Vos</span><br>
     <span class="listing-publication fw-bolder ">Science of the Total Environment</span>
@@ -353,18 +460,27 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/lear_2022.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1016/j.scitotenv.2022.156199" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://github.com/padpadpadpad/Lear_et_al_2022_stoten" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB53346" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="10" data-listing-file-modified-sort="1676326100586" data-listing-reading-time-sort="2">
+
+  <li data-index="10" data-listing-file-modified-sort="1676326100586" data-listing-reading-time-sort="2" data-listing-word-count-sort="228">
     <span class="listing-title lead">Disturbance‐mediated invasions are dependent on community resource abundance</span><br>
     <span class="listing-author">Luke Lear, Daniel Padfield, Hidetoshi Inamine, Katriona Shea, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Ecology</span>
@@ -372,18 +488,27 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/lear_2022a.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1002/ecy.3728" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://doi.org/10.5281/zenodo.6334795" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://doi.org/10.5281/zenodo.5057319" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="11" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2">
+
+  <li data-index="11" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2" data-listing-word-count-sort="252">
     <span class="listing-title lead">Greater phage genotypic diversity constrains arms-race coevolution</span><br>
     <span class="listing-author">Meaghan Castledine, Pawel Sierocinski, Mhairi Inglis, Suzanne Kay, Alex Hayward, Angus Buckling, Daniel Padfield</span><br>
     <span class="listing-publication fw-bolder ">Frontiers in Cellular and Infection Microbiology</span>
@@ -391,18 +516,27 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/castledine_2022b.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.3389/fcimb.2022.834406" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://github.com/padpadpadpad/Castledine_2022_frontiers" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB50009" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="12" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2">
+
+  <li data-index="12" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2" data-listing-word-count-sort="251">
     <span class="listing-title lead">Parallel evolution of Pseudomonas aeruginosa phage resistance and virulence loss in response to phage treatment in vivo and in vitro</span><br>
     <span class="listing-author">Meaghan Castledine, Daniel Padfield, Pawel Sierocinski, Jesica Soria Pascual, Adam Hughes, Lotta Mäkinen, Ville-Petri Friman, Jean-Paul Pirnay, Maya Merabishvili, Daniel De Vos, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">eLife</span>
@@ -410,21 +544,31 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/castledine_2022a.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.7554/eLife.73679" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
     <a href="https://doi.org/10.1101/2021.09.06.459069" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
     <a href="https://github.com/mcastledine96/Parallel_evolution_phage_resistance_virulence_trade-offs_invivo_invitro" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB47945?show=reads" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="13" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="1">
+
+  <li data-index="13" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="1" data-listing-word-count-sort="149">
     <span class="listing-title lead">CMRnet: An R package to derive networks of social interactions and movement from mark–recapture data</span><br>
     <span class="listing-author">Matthew J Silk, Robbie A McDonald, Richard J Delahay, Daniel Padfield, David J Hodgson</span><br>
     <span class="listing-publication fw-bolder ">Methods in Ecology &amp; Evolution</span>
@@ -432,15 +576,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/silk_2021.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/2041-210X.13502" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://github.com/matthewsilk/CMRnet" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <br><br>
   </li>
-  <li data-index="14" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="1">
+
+  <li data-index="14" data-listing-file-modified-sort="1676326100589" data-listing-reading-time-sort="1" data-listing-word-count-sort="165">
     <span class="listing-title lead">Compost spatial heterogeneity promotes evolutionary diversification of a bacterium</span><br>
     <span class="listing-author">Stineke van Houte, Daniel Padfield, Pedro Gómez, Adela M Luján, Michael A Brockhurst, Steve Paterson, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Journal of Evolutionary Biology</span>
@@ -448,21 +600,31 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/vanhoute_2021.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/jeb.13722" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
     <a href="https://doi.org/10.1101/838110" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
     <a href="https://github.com/padpadpadpad/vanHoute_et_al_2020_JEB" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB41017" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="15" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1">
+
+  <li data-index="15" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1" data-listing-word-count-sort="200">
     <span class="listing-title lead">The impact of propagule pressure on whole community invasions in biomethane-producing communities</span><br>
     <span class="listing-author">Pawel Sierocinski, Jesica Soria Pascual, Daniel Padfield, Mike Salter, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">iScience</span>
@@ -470,18 +632,27 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/sierocinski_2021.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1016/j.isci.2021.102659" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
     <a href="https://doi.org/10.1101/2021.02.25.432953" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
+    
     <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB43371" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="16" data-listing-file-modified-sort="1676326100581" data-listing-reading-time-sort="2">
+
+  <li data-index="16" data-listing-file-modified-sort="1676326100581" data-listing-reading-time-sort="2" data-listing-word-count-sort="245">
     <span class="listing-title lead">Warming impairs trophic transfer efficiency in a long-term field experiment</span><br>
     <span class="listing-author">Diego R Barneche, Chris J Hulatt, Matteo Dossena, Daniel Padfield, Guy Woodward, Mark Trimmer, Gabriel Yvon-Durocher</span><br>
     <span class="listing-publication fw-bolder ">Nature</span>
@@ -489,21 +660,31 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/barneche_2021.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1038/s41586-021-03352-2" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
     <a href="https://ore.exeter.ac.uk/repository/bitstream/handle/10871/125009/nature20200508666_MS%20_merged.pdf?sequence=1" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Open Access
     </a>
+    
+    
     <a href="https://github.com/dbarneche/nature20200508666" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://doi.org/10.5281/zenodo.4468371" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="17" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="2">
+
+  <li data-index="17" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="2" data-listing-word-count-sort="259">
     <span class="listing-title lead">rTPC and nls.multstart: A new pipeline to fit thermal performance curves in R</span><br>
     <span class="listing-author">Daniel Padfield, Hannah O'Sullivan, Samraat Pawar</span><br>
     <span class="listing-publication fw-bolder ">Methods in Ecology &amp; Evolution</span>
@@ -511,15 +692,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/padfield_2021.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/2041-210X.13585" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://github.com/padpadpadpad/rTPC" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <br><br>
   </li>
-  <li data-index="18" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1">
+
+  <li data-index="18" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1" data-listing-word-count-sort="146">
     <span class="listing-title lead">Community coalescence: an eco-evolutionary perspective</span><br>
     <span class="listing-author">Meaghan Castledine, Pawel Sierocinski, Daniel Padfield, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Philosophical Transactions of the Royal Society B</span>
@@ -527,12 +716,19 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/castledine_2020b.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1098/rstb.2019.0252" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
+    
     <br><br>
   </li>
-  <li data-index="19" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1">
+
+  <li data-index="19" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1" data-listing-word-count-sort="190">
     <span class="listing-title lead">Evolution of diversity explains the impact of pre-adaptation of a focal species on the structure of a natural microbial community</span><br>
     <span class="listing-author">Daniel Padfield, Alex Vujakovic, Steve Paterson, Rob Griffiths, Angus Buckling, Elze Hesse</span><br>
     <span class="listing-publication fw-bolder ">ISME</span>
@@ -540,21 +736,31 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/padfield_2020a.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1038/s41396-020-00755-3" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
     <a href="https://ore.exeter.ac.uk/repository/bitstream/handle/10871/123029/padfield_2020_preadapt_soil_diversity_isme_accepted_ORE.pdf?sequence=2&amp;isAllowed=y" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Open Access
     </a>
+    
+    
     <a href="https://git.io/JUOpE" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://www.ebi.ac.uk/ena/browser/view/PRJEB40882" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="20" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1">
+
+  <li data-index="20" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="1" data-listing-word-count-sort="173">
     <span class="listing-title lead">Experimental (co)evolution in a multi‐species microbial community results in local maladaptation</span><br>
     <span class="listing-author">Meaghan Castledine, Daniel Padfield, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Ecology Letters</span>
@@ -562,18 +768,27 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/castledine_2020a.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/ele.13599" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
     <a href="https://doi.org/10.1101/2020.04.26.062067" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
     <a href="https://doi.org/10.5061/10.5281/zenodo.3985093" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <br><br>
   </li>
-  <li data-index="21" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="2">
+
+  <li data-index="21" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="2" data-listing-word-count-sort="298">
     <span class="listing-title lead">Postrelease movement and habitat selection of translocated pine martens Martes martes</span><br>
     <span class="listing-author">Catherine M McNicol, David Bavin, Stuart Bearhop, Josie Bridges, Elizabeth Croose, Robin Gill, Cecily ED Goodwin, John Lewis, Jenny MacPherson, Daniel Padfield, Henry Schofield, Matthew J Silk, Alexandra J Tomlinson, Robbie A McDonald</span><br>
     <span class="listing-publication fw-bolder ">Ecology &amp; Evolution</span>
@@ -581,15 +796,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/mcnicol_2020.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1002/ece3.6265" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
+    
     <a href="https://doi.org/10.5061/dryad.3tx95x6c4" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="22" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1">
+
+  <li data-index="22" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1" data-listing-word-count-sort="200">
     <span class="listing-title lead">Temperature-dependent changes to host–parasite interactions alter the thermal performance of a bacterial host</span><br>
     <span class="listing-author">Daniel Padfield, Meaghan Castledine, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">ISME</span>
@@ -597,21 +820,31 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/padfield_2020b.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1038/s41396-019-0526-5" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
     <a href="https://ore.exeter.ac.uk/repository/handle/10871/39738" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Open Access
     </a>
+    
+    
     <a href="https://github.com/padpadpadpad/Padfield_2019_ISME_bact_phage_temperature" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://doi.org/10.5281/zenodo.3492192" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="23" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="2">
+
+  <li data-index="23" data-listing-file-modified-sort="1676326100582" data-listing-reading-time-sort="2" data-listing-word-count-sort="253">
     <span class="listing-title lead">A shared coevolutionary history does not alter the outcome of coalescence in experimental populations of Pseudomonas fluorescens</span><br>
     <span class="listing-author">Meaghan Castledine, Angus Buckling, Daniel Padfield</span><br>
     <span class="listing-publication fw-bolder ">Journal of Evolutionary Biology</span>
@@ -619,18 +852,27 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/castledine_2019.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/jeb.13394" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://bit.ly/2NKTkCA" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://doi.org/10.5281/zenodo.1464583" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="24" data-listing-file-modified-sort="1676326100584" data-listing-reading-time-sort="1">
+
+  <li data-index="24" data-listing-file-modified-sort="1676326100584" data-listing-reading-time-sort="1" data-listing-word-count-sort="166">
     <span class="listing-title lead">Anthropogenic remediation of heavy metals selects against natural microbial remediation</span><br>
     <span class="listing-author">Elze Hesse, Daniel Padfield, Florian Bayer, Eleanor M Van Veen, Christopher G Bryan, Angus Buckling</span><br>
     <span class="listing-publication fw-bolder ">Proceedings of the Royal Society B</span>
@@ -638,18 +880,27 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/hesse_2019.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1098/rspb.2019.0804" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
     <a href="https://doi.org/10.1101/441873" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
+    
     <a href="https://doi.org/10.5061/dryad.843814d" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="25" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1">
+
+  <li data-index="25" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1" data-listing-word-count-sort="175">
     <span class="listing-title lead">Linking phytoplankton community metabolism to the individual size distribution</span><br>
     <span class="listing-author">Daniel Padfield, Angus Buckling, Ruth Warfield, Chris Lowe, Gabriel Yvon‐Durocher</span><br>
     <span class="listing-publication fw-bolder ">Ecology Letters</span>
@@ -657,15 +908,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/padfield_2018.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/ele.13082" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
     <a href="https://git.io/vpzfu" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <br><br>
   </li>
-  <li data-index="26" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2">
+
+  <li data-index="26" data-listing-file-modified-sort="1676326100583" data-listing-reading-time-sort="2" data-listing-word-count-sort="223">
     <span class="listing-title lead">Role of carbon allocation efficiency in the temperature dependence of autotroph growth rates</span><br>
     <span class="listing-author">Bernardo García-Carreras, Sofía Sal, Daniel Padfield, Dimitrios-Georgios Kontopoulos, Elvire Bestion, C-Elisa Schaum, Gabriel Yvon-Durocher, Samraat Pawar</span><br>
     <span class="listing-publication fw-bolder ">PNAS</span>
@@ -673,9 +932,15 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/garciacarreras_2018.html" class="btn btn-primary">
       Details
     </a>
+    
+    
+    
+    
+    
     <br><br>
   </li>
-  <li data-index="27" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1">
+
+  <li data-index="27" data-listing-file-modified-sort="1676326100588" data-listing-reading-time-sort="1" data-listing-word-count-sort="42">
     <span class="listing-title lead">Temperature‐driven selection on metabolic traits increases the strength of an algal–grazer interaction in naturally warmed streams</span><br>
     <span class="listing-author">C Elisa Schaum, Student Research Team, Richard ffrench‐Constant, Chris Lowe, Jón S Ólafsson, Daniel Padfield, Gabriel Yvon‐Durocher, Yasmin Ashton, Romina Botoli, Peter Coles, Joe Crisp, Emma Dwan, Stella Enoch‐Pledger, Briony Flello, Kate Freegard, Ceri Haines, Matthew Holland, Luke Lear, Emma Lokuciejewski, Heather McPhee, Toby Newport, Liisa Pahk, Sienna Somers, Caspar Swindells, Maria Wild, Ethan Wrigglesworth</span><br>
     <span class="listing-publication fw-bolder ">Global Change Biology</span>
@@ -683,15 +948,23 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/schaum_2018.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/gcb.14033" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
     <a href="https://doi.org/10.1101/104513" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
+    
     <br><br>
   </li>
-  <li data-index="28" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1">
+
+  <li data-index="28" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1" data-listing-word-count-sort="185">
     <span class="listing-title lead">Metabolic compensation constrains the temperature dependence of gross primary production</span><br>
     <span class="listing-author">Daniel Padfield, Chris Lowe, Angus Buckling, Richard Ffrench‐Constant, Student Research Team, Simon Jennings, Felicity Shelley, Jón S Ólafsson, Gabriel Yvon‐Durocher</span><br>
     <span class="listing-publication fw-bolder ">Ecology Letters</span>
@@ -699,21 +972,31 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/padfield_2017.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/ele.12820" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
     <a href="https://doi.org/10.1101/108696" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-text"></i> Preprint
     </a>
+    
+    
+    
     <a href="https://git.io/v5TUG" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-code"></i> Code
     </a>
+    
+    
     <a href="https://doi.org/10.5281/zenodo.1285680" class="btn btn-light" target="_blank" rel="noopener noreferrer">
       <i class="bi bi-file-earmark-zip"></i> Data
     </a>
+    
     <br><br>
   </li>
-  <li data-index="29" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1">
+
+  <li data-index="29" data-listing-file-modified-sort="1676326100587" data-listing-reading-time-sort="1" data-listing-word-count-sort="176">
     <span class="listing-title lead">Rapid evolution of metabolic traits explains thermal adaptation in phytoplankton</span><br>
     <span class="listing-author">Daniel Padfield, Genevieve Yvon‐Durocher, Angus Buckling, Simon Jennings, Gabriel Yvon‐Durocher</span><br>
     <span class="listing-publication fw-bolder ">Ecology Letters</span>
@@ -721,12 +1004,20 @@ gtag('config', 'G-8ZTBW36K7F', { 'anonymize_ip': true});
     <a href="./publications/articles/padfield_2016.html" class="btn btn-primary">
       Details
     </a>
+    
     <a href="https://doi.org/10.1111/ele.12545" class="btn btn-secondary" target="_blank" rel="noopener noreferrer">
       DOI
     </a>
+    
+    
+    
+    
+    
     <br><br>
   </li>
+
 </ul>
+
 <div class="listing-no-matching d-none">
 No matching items
 </div>
@@ -813,10 +1104,27 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/padpadpadpad\.netlify\.app");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -826,8 +1134,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -839,7 +1156,130 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -883,6 +1323,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -908,6 +1349,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -968,6 +1435,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 });
 </script>
 </div> <!-- /content -->
+
 
 
 
