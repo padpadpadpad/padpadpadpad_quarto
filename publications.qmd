@@ -15,4 +15,5 @@ listing:
     field-display-names: 
       publication: "Publication"
       year: "Year"
+    page-size: 100
 ---
