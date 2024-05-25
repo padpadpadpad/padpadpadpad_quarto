@@ -105,6 +105,13 @@
     "text": "Abstract\nProkaryotes dominate the Tree of Life, but our understanding of the macroevolutionary processes generating this diversity is still limited. Habitat transitions are thought to be a key driver of prokaryote diversity. However, relatively little is known about how prokaryotes successfully transition and persist across environments, and how these processes might vary between biomes and lineages. Here, we investigate biome transitions and specialisation in natural populations of a focal bacterial phylum, the Myxococcota, sampled across a range of replicated soils and freshwater and marine sediments in Cornwall (UK). By targeted deep sequencing of the protein-coding gene rpoB, we found &gt;2000 unique Myxococcota lineages, with the majority (77%) being biome specialists and with only &lt;5% of lineages distributed across the salt barrier. Discrete character evolution models revealed that specialists in one biome rarely transitioned into specialists in another biome. Instead, evolved generalism mediated transitions between biome specialists. State-dependent diversification models found variation in speciation rates across the tree, but this variation was independent of biome association or specialisation. These results were robust to phylogenetic uncertainty, assumed amounts of unsampled diversity resulting in an incomplete phylogeny, and different levels of species delineation. Overall, our results are consistent with a “jack-of-all-trades” trade-off where generalists suffer a cost in any individual environment, resulting in rapid evolution of niche specialists and shed light on how bacteria could transition between biomes."
   },
   {
+    "objectID": "publications/articles/padfield_2024.html#summary",
+    "href": "publications/articles/padfield_2024.html#summary",
+    "title": "Macroevolutionary dynamics in micro-organisms: generalists give rise to specialists across biomes in the ubiquitous bacterial phylum Myxococcota",
+    "section": "Summary",
+    "text": "Summary"
+  },
+  {
     "objectID": "publications/articles/lear_2022.html",
     "href": "publications/articles/lear_2022.html",
     "title": "Bacterial colonisation dynamics of household plastics in a coastal environment",
