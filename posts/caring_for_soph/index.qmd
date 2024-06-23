@@ -13,6 +13,7 @@ execute:
   message: false
   warning: false
   fig.align: "center"
+from: markdown+emoji
 ---
 
 # Introduction
@@ -22,6 +23,30 @@ You may know me. You may not. I am Daniel Padfield, a microbial ecologist and ca
 The pain and suffering she gets through is very difficult to describe, but I have decided to try and document each visit in some, small way. This is my account, of how it feels to watch her, of how I see her suffering. This is my account because she cannot tell the world about what she is going through. Right now she cannot speak. Cannot text in full sentences. Cannot write.
 
 *A warning that this set of posts are going to be very sad.*
+
+## 23/06/2024 Six voice messages, a photo of a swan, and 15 emojis.
+
+Early in 2024 I went to a Level 1 Makaton training course organised by the University. I had a very unique reason for going: to better communicate with Soph my 35 year old partner. The ability to communicate is something we take for granted, but it is just another thing that has become increasingly difficult for Soph. In person she now communicates with very strained words, some makaton, and some of her own signs (her birthday sign is especially resourceful), but it is when she holds in screams or holds back severe pain that makes it plain to us all how much she is suffering. And when her hand shakes uncontrollably and her head and arms writhe we know a crash is coming. If she has only just started eating, she somehow manages to continue because she knows she has to.
+
+She only sees people for maybe an hour a day due to her fatigue, so outside of that she communicates via WhatsApp with shortened words and emojis. These are mostly to discuss soup choices and times for us to go up to do lunch/dinner etc. These are also ingenious as she describes the ingredients for a soup in a mix of emojis and broken words. For example the message:
+
+🥦, Cour toast🌽, 🤏 🥔, hard GC, thy
+
+Translates to:
+
+Broccoli, courgette, toasted corn, a small amount of potato, hard goats cheese and thyme.
+
+Her mum and I translate these - mostly successfully - and when we discuss what Soph tells us we interestingly retell everything in full sentences. Maybe to humanise the conversations, to make them more like what Soph sounds like as we know she still is inside.
+
+I had no idea how much I rely on these tiny messages, until they become less regular or stopped altogether. You can spend an hour looking at your phone because you know she is going to message, and you worry that something catastrophic has happened. Last Wednesday when I was in Cornwall I did not hear from Soph after 5pm until the next morning. That had never happened before in several years of her being bedbound. She had a big crash and was just incapable of messaging. And knowing how desperate she is to message, how lonely she is lay alone in bed just makes it worse. I panicked, spiralled and took the Thursday off work.
+
+I send her maybe 5 or 6 voice messages a day telling her about the mundanities of my life in Cornwall. I try to take photos of baby animals, beaches, and sunsets to send to her. I receive back heart emojis and the broken words. I miss her voice. I miss her laugh. I miss her touch. I also feel pressure to maintain those voice messages, as it is the only voice she hears outside of her mum's and dad's in a day. I am prone to sending messages while pottering around, banging a door, or boiling the kettle, and that creates background noise that makes the message harder for Soph to listen to. I know I shouldn't feel guilty, and yet I am trying to do better.
+
+There are so many complexities about communication I cannot cover in a short post. How Soph's mum discusses treatment options with her now I have no idea. How Karen and I have to discuss so many things about visiting and Soph because she does not have the energy to. How she must feel forgotten as she is not able to communicate with people she loves. How she feels so alone. The mutual frustration of me not being able to understand a sign and the obvious toll it takes on Soph's energy to have to repeat it several times. Soph is extremely resourceful and incredible for being able to communicate despite everything. And I try so hard to try to understand because every message, sign, word is precious, a privilege to try to decipher. She is an incredible woman, fighting to survive and keep any semblance of a personal connection wherever she can.
+
+Below is a video of the finger spelling alphabet. It might be useful for someone. :heart:
+
+{{< video https://www.youtube.com/watch?v=-OO4VfT-OzI >}}
 
 ## 02/06/2024 The worst it has ever been.
 
