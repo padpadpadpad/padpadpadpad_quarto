@@ -24,28 +24,64 @@ The pain and suffering she gets through is very difficult to describe, but I hav
 
 *A warning that this set of posts are going to be very sad.*
 
+## 17/09/2024 Cruel does not cover it.
+
+This evening I went into Soph's for our “time” at 8pm. This is the only time of the day Soph really has to try and interact with someone when it is not also about eating soup. Her only time to connect. On a relatively good day, this can last \~30 minutes. Not today. She was using a tissue to cover her eyes as I moved around as she had dropped her eye mask somewhere. Within seconds of lying next to her I realised this was not going to go well. Her hand was limp. Her breathing laboured. Suffering and torture writ all over her face, and her body was tense as she tried to hold everything in. I had to make the decision - even though I had seen her for less than thirty minutes all day - to leave almost immediately as she was so far past her energy envelope, what she can cope with.
+
+I returned with her chocolate, vegan cheese, and oat milk and undressed her. She had nothing left. She could barely lift her arm up for me to move the shoulder of her dress down. She held back screams of pain. I often sing silly made up lyrics to "here comes the sun" by The Beatles, one of our favourite songs, so start a verse, to fill the silence as chatting is impossible.
+
+> "Mrs Beanie, my love for you grows each hour,
+>
+> Mrs Beanie, you are one of the world's most beautiful flowers...".
+
+Soph interrupted me. She signs that she did not hear the first line. Despite everything going on in that moment, she was trying to escape, to engage, to listen. She is truly incredible. And it is all so extremely cruel.
+
+And then I have to leave. I closed the door. The last night of this trip reduced to maybe five minutes. And she chose to use her energy trying to see me properly instead of having her sheet changed. And I had spilt soup on it, and other things can get on it. And she just has to lie there. And put up with it. Imagine having to choose between eating, engaging, and having your bedding changed. The lack of independence. Of choice. Of dignity.
+
+I am so heartbroken. Feel so helpless. So incredibly, deeply sad. You do not get used to watching that level of torture and suffering. And yet she does it everyday. She is incredible.
+
+## 25/08/2024 Covid and the trip that never was.
+
+![](covid_tests.jpg)
+
+Shit. On the 15th August I tested positive for coronavirus. I woke up with a sore throat at 2am and just knew. Thankfully I was in Cornwall, and I had 8 days before I planned to go to Soph's next. Plenty of time. And then I tested positive again and again. Day after day.
+
+I had a holiday planned for after the next Soph visit to attend a couple of weddings and see family. But because of these events, if I did not get up to Cheltenham to see Soph beforehand, then it would be a very long time between visits due to needing to self isolate afterwards.
+
+I tested negative on the 25th August, so I hoped I would be able to see Soph after all and change around some of my holiday plans. I chatted to Karen about what may be best for me trying to come up, but it was just impossible for me to discuss with Soph due to her fatigue and communication limitations. And unfortunately she has to make this decision, to be comfortable with me coming. And getting covid - and becoming more ill generally - is amongst her worst fears.
+
+She worried about making the right decision for a couple of days, making herself more ill in the process. In the end, she decided it was best for me not to come, and she knew it would mean the biggest ever gap between my visits. And to put the despair of this decision into perspective: I am the only person who sees her other than her parents. Me visiting is one of the only positive things that changes in her life. My voice is one of the only voices she ever hears. Her life partner. And she had to make the decision not to see me.
+
+Karen rang me to tell me the decision and we spent a day ruminating, trying desperately to work out how we could make it better, whether to bring it up again. But Soph is simply too ill to have to go through trying to change her mind. Everything - I mean everything - makes her fatigue worse. My heart broke into a thousand tiny pieces.
+
+This is the longest I have not seen Soph for \~9 years. Even through coronavirus pandemic. And Soph is well aware. “5w 3 dys”, she messages on the day before I come up.
+
 ## 04/08/2024 Feeding Soph on Tuesday, making presentation slides on Wednesday.
 
-<div style="display: flex; justify-content: center;">
-  <div class="tenor-gif-embed" data-postid="11667864" data-share-method="host" data-aspect-ratio="1.33121" data-width="65%">
-    <a href="https://tenor.com/view/train-tracks-tracks-collect-get-gromit-gif-11667864">Train Tracks Collect GIF</a>from <a href="https://tenor.com/search/train-tracks-gifs">Train Tracks GIFs</a>
-  </div>
-</div>
-<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+::: {style="display: flex; justify-content: center;"}
+::: {.tenor-gif-embed data-postid="11667864" data-share-method="host" data-aspect-ratio="1.33121" data-width="65%"}
+```         
+<a href="https://tenor.com/view/train-tracks-tracks-collect-get-gromit-gif-11667864">Train Tracks Collect GIF</a>from <a href="https://tenor.com/search/train-tracks-gifs">Train Tracks GIFs</a>
+```
+:::
+:::
 
+```{=html}
+<script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+```
 <br>
 
-I feel like I live my life like Gromit on the train, constantly laying down the tracks in front of myself to keep going. Every day I lay down a new track, prioritising what to do that day - or at best that week or that month - uncertain and unable to plan much beyond that. Living precariously, day by day. 
+I feel like I live my life like Gromit on the train, constantly laying down the tracks in front of myself to keep going. Every day I lay down a new track, prioritising what to do that day - or at best that week or that month - uncertain and unable to plan much beyond that. Living precariously, day by day.
 
 In some ways it often feels like I live two separate lives. In one life, I work in Cornwall at the University of Exeter, researching how bacteria respond to environmental change and in the other I care for Soph in Cheltenham. I try my best to juggle both and switch off from one when I am doing the other, but the stress and trauma of watching Soph suffer, and occasionally work stress, inevitably blend into some constant low-level - sometimes more severe - depression that makes managing both work and life rather challenging. The contrast between my last day at Soph's to my first back at work is always stark: holding a cup for Soph to eat soup to making presentation slides, coding or editing manuscripts
 
-Logistically it has become increasingly challenging. I visit Soph every third week, and beforehand I self-isolate for 5 days to ensure I do not have covid or any other illness that I could pass on to her. In practice, this means I only have 8 days in person at work in every 15 (work days). I have 4 days at home isolating, and 3 at Soph's or travelling to Soph's. Part of my research involves lab work, but in reality this has been  incredibly challenging to plan and do. I rarely go to conferences or visit other research groups, and I miss seminars and visiting researchers I would like to chat to. As a research fellow I currently do not have many teaching responsibilities, but at some point that will change. Planning in-person activities with people alongside making sure I am covid (and other illness) free for visiting Soph is a constant anxiety for me. Caring for someone automatically makes you a hypochondriac. I second guess when my throat feels the tiniest bit different. The consequences of bringing a virus to Soph’s house are frightening. Then if I do get covid then all other plans would have to be shifted to accommodate a rearranged Soph visit. It makes my brain hurt thinking about it.
+Logistically it has become increasingly challenging. I visit Soph every third week, and beforehand I self-isolate for 5 days to ensure I do not have covid or any other illness that I could pass on to her. In practice, this means I only have 8 days in person at work in every 15 (work days). I have 4 days at home isolating, and 3 at Soph's or travelling to Soph's. Part of my research involves lab work, but in reality this has been incredibly challenging to plan and do. I rarely go to conferences or visit other research groups, and I miss seminars and visiting researchers I would like to chat to. As a research fellow I currently do not have many teaching responsibilities, but at some point that will change. Planning in-person activities with people alongside making sure I am covid (and other illness) free for visiting Soph is a constant anxiety for me. Caring for someone automatically makes you a hypochondriac. I second guess when my throat feels the tiniest bit different. The consequences of bringing a virus to Soph’s house are frightening. Then if I do get covid then all other plans would have to be shifted to accommodate a rearranged Soph visit. It makes my brain hurt thinking about it.
 
 Emotionally and mentally, maintaining a full time job in academia while caring for Soph is hard, especially so recently as Soph has gotten worse. Although she may have stabilised over the last two visits, we have stabilised at a place much worse than before. Less time together. Less interaction. More suffering. And with that my depression has flared. I have been on antidepressants for several years, and I do counselling every third week (with Action for ME). I have become addicted to the routine and endorphins that exercise gives me. But it just isn't enough at times. Some days, no matter how much I will myself, I cannot get out of bed. Scrolling to numb my brain. Napping to avoid the world. Unable to shift the haze of anxiety or the big black blob of dread that lives in the pit of my stomach. My inability to make my brain productive and do what I know I should be doing just makes me feel further behind with work, which fuels work stress. It is a never ending cycle.
 
-And yet I am coping.  I still manage to help care for Soph and maintain a career in academia. And even though most of the time it does not feel like it, somehow my career seems to still be going well. I am lucky and privileged for the opportunities I have, for the flexibility that my job currently allows me to look after Soph. And I have very understanding colleagues and a great support network that looks out for me.  I am also getting better at letting some less important stressors go, to make time for myself and acknowledge that I need that afternoon of self care to make sure I can keep at least some of the plates turning. 
+And yet I am coping. I still manage to help care for Soph and maintain a career in academia. And even though most of the time it does not feel like it, somehow my career seems to still be going well. I am lucky and privileged for the opportunities I have, for the flexibility that my job currently allows me to look after Soph. And I have very understanding colleagues and a great support network that looks out for me. I am also getting better at letting some less important stressors go, to make time for myself and acknowledge that I need that afternoon of self care to make sure I can keep at least some of the plates turning.
 
-Whether undressing Soph while she screams in pain one day, or analysing growth curves, attending meetings, and editing manuscripts. Both days start the same, with getting out of bed. 
+Whether undressing Soph while she screams in pain one day, or analysing growth curves, attending meetings, and editing manuscripts. Both days start the same, with getting out of bed.
 
 There are so many feelings of guilt, sadness, and grief - as well as fleeting smiles, happiness, and warmth - but this is a good introduction to how I “manage”.
 
