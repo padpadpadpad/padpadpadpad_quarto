@@ -9,7 +9,7 @@
 <link>https://padpadpadpad.netlify.app/posts.html</link>
 <atom:link href="https://padpadpadpad.netlify.app/posts.xml" rel="self" type="application/rss+xml"/>
 <description></description>
-<generator>quarto-1.4.555</generator>
+<generator>quarto-1.5.57</generator>
 <lastBuildDate>Fri, 31 May 2024 23:00:00 GMT</lastBuildDate>
 <item>
   <title>Caring for someone with severe ME</title>
@@ -26,6 +26,22 @@
 <p>You may know me. You may not. I am Daniel Padfield, a microbial ecologist and carer. I live in Cornwall and my partner of 11 years is called Sophia Galpin. She lives in Cheltenham with her family and has very severe ME. She has been getting steadily worse for around 10 years, and is now bedbound in constant neuropathic pain. I visit every three weeks for 3 to 4 days.</p>
 <p>The pain and suffering she gets through is very difficult to describe, but I have decided to try and document each visit in some, small way. This is my account, of how it feels to watch her, of how I see her suffering. This is my account because she cannot tell the world about what she is going through. Right now she cannot speak. Cannot text in full sentences. Cannot write.</p>
 <p><em>A warning that this set of posts are going to be very sad.</em></p>
+<section id="who-is-looking-after-who" class="level2">
+<h2 class="anchored" data-anchor-id="who-is-looking-after-who">07/10/2024 Who is looking after who?</h2>
+<p>From the outside, it looks like we care for Soph. Karen is Soph’s full-time carer. She sorts Soph’s medications, washes her clothes and bedding, makes countless soups, buys endless supplies, and is her medical guardian. The admin, research, and fighting Karen does for Soph is endless. We are all very lucky to have her. Soph’s dad - John - works 8-3 and then comes back to help care for Soph and allow Karen to run errands or take a walk. And then I visit every third weekend to allow Karen and John to do a few different things they cannot do without me there, and to see my beloved Soph. I collected some leaves during a walk as Soph loves autumn and left one for her in her room. She told me it smelled like autumn and the outside. We take so much for granted.</p>
+<p>Soph constantly thinks of us as well, despite her being the one who is suffering relentlessly. I just want to highlight some examples of her incredible thoughtfulness and selflessness in the face of her own brutal torture.</p>
+<p>First, she hides so much from us. To protect us in some small way. She suppresses screams, holds back tears, and holds her hand to her collarbone - or tucks it into her armpit - to stop uncontrollably shaking. There are many terrifying symptoms that she does not mention - beyond what we see - that must be so frightening. When I lie next to her in the evening for a short time, I can feel her whole body tense as she holds in intense, excruciating, indescribable pain. She then lets out a quiet “oooh” more akin to standing under a shower that is too cold than the feeling of being stabbed by thousands of knives inside and out.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://padpadpadpad.netlify.app/posts/caring_for_soph/hell_makaton.png" class="img-fluid figure-img"></p>
+<figcaption>H-E-L-L in BSL, icons from https://mkdeafzone.org.uk/</figcaption>
+</figure>
+</div>
+<p>When she explicitly tells us how awful it is - today she used finger spelling for the word H-E-L-L to describe her life - she quickly moves on and downplays the seriousness of it all by saying “it’s ok”. “So so so so so so so so so much suffering, but it’s ok”. She also manages who does what in terms of her care to try and make sure the load is spread to try not to overburden anyone. If we suggest a change, she sometimes says no to protect us, even if she would like to see more of a particular person.</p>
+<p>Despite her extreme limitations, she still manages to show us how much she cares. She has two lamps in her room that she can change the colour of. One is a moon-shaped light which she adores. When I enter her room, they will often be blue - my favourite colour. For Karen, she will make them a different colour. She makes sure to ask me if I’m ok, and will regularly mention to me ways in which we could allow John and Karen to take better care of themselves.</p>
+<p>She remains my biggest supporter and cheerleader, despite being unable to speak and communication being extremely limited. She asks about my family, friends, and work. She sends me a <span class="emoji" data-emoji="four_leaf_clover">🍀</span> when I have counselling to wish me good luck. She arranges for a caramel shortbread cake for my birthday and arranges with us all to do and buy nice things for each other.</p>
+<p>She is always thinking of others. All she wants is to make us all happy. She has a huge heart and is trapped inside her body. She has so much to give the world. She goes through hell every day and we are all incredibly proud. In awe of her force of will and huge heart when she is coping with the cruellest of hands.</p>
+</section>
 <section id="cruel-does-not-cover-it." class="level2">
 <h2 class="anchored" data-anchor-id="cruel-does-not-cover-it.">17/09/2024 Cruel does not cover it.</h2>
 <p>This evening I went into Soph’s for our “time” at 8pm. This is the only time of the day Soph really has to try and interact with someone when it is not also about eating soup. Her only time to connect. On a relatively good day, this can last ~30 minutes. Not today. She was using a tissue to cover her eyes as I moved around as she had dropped her eye mask somewhere. Within seconds of lying next to her I realised this was not going to go well. Her hand was limp. Her breathing laboured. Suffering and torture writ all over her face, and her body was tense as she tried to hold everything in. I had to make the decision - even though I had seen her for less than thirty minutes all day - to leave almost immediately as she was so far past her energy envelope, what she can cope with.</p>
@@ -319,8 +335,10 @@ background-color: null;
 font-style: inherit;"># run a for loop</span></span>
 <span id="cb1-13"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span>(i <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
@@ -553,8 +571,10 @@ background-color: null;
 font-style: inherit;"># write for loop ro rename files</span></span>
 <span id="cb3-14"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span>(i <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
@@ -886,8 +906,10 @@ background-color: null;
 font-style: inherit;"># run a for loop to submit sequencing files</span></span>
 <span id="cb4-36"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> file <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$manifest_files</span>/<span class="pp" style="color: #AD0000;
@@ -896,6 +918,7 @@ font-style: inherit;">*</span>.txt</span>
 <span id="cb4-37"></span>
 <span id="cb4-38">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">do</span></span>
 <span id="cb4-39">        <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -979,6 +1002,7 @@ font-style: inherit;">-password</span> your_password</span>
 <span id="cb4-52">        </span>
 <span id="cb4-53">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">done</span></span></code></pre></div>
 </div>
 <p>After this has ran, you can check the output of all the validation files. If there are no errors, you can then submit the files to ENA. This can be done quite simply in R.</p>
@@ -1028,8 +1052,10 @@ background-color: null;
 font-style: inherit;"># run a for loop to grab the output of the validation report for each sample</span></span>
 <span id="cb5-12"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span>(i <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span><span class="sc" style="color: #5E5E5E;
@@ -1092,8 +1118,10 @@ background-color: null;
 font-style: inherit;"># run a for loop to submit sequencing files</span></span>
 <span id="cb6-2"><span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">for</span> file <span class="kw" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">in</span> <span class="va" style="color: #111111;
 background-color: null;
 font-style: inherit;">$manifest_files</span>/<span class="pp" style="color: #AD0000;
@@ -1101,6 +1129,7 @@ background-color: null;
 font-style: inherit;">*</span>.txt</span>
 <span id="cb6-3">    <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">do</span></span>
 <span id="cb6-4">        <span class="co" style="color: #5E5E5E;
 background-color: null;
@@ -1170,6 +1199,7 @@ background-color: null;
 font-style: inherit;">-password</span> your_password</span>
 <span id="cb6-14">  <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">done</span></span></code></pre></div>
 </div>
 <p>With any luck, these files should then be viewable the Samples Report section of the ENA Web Portal.</p>
@@ -2410,6 +2440,7 @@ font-style: inherit;"># define gompertz growth model</span></span>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(log10_nmax, log10_n0, mumax, t, lag){</span>
 <span id="cb3-5">  log10_n0 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -2736,6 +2767,7 @@ font-style: inherit;"># create the rolling regression function</span></span>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x){</span>
 <span id="cb5-3">  temp <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -6384,6 +6416,7 @@ font-style: inherit;">''</span>, <span class="at" style="color: #657422;
 background-color: null;
 font-style: inherit;">labels =</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x) stringr<span class="sc" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">::</span><span class="fu" style="color: #4758AB;
@@ -6426,6 +6459,7 @@ font-style: inherit;">'For the bacteria TPC; dashed lines are CI of profiling me
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(model){</span>
 <span id="cb12-2">  coefs <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -6506,6 +6540,7 @@ font-style: inherit;">Boot</span>(fit_nlsLM, <span class="at" style="color: #657
 background-color: null;
 font-style: inherit;">f =</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x){<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">get_topt</span>(x)}, <span class="at" style="color: #657422;
@@ -6640,6 +6675,7 @@ font-style: inherit;"># define the Sharpe-Schoolfield equation</span></span>
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(lnc, E, Eh, Th, temp, Tc) {</span>
 <span id="cb4-3">  Tc <span class="ot" style="color: #003B4F;
 background-color: null;
@@ -7087,6 +7123,7 @@ font-style: inherit;">CI =</span> <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">map</span>(fit, <span class="cf" style="color: #003B4F;
 background-color: null;
+font-weight: bold;
 font-style: inherit;">function</span>(x)<span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">data.frame</span>(<span class="fu" style="color: #4758AB;
