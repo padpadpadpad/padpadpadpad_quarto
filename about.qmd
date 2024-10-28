@@ -7,15 +7,11 @@ image: images/profile_avatar.jpeg
 about:
   template: jolla
   links:
-    - icon: square
-      text: Bluesky
+    - text: "{{< iconify fa6-brands bluesky >}} Bluesky"
       href: https://bsky.app/profile/padpadpadpad.bsky.social
     - icon: github
       text: Github
       href: https://github.com/padpadpadpad
-    - icon: mastodon
-      text: Mastodon
-      href: https://mastodon.social/@padpadpadpad@ecoevo.social
     - icon: mortarboard-fill
       text: Google Scholar
       href: https://scholar.google.co.uk/citations?user=1DXIqF4AAAAJ&hl=en
