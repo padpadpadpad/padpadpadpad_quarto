@@ -1,7 +1,7 @@
 ---
 title: Caring for someone with severe ME
 description: |
-  A running journal of my the realities of caring for someone with severe ME.
+  A running journal of the realities of caring for someone with severe ME.
 author: Daniel Padfield
 date: "06/01/2024"
 date-modified: last-modified
