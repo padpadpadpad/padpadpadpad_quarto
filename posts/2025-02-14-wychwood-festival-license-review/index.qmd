@@ -3,7 +3,7 @@ title: "Wychwood Festival License Review"
 description: |
   In 2024 Wychwood broke the terms of their license for noise and should move the stages.
 author: Daniel Padfield
-date: "14/02/2025"
+date: "2025-02-14"
 date-modified: last-modified
 image: "preview.png"
 execute:
