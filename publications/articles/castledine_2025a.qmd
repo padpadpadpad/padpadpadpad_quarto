@@ -33,7 +33,7 @@ A key feature of natural communities is that the species within them stably coex
 Community stability is usually assessed by invading single species from rare and measuring relative fitness. However does this hold up when multiple species invade from rare? Here, we - led by the talented [Meaghan Castledine](https://bsky.app/profile/mcastd.bsky.social/post/3ljhzcmhnzc2u) test this using our super stable 5 species microbial community. @cr-fig1
 
 :::{#cr-fig1}
-![](images/castledine_2025a_1.png)
+![](images/castledine_2025a_1.png){width=80%}
 :::
 
 
@@ -42,7 +42,7 @@ We did separate assays where the resident community was the same, but the number
 First, we used linear models to look at the relationship between estimates of mean relative invader growth rate from single invasions as compared to mean multi-species invasions. These values are from all of the species combinations. If single species invasions perfectly predicted relative invader growth rate with co-invaders, we would expect a 1-1 relationship, whereas our slope is much lower. @cr-fig2
 
 :::{#cr-fig2}
-![](images/castledine_2025a_2.png)
+![](images/castledine_2025a_2.png){width=80%}
 :::
 
 This means that higher relative invader growth rate estimates from single invasions do
@@ -57,11 +57,12 @@ We also compared relative invader growth rate values within each combination of 
 Of the other significant differences 9 were accounted from _Ochrobactrum_, 4 by _Achromobacter_, and 2 each for _Pseudomonas_ and _Variovorax._ @cr-fig3
 
 :::{#cr-fig3}
-![](images/castledine_2025a_3.png)
+![](images/castledine_2025a_3.png){width=80%}
 :::
 
 This suggests that for most species within this community, estimates of relative invader growth rate are robust to the presence of co-invaders when accounting for within-treatment variation.
-
+\
+\
 Overall our work shows that qualitative predictions of community stability can be
 broadly predictive of stability under community perturbation where multiple species may recover from rare. Quantitative predictions were less reliable.
 
