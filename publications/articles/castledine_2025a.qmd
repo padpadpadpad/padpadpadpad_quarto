@@ -52,9 +52,9 @@ differences in how the two growth rate measures compare between species.
 
 We also compared relative invader growth rate values within each combination of resident species as mean estimates do not account for within treatment variation. There were 28 instances where there was a significant difference between single and multi-species invasions, which are highlighted by the asterisks. The text shows who the other co-invaders were in those trials. @cr-fig3
 
-11 of the significant differences  being accounted for _Stenotrophomonas_, which had generally lower values for relative invader growth rate with co-invaders present. [@cr-fig3]{pan-to="30%,-30%"}
+11 of the significant differences were when the focal species was _Stenotrophomonas_ (78% of all trials for that species), which generally had lower values for relative invader growth rate with co-invaders present. [@cr-fig3]{pan-to="30%,-30%"}
 
-Of the other significant differences 9 were accounted from _Ochrobactrum_, 4 by _Achromobacter_, and 2 each for _Pseudomonas_ and _Variovorax._ @cr-fig3
+Of the other significant differences, 9 were when the focal species was _Ochrobactrum_, 4 were _Achromobacter_, and 2 each were _Pseudomonas_ and _Variovorax._ @cr-fig3
 
 :::{#cr-fig3}
 ![](images/castledine_2025a_3.png){width=80%}
