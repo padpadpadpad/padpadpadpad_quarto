@@ -5,8 +5,8 @@ author: "Meaghan Castledine, Daniel Padfield & Angus Buckling"
 year: "2025"
 publication: "Microbiology"
 doi: "https://doi.org/10.1099/mic.0.001577"
-code: "github.com/mcastledine96/Polyculture_suppresses_coevolution_2024"
-data: "github.com/mcastledine96/Polyculture_suppresses_coevolution_2024"
+code: "https://github.com/mcastledine96/Polyculture_suppresses_coevolution_2024"
+data: "https://github.com/mcastledine96/Polyculture_suppresses_coevolution_2024"
 toc: false
 comments: false
 ---
