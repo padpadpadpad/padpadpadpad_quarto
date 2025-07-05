@@ -18,6 +18,7 @@ format:
     cr-style:
       narrative-background-color-sidebar: white
       section-background-color: white
+    theme: flatly
 ---
 
 ## Citation
