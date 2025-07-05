@@ -2,6 +2,9 @@ project:
   type: website
   output-dir: _site
 
+execute:
+  freeze: auto
+
 website:
   favicon: images/favicon-32x32.png
   google-analytics: G-8ZTBW36K7F

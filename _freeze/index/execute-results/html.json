@@ -1,0 +1,15 @@
+{
+  "hash": "9733df451b1d6929c27c37000a9cc7a9",
+  "result": {
+    "engine": "knitr",
+    "markdown": "---\ntitle: \"Welcome to DanPadLab's website\"\ncomments: false\nimage: images/home_avatar.jpg\nabout:\n  template: jolla\n---\n\n\n\n\n::: {.cell}\n<style type=\"text/css\">\n.justify {\n  text-align: justify !important\n}\n</style>\n:::\n\n\n:::{.justify}\n\nI am Daniel Padfield and I am based at the University of Exeter (at the Cornwall campus by the sea). My research is broadly interested in understanding how microbial communities respond to environmental change. To do this, I use a variety of sequencing, experimental, and modelling approaches.\n\nI am also committed to reproducible and open science. All of the code and data from my projects are freely available online through GitHub and archived on Zenodo.\n\nThe aim of this website is to allow me to document my work and to provide a space to share useful code and walk-throughs. I also hope to use this as an outlet to document my academic journey as I attempt to manage being an academic alongside being a long-time carer. \n:::",
+    "supporting": [],
+    "filters": [
+      "rmarkdown/pagebreak.lua"
+    ],
+    "includes": {},
+    "engineDependencies": {},
+    "preserve": {},
+    "postProcess": true
+  }
+}

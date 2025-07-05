@@ -6,3 +6,5 @@
 /posts/animate_rstrava/.httr_oauth
 /posts/animate_rstrava/google_api.rds
 /.quarto/
+/.quarto/
+/_site/
