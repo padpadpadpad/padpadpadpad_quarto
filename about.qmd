@@ -25,13 +25,12 @@ knitr::opts_chunk$set(echo = FALSE)
 ```
 
 ```{css, echo = FALSE}
-# change justification of the text
 .justify {
   text-align: justify !important
 }
 ```
 
-::: {.justify}
+:::{.justify}
 
 :::{#hero-heading}
 
@@ -47,7 +46,7 @@ If you are interested in collaborating or have any questions or comments I would
 
 ## Current Lab Members
 
-- **Zoltan Erdos** (Postdoctoral researcher 2025 - Present). Zoltan is a postdoctoral researcher working on how temperature alters the selection of antibiotic resistance and plasmid transfer. He has broad interests in microbial ecology and experimental evolution.
+- **Zoltan Erdos** (Postdoctoral researcher 2025 - present). Zoltan is a postdoctoral researcher working on how temperature alters the selection of antibiotic resistance and plasmid transfer. He has broad interests in microbial ecology and experimental evolution.
 
 ## Previous Lab Members
 
