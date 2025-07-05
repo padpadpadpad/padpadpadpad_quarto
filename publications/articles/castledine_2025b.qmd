@@ -1,0 +1,21 @@
+---
+title: "Microbial community structure is affected by phage-resistance associated increases in host density."
+type: "article"
+author: "Meaghan Castledine, Daniel Padfield, Rai Lewis & Angus Buckling"
+year: "2025"
+publication: "FEMS Microbiology Ecology"
+preprint: "https://www.biorxiv.org/content/10.1101/2024.03.07.583923v3.abstract"
+doi: "https://doi.org/10.1093/femsec/fiaf027"
+code: "https://github.com/mcastledine96/Variovorax_phage_resistance_increases_density_2024"
+data: "https://github.com/mcastledine96/Variovorax_phage_resistance_increases_density_2024"
+toc: false
+comments: false
+---
+
+## Citation
+
+Castledine, M., **Padfield, D.**, Lewis, R., & Buckling, A. (2025). Microbial community structure is affected by phage-resistance associated increases in host density. FEMS Microbiology Ecology, 101(4), fiaf027. [https://doi.org/10.1093/femsec/fiaf027](https://doi.org/10.1093/femsec/fiaf027)
+
+## Abstract
+
+Lytic bacteriophages (‘phages’) can limit bacterial densities and shape community structure, either directly through lysis or indirectly through costs to resistance. However, phages have also been reported to have no, and in some cases even positive, effects on host densities. Here, we investigate the mechanisms behind an increase in host density in *Variovorax* sp. populations following a fixation of resistance that was maintained after phage extinction. Our results demonstrate that the density increase was a genetic trait coinciding with resistance emergence. Growth curves showed that phage resistance shifted population growth curves such that density was higher in the death phase. This density-increasing effect of resistance had important implications for community structure with phage-resistant *Variovorax* decreasing the density of a conspecific. That resistance to lytic phage can increase host densities has implications for wider ecology and phage therapy, where lytic phages are presumed to have negative effects on their hosts.

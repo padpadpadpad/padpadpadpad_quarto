@@ -1,0 +1,20 @@
+---
+title: "Bacteria–phage (co)evolution is constrained in a synthetic community across multiple bacteria–phage pairs."
+type: "article"
+author: "Meaghan Castledine, Daniel Padfield & Angus Buckling"
+year: "2025"
+publication: "Microbiology"
+doi: "https://doi.org/10.1099/mic.0.001577"
+code: "github.com/mcastledine96/Polyculture_suppresses_coevolution_2024"
+data: "github.com/mcastledine96/Polyculture_suppresses_coevolution_2024"
+toc: false
+comments: false
+---
+
+## Citation
+
+Castledine, M., **Padfield, D.**, Schoeman, M., Berry, A., & Buckling, A. (2025). Bacteria–phage (co) evolution is constrained in a synthetic community across multiple bacteria–phage pairs. Microbiology, 171(6), 001577. [https://doi.org/10.1099/mic.0.001577](https://doi.org/10.1099/mic.0.001577)
+
+## Abstract
+
+Bacteriophages can be important drivers of bacterial densities and, therefore, microbial community composition and function. These ecological interactions are likely to be greatly affected by evolutionary dynamics because bacteria can rapidly evolve resistance to phage, while phage can reciprocally evolve to increase infectivity. Most studies to date have explored eco-evolutionary dynamics using isolated pairs of bacteria–phage, but in nature, multiple bacteria and phages coexist and (co)evolve simultaneously. How coevolution plays out in this context is poorly understood. Here, we examine how three coexisting soil bacteria (_Ochrobactrum_ sp., _Pseudomonas_ sp. and _Variovorax_ sp.) interact and evolve with three species-specific bacteriophages over 8 weeks of experimental evolution, both as host–parasite pairs in isolation and as a mixed community. Across all species, phage resistance evolution was inhibited in polyculture, with the most pronounced effect on _Ochrobactrum_. Between bacteria–phage pairs, there were also substantial differences in the effect of phage on host densities and evolutionary dynamics, including whether pairs coevolved. Our results also indicate bacteria have a relative advantage over phage, with high rates of phage extinction and/or lower densities in polyculture. These contrasts emphasize the difficulty in generalizing findings from monoculture to polyculture and between model bacteria–phage pairs to wider systems. Future studies should consider how multiple bacteria and phage pairs interact simultaneously to better understand how coevolutionary dynamics happen in natural communities.
