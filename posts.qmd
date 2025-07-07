@@ -9,5 +9,5 @@ listing:
   feed: true
   fields: [image, title, description, date, reading-time]
   date-format: "YYYY-MM-DD"
-  page-size: 9
+  page-size: 30
 ---

@@ -2,7 +2,7 @@
 title: "DanPadLab protocols"
 comments: false
 listing:
-  contents: protocols
+  contents: protocols/*/index.qmd
   sort: "date desc"
   type: default
   categories: true
