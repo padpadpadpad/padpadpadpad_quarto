@@ -4,11 +4,11 @@ comments: false
 listing:
   contents: protocols/*/index.qmd
   sort: "date desc"
-  type: default
+  type: table
   categories: true
   feed: true
   fields: [title, description, date]
-  date-format: "YYYY-MM-DD"
+  date-format: "DD-MM-YY"
   page-size: 30
   sort-ui: true
   filter-ui: true
