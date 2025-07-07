@@ -12,7 +12,7 @@ execute:
 format:
   html:
     other-links:
-      - text: pdf
+      - text: PDF
         href: padlabnas.pdf
       - text: Word doc
         href: padlabnas.docx
