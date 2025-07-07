@@ -1,0 +1,28 @@
+---
+title: "DanPadLab protocols"
+comments: false
+listing:
+  contents: protocols
+  sort: "date desc"
+  type: default
+  categories: true
+  feed: true
+  fields: [title, description, date]
+  date-format: "YYYY-MM-DD"
+  page-size: 30
+  sort-ui: true
+  filter-ui: true
+---
+
+# What are DanPadLab protocols?
+
+DanPadLab protocols are a collection of protocols used by members of the lab of Angus Buckling and the wider group at the University of Exeter. This includes the labs of Daniel Padfield, Elze Hesse, and Dirk Sanders. They cover experimental
+and methodological protocols that we use in our research, as well as some around data management, data wrangling, and bioinformatics.
+
+These protocols are designed to help with onboarding for new members of the lab, and might be useful for other researchers too. They are a work in progress, and will be updated as we develop new protocols or improve existing ones. If you would like to contribute, please see the separate [protocols](https://github.com/padpadpadpad/protocols) GitHub repository. 
+
+## Get started
+
+All of the available protocols can be found below. They can also be downloaded as a pdf or word document. You can filter by **lab** or **computational** in the sidebar.
+
+------------------------------------------------------------------------
