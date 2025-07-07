@@ -7,8 +7,6 @@ date-modified: "`r format(Sys.time(), '%d %B %Y')`"
 date-format: long
 categories:
   - computational
-execute: 
-  eval: false
 format: 
   html:
     toc: true
@@ -100,6 +98,8 @@ Programmatically move files using **rclone**. [**rclone**](https://rclone.org/) 
 First you will need to set up **rclone**. Open your terminal. On both your local machine and the PadLabNas (if needed), you need to create a _config_ file which stores the details of the remotes you want to move files between. On your local machine, I recommend adding **PadLabNas** and any of the other servers you use. For **PadLabNas** I recommend adding other servers as you need to.
 
 ```{r}
+#| eval: false
+
 # ssh in PadLabNas (if needed)
 ssh USERNAME@ipaddresshere -p 22
 
@@ -123,6 +123,8 @@ This will start an interactive command in your terminal to add a new remote. To 
 To be able to move files to and from PadLabNas easily, we need to manually edit the config file. First we need to know where the config file is.
 
 ```{r}
+#| eval: false
+
 # local rclone config file
 rclone config file
 ```
@@ -132,6 +134,8 @@ Will tell you where your config file is stored. Open it. In the **\[PadLabNas\]*
 We are now ready to move folders and files programmitically. Some useful usecases are below. [rclone](https://rclone.org/docs/) docs are useful for writing commands. ChatGPT or Claude AI may also be useful for this. Some example commands are below. Adding _–dry-run_ to your copy commands will give you output of what _rclone copy_ will do without moving any files.
 
 ```{r}
+#| eval: false
+
 # list available remotes
 rclone listremotes
 
@@ -159,6 +163,8 @@ If you want them to be able to download it through a server (e.g. RStudio server
 The following code is for the recipient. Open the Terminal Client.
 
 ```{r}
+#| eval: false
+
 # check curl is installed
 curl --version
 
