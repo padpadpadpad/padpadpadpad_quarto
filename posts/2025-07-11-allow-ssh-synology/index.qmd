@@ -6,6 +6,8 @@ author: Daniel Padfield
 date: "07/11/2025"
 date-modified: last-modified
 categories: 
+  - Synology
+  - bash
 image: ""
 execute:
   message: false
@@ -30,16 +32,13 @@ To Enable SSH, you can do **Control Panel -> Terminal and SNMP -> tick Enable SS
 
 First SSH into the NAS. You can then enter root access by using `sudo -i` and re-entering your password.
 
-```{r login}
-#| eval: false
+```{bash login}
 
 # firstly login to the server using the command
-ssh
-user@ipaddress - p
-XX
+ssh user@ipaddress -p XX
 
 # get root access
-sudo - i
+sudo -i
 ```
 
 Next, we need to edit **/etc/passwd**. To do this we used **vi**. I hate **vi**. Key things for using **vi** are:
@@ -51,25 +50,23 @@ Next, we need to edit **/etc/passwd**. To do this we used **vi**. I hate **vi**.
 
 When you go into `insert` mode, find the user you want to give SSH access to, and change **/sbin/nologin** to **/bin/sh**.
 
-```{r}
-#| eval: false
+```{bash}
 
 # edit the file
-vi / etc / passwd
+vi /etc/passwd
 # i to enter insert mode
 # :wq to save and exit
 ```
 
-Once you have copy the file **$HOME/.profile** **/var/services/homes/test_user** and edit it again. This time,change the value of **$HOME** to **/var/services/homes/test_user**.
+Once you have copy the file **\$HOME/.profile** **/var/services/homes/test_user** and edit it again. This time,change the value of **\$HOME** to **/var/services/homes/test_user**.
 
-```{r}
-#| eval: false
+```{bash}
 
 # copy the file
-cp$HOME / .profile / var / services / homes / test_user
+cp $HOME /.profile/var/services/homes/test_user
 
 # edit the file
-vi / var / services / homes / test_user / .profile
+vi /var/services/homes/test_user/.profile
 # i to enter insert mode
 # :wq to save and exit
 ```
