@@ -1,0 +1,73 @@
+---
+title: Setting SSH access for a non-admin user on Synology
+description: |
+  Step-by-step instructions to allow a user to have SSH access to a Synology NAS.
+author: Daniel Padfield
+date: "07/11/2025"
+date-modified: last-modified
+categories: 
+image: ""
+execute:
+  message: false
+  warning: false
+  fig.align: "center"
+  eval: false
+---
+
+# Outline
+
+This is a step-by-step guide to allowing a non-admin user to have SSH access to a Synology NAS. Synology - and many others - think this is a security risk and you should not do it. Fair enough. You can make that decision yourself.
+
+But if you do want to do it, here are the steps that worked for me. They were a hack between [this] blog post and the output from ChatGPT, both of which had partial errors or missing bits.
+
+**This was done on a Synology DS423+ on DSM 7.2.2-72806 Update 3.**
+
+# Steps
+
+This example has a user - called **test_user** - that you want to give SSH access to. And that you have enabled SSH access on the Synology NAS so you - as an admin user, can SSH into it.
+
+To Enable SSH, you can do **Control Panel -> Terminal and SNMP -> tick Enable SSH service**.
+
+First SSH into the NAS. You can then enter root access by using `sudo -i` and re-entering your password.
+
+```{r login}
+# firstly login to the server using the command
+ssh
+user@ipaddress - p
+XX
+
+# get root access
+sudo - i
+```
+
+Next, we need to edit **/etc/passwd**. To do this we used **vi**. I hate **vi**. Key things for using **vi** are:
+
+- `i` to enter insert mode where you edit things.
+- `Esc` to exit insert mode.
+- `:wq` to save the changes and quit.
+- `:q!` to quit without saving changes. **I used this as save changes for about twenty minutes.**
+
+When you go into `insert` mode, find the user you want to give SSH access to, and change **/sbin/nologin** to **/bin/sh**.
+
+```{r}
+# edit the file
+vi / etc / passwd
+# i to enter insert mode
+# :wq to save and exit
+```
+
+Once you have copy the file **$HOME/.profile** **/var/services/homes/test_user** and edit it again. This time,change the value of **$HOME** to **/var/services/homes/test_user**.
+
+```{r}
+# copy the file
+cp$HOME / .profile / var / services / homes / test_user
+
+# edit the file
+vi / var / services / homes / test_user / .profile
+# i to enter insert mode
+# :wq to save and exit
+```
+
+You can now exit root access by typing `exit`. And exit the SSH session by typing `exit` again.
+
+Voila, that user should now have SSH access to the Synology NAS.
