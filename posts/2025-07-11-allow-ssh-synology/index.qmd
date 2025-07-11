@@ -32,6 +32,10 @@ To Enable SSH, you can do **Control Panel -> Terminal and SNMP -> tick Enable SS
 
 First SSH into the NAS. You can then enter root access by using `sudo -i` and re-entering your password.
 
+```{r, eval=FALSE}
+getwd()
+```
+
 ```{bash login}
 
 # firstly login to the server using the command
