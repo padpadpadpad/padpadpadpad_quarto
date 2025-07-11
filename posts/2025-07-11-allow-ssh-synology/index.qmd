@@ -31,6 +31,8 @@ To Enable SSH, you can do **Control Panel -> Terminal and SNMP -> tick Enable SS
 First SSH into the NAS. You can then enter root access by using `sudo -i` and re-entering your password.
 
 ```{r login}
+#| eval: false
+
 # firstly login to the server using the command
 ssh
 user@ipaddress - p
@@ -50,6 +52,8 @@ Next, we need to edit **/etc/passwd**. To do this we used **vi**. I hate **vi**.
 When you go into `insert` mode, find the user you want to give SSH access to, and change **/sbin/nologin** to **/bin/sh**.
 
 ```{r}
+#| eval: false
+
 # edit the file
 vi / etc / passwd
 # i to enter insert mode
@@ -59,6 +63,8 @@ vi / etc / passwd
 Once you have copy the file **$HOME/.profile** **/var/services/homes/test_user** and edit it again. This time,change the value of **$HOME** to **/var/services/homes/test_user**.
 
 ```{r}
+#| eval: false
+
 # copy the file
 cp$HOME / .profile / var / services / homes / test_user
 
