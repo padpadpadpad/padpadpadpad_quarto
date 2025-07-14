@@ -65,12 +65,12 @@ vi /etc/passwd
 # :wq to save and exit
 ```
 
-Once you have copy the file **\$HOME/.profile** **/var/services/homes/test_user** and edit it again. This time,change the value of **\$HOME** to **/var/services/homes/test_user**.
+Once you have done this copy the file **\$HOME/.profile** to **/var/services/homes/test_user** and edit it again. This time,change the value of **\$HOME** to **/var/services/homes/test_user**.
 
 ```{bash}
 
 # copy the file
-cp $HOME /.profile/var/services/homes/test_user
+cp $HOME/.profile /var/services/homes/test_user
 
 # edit the file
 vi /var/services/homes/test_user/.profile
