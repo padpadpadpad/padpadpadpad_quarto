@@ -46,7 +46,13 @@ If you are interested in collaborating or have any questions or comments I would
 
 ## Current Group Members
 
-- **Zoltan Erdos** (Postdoctoral researcher 2025 - present). Zoltan is a postdoctoral researcher working on how temperature alters the selection of antibiotic resistance and plasmid transfer. He has broad interests in microbial ecology and experimental evolution.
+![](images/zoltan_profile.png){width=5cm fig-align="center"}
+
+**Zoltan Erdos** (Postdoctoral researcher 2025 - present). Zoltan is a microbiologist interested in how microbial communities adapt, interact, and evolve in changing environments. Within DanPadLab, Zoltan is investigating the effects of climate change on the selection and spread of antibiotic resistance.
+
+His research combines experimental evolution, molecular biology, and evolutionary theory to understand the dynamics of cooperation, competition, and coevolution among microbes. He is particularly fascinated by how evolutionary processes shape microbial interactions and community resilience, with applications that span ecosystem function, health, and biotechnology. His recent work includes [characterising stable microbial consortia](https://doi.org/10.1099/mic.0.001489) for use in experimental evolution, [exploring the evolution of virulence in entomopathogenic fungi](https://journals.plos.org/plospathogens/article?id=10.1371/journal.ppat.1011775), and [developing fungal biocontrol agents to combat insect pests](https://scijournals.onlinelibrary.wiley.com/doi/full/10.1002/ps.6571).
+
+By integrating fundamental evolutionary principles with applied microbiology, he aims to uncover insights that inform both evolutionary theory and practical solutions in sustainable agriculture and microbial biotechnology.
 
 ## Previous Group Members
 
