@@ -89,7 +89,7 @@ Make sure you have had training on all the equipment and methods outlined. If yo
    1. Add 5mL of sterile NaCl solution to the tube containing the pellet. 
    2. Gently vortex the tube to thoroughly resuspend the pellet. This concentrated suspension now contains the E. coli from the original 50 mL sample. 
 
-## Stage 3: Plating and Incubation 
+### Stage 3: Plating and Incubation 
 
 1. Dilution (if necessary): 
    1. Prepare serial dilutions of your resuspension.
