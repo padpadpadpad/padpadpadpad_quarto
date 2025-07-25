@@ -37,7 +37,7 @@ format:
 
 ## Outline
 
-This protocol outlines the steps for concentrating _E. coli_ from 50 mL water samples using centrifugation, followed by plating on selective media. It was created partly created using Google Gemini.
+This protocol outlines the steps for concentrating _E. coli_ from 50 mL water samples using centrifugation, followed by plating on selective media. _It was created partly created using Google Gemini._
 
 Make sure you have had training on all the equipment and methods outlined. If you have any questions, ask somebody who can help.
 
