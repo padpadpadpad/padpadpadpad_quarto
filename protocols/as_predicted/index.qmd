@@ -1,6 +1,6 @@
 ---
 title: AsPredicted Project Planning
-description: A modified version of the AsPredicted pre-registration questions to help you plan your research project.
+description: A modified version of the AsPredicted pre-registration questions to help plan a research project.
 author: Daniel Padfield
 date: 08 08 2025
 date-modified: last-modified
